@@ -14,10 +14,10 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_gravity="center"
-        android:gravity="center"
         android:elevation="@dimen/card_corner_radius_4"
-        app:popupTheme="@style/Widget.MaterialComponents.Toolbar.Primary"
-        app:titleTextColor="@android:color/primary_text_dark">
+        android:gravity="center"
+        android:theme="@style/ToolbarTheme"
+        app:popupTheme="@style/ToolbarTheme">
 
         <TextView
             android:id="@+id/toolbarText"

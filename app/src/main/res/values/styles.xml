@@ -7,6 +7,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="ToolbarTheme" parent="@style/Widget.MaterialComponents.Toolbar.Primary">
+        <!-- Customize color of navigation drawer icon and back arrow -->
+        <item name="colorControlNormal">@color/colorAccent</item>
+    </style>
+
+    <!--    bottomsheet-->
     <style name="ShapeAppearanceOverlay.Demo" parent="">
         <item name="cornerSizeTopLeft">@dimen/vertical_margin_48</item>
         <item name="cornerSizeTopRight">@dimen/vertical_margin_48</item>
