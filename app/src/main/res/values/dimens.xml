@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_margin">16dp</dimen>
+    <dimen name="vertical_margin_16">16dp</dimen>
+    <dimen name="vertical_margin_32">32dp</dimen>
+    <dimen name="vertical_margin_48">48dp</dimen>
+    <dimen name="card_corner_radius_16">16dp</dimen>
+    <dimen name="card_corner_radius_8">8dp</dimen>
+    <dimen name="card_corner_radius_4">4dp</dimen>
+    <dimen name="bottom_sheet_corner_radius">100dp</dimen>
+    <dimen name="bottom_sheet_top_padding">@dimen/vertical_margin_16</dimen>
+    <dimen name="text_size_24">24sp</dimen>
+    <dimen name="text_size_18">18sp</dimen>
+</resources>
