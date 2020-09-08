@@ -4,14 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import com.google.android.material.appbar.MaterialToolbar
 import com.islam.hesn.myapplication.AdapterStateEnum.QURAN_SURAH
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.adapter.MySurahRecyclerViewAdapter
+import com.islam.hesn.myapplication.changeToolbarTitle
 import com.islam.hesn.myapplication.model.response.arabic.SurahItem
 import com.islam.hesn.myapplication.showSnackBar
 import com.islam.hesn.myapplication.viewmodel.AyaTranslationViewModel
@@ -67,13 +66,6 @@ class SurahFragment : Fragment() {
             bottomSheet.dismissAllowingStateLoss()
             surahRecyclerView.showSnackBar(aya.translation)
         })
-    }
-
-    private fun changeToolbarTitle(text: String) {
-        val toolbar = activity?.findViewById<MaterialToolbar>(R.id.toolbar)
-        val title = toolbar?.findViewById<TextView>(R.id.toolbarText)
-
-        title?.text = text
     }
 
 }

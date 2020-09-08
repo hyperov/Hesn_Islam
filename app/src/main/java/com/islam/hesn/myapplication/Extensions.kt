@@ -2,7 +2,10 @@ package com.islam.hesn.myapplication
 
 import android.content.res.AssetManager
 import android.view.View
+import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.snackbar.Snackbar
 import java.io.IOException
 import java.nio.charset.Charset
@@ -31,4 +34,11 @@ fun View.showSnackBar(message: String) {
         .setAction("dismiss") { (it as Snackbar).dismiss() }
         .setActionTextColor(ContextCompat.getColor(context, R.color.design_default_color_error))
         .show()
+}
+
+fun Fragment.changeToolbarTitle(text: String) {
+    val toolbar = activity?.findViewById<MaterialToolbar>(R.id.toolbar)
+    val title = toolbar?.findViewById<TextView>(R.id.toolbarText)
+
+    title?.text = text
 }

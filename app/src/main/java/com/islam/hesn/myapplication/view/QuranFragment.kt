@@ -4,14 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.appbar.MaterialToolbar
 import com.islam.hesn.myapplication.AdapterStateEnum.QURAN_SURAH_LIST
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.adapter.MySurahRecyclerViewAdapter
+import com.islam.hesn.myapplication.changeToolbarTitle
 import com.islam.hesn.myapplication.viewmodel.QuranViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_quran_list.*
@@ -32,7 +31,7 @@ class QuranFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
-        changeToolbarTitle()
+        changeToolbarTitle(getString(R.string.quran))
         observeData()
         getSurahs()
     }
@@ -51,11 +50,11 @@ class QuranFragment : Fragment() {
         })
     }
 
-    private fun changeToolbarTitle() {
-        val toolbar = activity?.findViewById<MaterialToolbar>(R.id.toolbar)
-        val title = toolbar?.findViewById<TextView>(R.id.toolbarText)
-
-        title?.text = getString(R.string.quran)
-    }
+//    private fun changeToolbarTitle() {
+//        val toolbar = activity?.findViewById<MaterialToolbar>(R.id.toolbar)
+//        val title = toolbar?.findViewById<TextView>(R.id.toolbarText)
+//
+//        title?.text = getString(R.string.quran)
+//    }
 
 }

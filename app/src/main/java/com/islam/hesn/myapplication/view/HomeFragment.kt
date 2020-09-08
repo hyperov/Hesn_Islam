@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.navigation.fragment.findNavController
 import com.islam.hesn.myapplication.R
+import com.islam.hesn.myapplication.changeToolbarTitle
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlin.math.hypot
 
@@ -30,6 +31,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        changeToolbarTitle(getString(R.string.app_name))
         main.post {
             setupAnim()
             enterCircularTransition()
