@@ -11,8 +11,8 @@ import com.islam.hesn.myapplication.AdapterStateEnum.QURAN_SURAH
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.adapter.MySurahRecyclerViewAdapter
 import com.islam.hesn.myapplication.changeToolbarTitle
+import com.islam.hesn.myapplication.createDialog
 import com.islam.hesn.myapplication.model.response.arabic.SurahItem
-import com.islam.hesn.myapplication.showSnackBar
 import com.islam.hesn.myapplication.viewmodel.AyaTranslationViewModel
 import com.islam.hesn.myapplication.viewmodel.QuranViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -55,16 +55,20 @@ class SurahFragment : Fragment() {
                     ayaViewModel.suraNum.value = surahId
                     bottomSheet = TranslationBottomSheetFragment.newInstance().apply {
 
-                        show(this@SurahFragment.parentFragmentManager, tag)
+                        showNow(this@SurahFragment.parentFragmentManager, "translation")
                     }
                 }
             )
 
         })
 
-        ayaViewModel.aya.observe(viewLifecycleOwner, Observer { aya ->
-            bottomSheet.dismissAllowingStateLoss()
-            surahRecyclerView.showSnackBar(aya.translation)
+        ayaViewModel.aya.observe(viewLifecycleOwner, { aya ->
+
+            this@SurahFragment.createDialog(aya.aya, aya.translation)
+        })
+
+        ayaViewModel.loading.observe(viewLifecycleOwner, Observer { isVisible ->
+            progress.visibility = if (isVisible) View.VISIBLE else View.GONE
         })
     }
 

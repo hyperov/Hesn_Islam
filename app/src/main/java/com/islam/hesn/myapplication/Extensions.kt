@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import java.io.IOException
 import java.nio.charset.Charset
@@ -41,4 +42,13 @@ fun Fragment.changeToolbarTitle(text: String) {
     val title = toolbar?.findViewById<TextView>(R.id.toolbarText)
 
     title?.text = text
+}
+
+fun Fragment.createDialog(title: String, message: String) {
+    MaterialAlertDialogBuilder(this.requireContext())
+        .setTitle(title)
+        .setMessage(message)
+        .setPositiveButton("ok") { dialog, _ -> dialog.dismiss() }
+//        .setPositiveButtonIcon(ContextCompat.getDrawable(this.requireContext(),R.drawable.ic_book))
+        .show()
 }

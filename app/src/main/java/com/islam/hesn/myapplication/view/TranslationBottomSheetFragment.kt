@@ -68,6 +68,7 @@ class TranslationBottomSheetFragment : BottomSheetDialogFragment(), View.OnClick
                     lang = CHINESE.lang
                 }
             }
+            dismissAllowingStateLoss()
             ayaViewModel.getAyah(lang, suraNum.value!!, ayaNum.value!!)
         }
     }

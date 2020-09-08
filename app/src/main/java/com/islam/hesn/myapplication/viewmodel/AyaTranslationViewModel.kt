@@ -15,9 +15,13 @@ class AyaTranslationViewModel @ViewModelInject constructor(private val repo: Tra
     val ayaNum = MutableLiveData<Int>()
     val suraNum = MutableLiveData<Int>()
 
+    val loading = MutableLiveData<Boolean>()
+
     fun getAyah(translationKey: String, suraNum: Int, ayaNum: Int) {
+        loading.value = true
         viewModelScope.launch {
             aya.postValue(repo.getAya(translationKey, suraNum, ayaNum).aya)
+            loading.value = false
         }
     }
 }
