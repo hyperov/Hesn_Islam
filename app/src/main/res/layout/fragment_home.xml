@@ -8,7 +8,7 @@
     android:background="@color/colorPrimaryDark"
     app:layoutDescription="@xml/activity_main_scene"
     app:showPaths="true"
-    tools:context=".view.HomeFragment">
+    tools:context=".home.HomeFragment">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/quran"
