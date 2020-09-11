@@ -13,7 +13,8 @@
         android:paddingVertical="@dimen/vertical_margin_16"
         android:text="@string/translation_options"
         android:textColor="@android:color/black"
-        android:textSize="@dimen/text_size_24"
+        android:textSize="@dimen/text_size_32"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,25 +24,31 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/custom_ripple_color"
+        android:drawableEnd="@drawable/ic_english_language"
+        android:drawablePadding="@dimen/vertical_margin_16"
         android:paddingHorizontal="@dimen/vertical_margin_16"
         android:paddingVertical="@dimen/vertical_margin_16"
         android:text="@string/english"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/text_size_18"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/french"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/custom_ripple_color"
+        android:drawableEnd="@drawable/ic_french"
+        android:drawablePadding="@dimen/vertical_margin_16"
         android:paddingHorizontal="@dimen/vertical_margin_16"
         android:paddingVertical="@dimen/vertical_margin_16"
         android:text="@string/french"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/text_size_18"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/english" />
@@ -51,11 +58,15 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/custom_ripple_color"
+        android:drawableEnd="@drawable/ic_germany"
+        android:drawablePadding="@dimen/vertical_margin_16"
+        android:gravity=""
         android:paddingHorizontal="@dimen/vertical_margin_16"
         android:paddingVertical="@dimen/vertical_margin_16"
         android:text="@string/german"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/text_size_18"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/french" />
@@ -65,11 +76,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/custom_ripple_color"
+        android:drawableEnd="@drawable/ic_spain"
+        android:drawablePadding="@dimen/vertical_margin_16"
         android:paddingHorizontal="@dimen/vertical_margin_16"
         android:paddingVertical="@dimen/vertical_margin_16"
         android:text="@string/spanish"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/text_size_18"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/german" />
@@ -79,14 +93,28 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/custom_ripple_color"
+        android:drawableEnd="@drawable/ic_china"
+        android:drawablePadding="@dimen/vertical_margin_16"
         android:paddingHorizontal="@dimen/vertical_margin_16"
         android:paddingVertical="@dimen/vertical_margin_16"
         android:text="@string/chinese"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/text_size_18"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spanish" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="64dp"
+        android:layout_height="@dimen/card_corner_radius_4"
+        android:layout_marginBottom="@dimen/card_corner_radius_8"
+        android:background="@drawable/sheet_shape"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chinese" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -16,6 +16,8 @@
     <style name="ShapeAppearanceOverlay.Demo" parent="">
         <item name="cornerSizeTopLeft">@dimen/vertical_margin_48</item>
         <item name="cornerSizeTopRight">@dimen/vertical_margin_48</item>
+        <item name="cornerSizeBottomLeft">@dimen/vertical_margin_48</item>
+        <item name="cornerSizeBottomRight">@dimen/vertical_margin_48</item>
         <item name="cornerFamily">rounded</item>
     </style>
 
