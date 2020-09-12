@@ -7,11 +7,16 @@ import android.view.ViewGroup
 import androidx.core.view.children
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.quran.model.response.translation.TranslationsOptionsEnum.*
 import com.islam.hesn.myapplication.quran.viewmodel.AyaTranslationViewModel
 import kotlinx.android.synthetic.main.layout_translation_options_bottom_sheet.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.coroutineContext
 
 class TranslationBottomSheetFragment : BottomSheetDialogFragment(), View.OnClickListener {
 
@@ -68,7 +73,11 @@ class TranslationBottomSheetFragment : BottomSheetDialogFragment(), View.OnClick
                 }
             }
             dismissAllowingStateLoss()
-            ayaViewModel.getAyah(lang, suraNum.value!!, ayaNum.value!!)
+
+            lifecycleScope.launch {
+                ayaViewModel.getAyah(lang, suraNum.value!!, ayaNum.value!!)
+            }
+
         }
     }
 }

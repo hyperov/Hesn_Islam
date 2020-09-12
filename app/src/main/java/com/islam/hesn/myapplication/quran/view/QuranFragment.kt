@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.islam.hesn.myapplication.quran.model.response.arabic.AdapterStateQuranEnum.QURAN_SURAH_LIST
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.home.changeToolbarTitle
+import com.islam.hesn.myapplication.quran.model.response.arabic.AdapterStateQuranEnum.QURAN_SURAH_LIST
 import com.islam.hesn.myapplication.quran.viewmodel.QuranViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_quran_list.*
@@ -43,7 +43,8 @@ class QuranFragment : Fragment() {
         quranViewModel.surahs.observe(viewLifecycleOwner, {
             list.adapter =
                 MySurahRecyclerViewAdapter(it, QURAN_SURAH_LIST, { surahId ->
-                    quranViewModel.surahId.value = surahId
+                    if (quranViewModel.surahId.value != surahId)
+                        quranViewModel.surahId.value = surahId
                     findNavController().navigate(R.id.surahFragment)
                 })
         })

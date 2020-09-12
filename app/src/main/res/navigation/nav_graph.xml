@@ -13,7 +13,11 @@
         app:startDestination="@id/action_homeFragment_to_quranFragment">
         <action
             android:id="@+id/action_homeFragment_to_quranFragment"
-            app:destination="@id/quranFragment" />
+            app:destination="@id/quranFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_homeFragment_to_bibleFragment"
             app:destination="@id/bibleFragment" />
@@ -35,5 +39,6 @@
     <fragment
         android:id="@+id/bibleFragment"
         android:name="com.islam.hesn.myapplication.bible.view.BibleFragment"
-        android:label="BibleFragment" />
+        android:label="fragment_bible_list"
+        tools:layout="@layout/fragment_bible_list" />
 </navigation>

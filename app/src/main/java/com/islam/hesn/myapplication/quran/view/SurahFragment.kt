@@ -6,11 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
-import com.islam.hesn.myapplication.quran.model.response.arabic.AdapterStateQuranEnum.QURAN_SURAH
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.home.changeToolbarTitle
 import com.islam.hesn.myapplication.home.createDialog
+import com.islam.hesn.myapplication.quran.model.response.arabic.AdapterStateQuranEnum.QURAN_SURAH
 import com.islam.hesn.myapplication.quran.model.response.arabic.SurahItem
 import com.islam.hesn.myapplication.quran.viewmodel.AyaTranslationViewModel
 import com.islam.hesn.myapplication.quran.viewmodel.QuranViewModel
@@ -41,7 +40,7 @@ class SurahFragment : Fragment() {
     }
 
     private fun setupViewModelObservers() {
-        quranViewModel.surahId.observe(viewLifecycleOwner, Observer { surahId ->
+        quranViewModel.surahId.observe(viewLifecycleOwner, { surahId ->
 
             val surah = quranViewModel.ayat.value?.filter { it.sura_id == surahId }
             changeToolbarTitle(surah!!.first().sura_name)
@@ -62,13 +61,17 @@ class SurahFragment : Fragment() {
         })
 
         ayaViewModel.aya.observe(viewLifecycleOwner, { aya ->
+            aya?.let {
+                this@SurahFragment.createDialog(aya.aya, aya.translation)
+                ayaViewModel.aya.value = null
+            }
 
-            this@SurahFragment.createDialog(aya.aya, aya.translation)
         })
 
-        ayaViewModel.loading.observe(viewLifecycleOwner, Observer { isVisible ->
+        ayaViewModel.loading.observe(viewLifecycleOwner, { isVisible ->
             progress.visibility = if (isVisible) View.VISIBLE else View.GONE
         })
     }
+
 
 }
