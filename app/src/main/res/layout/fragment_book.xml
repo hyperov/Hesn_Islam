@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/list"
-    android:name="com.islam.hesn.myapplication.bible.view.BibleFragment"
+    android:name="com.islam.hesn.myapplication.bible.view.fragment.BookFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="@dimen/vertical_margin_16"
     android:background="@android:color/white"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".bible.view.fragment.BibleFragment"
-    tools:listitem="@layout/item_layout_surah" />
+    tools:context=".bible.view.fragment.BookFragment"
+    tools:listitem="@layout/item_layout_book" />

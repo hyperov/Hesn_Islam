@@ -1,4 +1,4 @@
-package com.islam.hesn.myapplication.bible.view
+package com.islam.hesn.myapplication.bible.view.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.islam.hesn.myapplication.R
-import com.islam.hesn.myapplication.bible.AdapterStateBibleEnum.BOOKS
-import com.islam.hesn.myapplication.bible.BibleLangEnum
+import com.islam.hesn.myapplication.bible.view.AdapterStateBibleEnum.BOOKS
+import com.islam.hesn.myapplication.bible.view.BibleLangEnum
+import com.islam.hesn.myapplication.bible.view.BibleMainRecyclerViewAdapter
 import com.islam.hesn.myapplication.bible.viewmodel.BibleViewModel
 import com.islam.hesn.myapplication.home.changeToolbarTitle
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,7 +26,7 @@ class BibleFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        return inflater.inflate(R.layout.fragment_quran_list, container, false)
+        return inflater.inflate(R.layout.fragment_bible_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,8 +48,8 @@ class BibleFragment : Fragment() {
                     books = it!!,
                     state = BOOKS,
                     onBookItemClick = { bookNum ->
-//                    bibleViewModel.selectedBook.value = bookNum
-//                    findNavController().navigate(R.id.surahFragment)
+                        bibleViewModel.selectedBook.value = bookNum
+                        findNavController().navigate(R.id.bookFragment)
                     })
         })
     }

@@ -10,5 +10,6 @@ data class Book(
     @field:SerializedName("book_nr")
     val bookNum: Int,
     val direction: String,
+    @field:SerializedName("book")
     val chaptersMap: Map<String, Chapter>,
 )

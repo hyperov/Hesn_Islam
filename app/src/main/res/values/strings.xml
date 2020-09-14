@@ -12,6 +12,8 @@
     <string name="spanish">اللغة الأسبانية</string>
     <string name="chinese">اللغة الصينية</string>
     <string name="translation_options">خيارات الترجمة</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

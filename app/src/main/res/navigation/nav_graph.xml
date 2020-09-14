@@ -38,7 +38,25 @@
         tools:layout="@layout/fragment_surah" />
     <fragment
         android:id="@+id/bibleFragment"
-        android:name="com.islam.hesn.myapplication.bible.view.BibleFragment"
+        android:name="com.islam.hesn.myapplication.bible.view.fragment.BibleFragment"
         android:label="fragment_bible_list"
-        tools:layout="@layout/fragment_bible_list" />
+        tools:layout="@layout/fragment_bible_list" >
+        <action
+            android:id="@+id/action_bibleFragment_to_bookFragment"
+            app:destination="@id/bookFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookFragment"
+        android:name="com.islam.hesn.myapplication.bible.view.fragment.BookFragment"
+        android:label="book_fragment"
+        tools:layout="@layout/fragment_book" >
+        <action
+            android:id="@+id/action_bookFragment_to_chapterFragment"
+            app:destination="@id/chapterFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chapterFragment"
+        android:name="com.islam.hesn.myapplication.bible.view.fragment.ChapterFragment"
+        android:label="fragment_chapter"
+        tools:layout="@layout/fragment_chapter" />
 </navigation>

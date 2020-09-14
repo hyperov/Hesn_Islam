@@ -15,13 +15,11 @@ class BibleViewModel @ViewModelInject constructor(
 ) : ViewModel() {
 
     val bookModels = MutableLiveData<List<Book>>()
-
-    private val chapterModels = MutableLiveData<List<Chapter>>()
-    val chapters = MutableLiveData<List<Int>>()
+    val chapterModels = MutableLiveData<List<Chapter>>()
 
     val verseModels = MutableLiveData<List<Verse>>()
 
-    val selectedBook = MutableLiveData<String>()
+    val selectedBook = MutableLiveData<Book>()
     val selectedChapter = MutableLiveData<Int>()
     val selectedVerse = MutableLiveData<String>()
 
@@ -36,19 +34,13 @@ class BibleViewModel @ViewModelInject constructor(
     }
 
     fun getChaptersForSelectedBook() {
-
-        val chapterValues =
-            bookModels.value?.filter { it.bookName.equals(selectedBook.value, false) }
-                ?.get(0)!!.chaptersMap.values
-        chapterModels.value = chapterValues as List<Chapter>
-
-        val chapterNames = chapterValues.map { it.chapterNum }
-        chapters.value = chapterNames
+        chapterModels.value =
+            bookModels.value?.filter { it.bookNum == selectedBook.value!!.bookNum }
+                ?.get(0)!!.chaptersMap.values.toList()
     }
 
     fun getVersesForSelectedChapter() {
-        val verseValues = chapterModels.value?.filter { it.chapterNum == selectedChapter.value }
-            ?.get(0)!!.verseMap.values as List<Verse>
-        verseModels.value = verseValues
+        verseModels.value = chapterModels.value?.filter { it.chapterNum == selectedChapter.value }
+            ?.get(0)!!.verseMap.values.toList()
     }
 }
