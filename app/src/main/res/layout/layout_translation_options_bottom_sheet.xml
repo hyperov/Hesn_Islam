@@ -21,7 +21,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/english"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/custom_ripple_color"
         android:drawableEnd="@drawable/ic_english_language"
@@ -38,7 +38,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/french"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/custom_ripple_color"
         android:drawableEnd="@drawable/ic_french"
@@ -55,7 +55,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/german"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/custom_ripple_color"
         android:drawableEnd="@drawable/ic_germany"
@@ -73,7 +73,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/spanish"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/custom_ripple_color"
         android:drawableEnd="@drawable/ic_spain"
@@ -90,7 +90,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/chinese"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/custom_ripple_color"
         android:drawableEnd="@drawable/ic_china"
