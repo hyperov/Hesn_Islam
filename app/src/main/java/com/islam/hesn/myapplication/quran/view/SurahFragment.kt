@@ -22,7 +22,7 @@ class SurahFragment : Fragment() {
     private val quranViewModel: QuranViewModel by activityViewModels()
     private val ayaViewModel: AyaTranslationViewModel by activityViewModels()
 
-    private lateinit var bottomSheet: TranslationBottomSheetFragment
+    private lateinit var bottomSheet: TranslationQuranBottomSheetFragment
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,7 +51,7 @@ class SurahFragment : Fragment() {
 
                     ayaViewModel.ayaNum.value = ayaId
                     ayaViewModel.suraNum.value = surahId
-                    bottomSheet = TranslationBottomSheetFragment.newInstance().apply {
+                    bottomSheet = TranslationQuranBottomSheetFragment.newInstance().apply {
 
                         showNow(this@SurahFragment.parentFragmentManager, "translation")
                     }

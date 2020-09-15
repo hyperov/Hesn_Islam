@@ -11,6 +11,7 @@ import com.islam.hesn.myapplication.bible.view.AdapterStateBibleEnum
 import com.islam.hesn.myapplication.bible.view.BibleMainRecyclerViewAdapter
 import com.islam.hesn.myapplication.bible.viewmodel.BibleViewModel
 import com.islam.hesn.myapplication.home.changeToolbarTitle
+import com.islam.hesn.myapplication.quran.view.TranslationQuranBottomSheetFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_quran_list.*
 
@@ -18,6 +19,8 @@ import kotlinx.android.synthetic.main.fragment_quran_list.*
 class ChapterFragment : Fragment() {
 
     private val bibleViewModel: BibleViewModel by activityViewModels()
+
+    private lateinit var bottomSheet: TranslationQuranBottomSheetFragment
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +49,10 @@ class ChapterFragment : Fragment() {
                     state = AdapterStateBibleEnum.VERSES,
                     onVerseItemClick = { verseNum ->
                         bibleViewModel.selectedVerse.value = verseNum.toString()
+                        bottomSheet = TranslationQuranBottomSheetFragment.newInstance().apply {
+
+                            showNow(this@ChapterFragment.parentFragmentManager, "translation")
+                        }
                     })
         })
     }

@@ -1,4 +1,4 @@
-package com.islam.hesn.myapplication.bible.model.response
+package com.islam.hesn.myapplication.bible.model.response.bible
 
 import com.google.gson.annotations.SerializedName
 

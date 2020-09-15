@@ -1,8 +1,6 @@
 package com.islam.hesn.myapplication.quran.model.di
 
-import com.islam.hesn.myapplication.bible.model.repo.BibleApis
 import com.islam.hesn.myapplication.quran.model.repo.translation.QuranTranslationApis
-import com.islam.hesn.myapplication.bible.model.response.BibleResponse
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

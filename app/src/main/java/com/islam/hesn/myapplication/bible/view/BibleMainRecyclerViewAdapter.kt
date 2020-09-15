@@ -5,9 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.islam.hesn.myapplication.R
-import com.islam.hesn.myapplication.bible.model.response.Book
-import com.islam.hesn.myapplication.bible.model.response.Chapter
-import com.islam.hesn.myapplication.bible.model.response.Verse
+import com.islam.hesn.myapplication.bible.model.response.bible.Book
+import com.islam.hesn.myapplication.bible.model.response.bible.Chapter
+import com.islam.hesn.myapplication.bible.model.response.bible.Verse
 import com.islam.hesn.myapplication.bible.view.AdapterStateBibleEnum.*
 import kotlinx.android.synthetic.main.item_layout_surah.view.*
 
@@ -17,7 +17,7 @@ class BibleMainRecyclerViewAdapter(
     private val chapters: List<Chapter>? = null,
     private val verses: List<Verse>? = null,
     private val state: AdapterStateBibleEnum,
-    private val onBookItemClick: ((book:Book) -> Unit)? = null,
+    private val onBookItemClick: ((book: Book) -> Unit)? = null,
     private val onChapterItemClick: ((chapterNum: Int) -> Unit)? = null,
     private val onVerseItemClick: ((verseNum: Int) -> Unit)? = null
 ) : RecyclerView.Adapter<BibleMainRecyclerViewAdapter.ViewHolder>() {

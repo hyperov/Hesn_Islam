@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.islam.hesn.myapplication.bible.model.repo.BibleRepo
-import com.islam.hesn.myapplication.bible.model.response.Book
-import com.islam.hesn.myapplication.bible.model.response.Chapter
-import com.islam.hesn.myapplication.bible.model.response.Verse
+import com.islam.hesn.myapplication.bible.model.response.bible.Book
+import com.islam.hesn.myapplication.bible.model.response.bible.Chapter
+import com.islam.hesn.myapplication.bible.model.response.bible.Verse
 import kotlinx.coroutines.launch
 
 class BibleViewModel @ViewModelInject constructor(

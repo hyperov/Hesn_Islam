@@ -13,12 +13,9 @@ import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.quran.model.response.translation.TranslationsOptionsEnum.*
 import com.islam.hesn.myapplication.quran.viewmodel.AyaTranslationViewModel
 import kotlinx.android.synthetic.main.layout_translation_options_bottom_sheet.*
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.coroutineContext
 
-class TranslationBottomSheetFragment : BottomSheetDialogFragment(), View.OnClickListener {
+class TranslationQuranBottomSheetFragment : BottomSheetDialogFragment(), View.OnClickListener {
 
     private val ayaViewModel: AyaTranslationViewModel by activityViewModels()
 
@@ -46,8 +43,8 @@ class TranslationBottomSheetFragment : BottomSheetDialogFragment(), View.OnClick
 
     companion object {
         @JvmStatic
-        fun newInstance(): TranslationBottomSheetFragment {
-            return TranslationBottomSheetFragment()
+        fun newInstance(): TranslationQuranBottomSheetFragment {
+            return TranslationQuranBottomSheetFragment()
         }
     }
 
