@@ -9,18 +9,21 @@ import androidx.fragment.app.activityViewModels
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.bible.view.AdapterStateBibleEnum
 import com.islam.hesn.myapplication.bible.view.BibleMainRecyclerViewAdapter
+import com.islam.hesn.myapplication.bible.viewmodel.BibleTranslationViewModel
 import com.islam.hesn.myapplication.bible.viewmodel.BibleViewModel
 import com.islam.hesn.myapplication.home.changeToolbarTitle
-import com.islam.hesn.myapplication.quran.view.TranslationQuranBottomSheetFragment
+import com.islam.hesn.myapplication.home.createDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_quran_list.*
+import kotlinx.android.synthetic.main.fragment_surah.*
 
 @AndroidEntryPoint
 class ChapterFragment : Fragment() {
 
     private val bibleViewModel: BibleViewModel by activityViewModels()
+    private val translationViewModel: BibleTranslationViewModel by activityViewModels()
 
-    private lateinit var bottomSheet: TranslationQuranBottomSheetFragment
+    private lateinit var bottomSheet: TranslationBibleBottomSheetFragment
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +37,22 @@ class ChapterFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         changeToolbarTitle(bibleViewModel.selectedChapter.value.toString())
         observeData()
+        observeTranslationData()
         getVerses()
+    }
+
+    private fun observeTranslationData() {
+        translationViewModel.loading.observe(viewLifecycleOwner, { isVisible ->
+            progress.visibility = if (isVisible) View.VISIBLE else View.GONE
+        })
+
+        translationViewModel.verse.observe(viewLifecycleOwner, { verse ->
+            verse?.let {
+
+                createDialog(verse.verseNum.toString(), verse.verseContent)
+                translationViewModel.verse.value = null
+            }
+        })
     }
 
     private fun getVerses() {
@@ -47,9 +65,20 @@ class ChapterFragment : Fragment() {
                 BibleMainRecyclerViewAdapter(
                     verses = it,
                     state = AdapterStateBibleEnum.VERSES,
-                    onVerseItemClick = { verseNum ->
-                        bibleViewModel.selectedVerse.value = verseNum.toString()
-                        bottomSheet = TranslationQuranBottomSheetFragment.newInstance().apply {
+                    onVerseItemClick = { verse ->
+                        translationViewModel.apply {
+
+                            bookName.value =
+                                bibleViewModel.selectedBook.value!!.bookName
+
+                            chapterNum.value =
+                                bibleViewModel.selectedChapter.value
+
+                            verseNum.value = verse.verseNum
+                        }
+
+
+                        bottomSheet = TranslationBibleBottomSheetFragment.newInstance().apply {
 
                             showNow(this@ChapterFragment.parentFragmentManager, "translation")
                         }

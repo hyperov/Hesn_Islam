@@ -19,7 +19,7 @@ class BibleMainRecyclerViewAdapter(
     private val state: AdapterStateBibleEnum,
     private val onBookItemClick: ((book: Book) -> Unit)? = null,
     private val onChapterItemClick: ((chapterNum: Int) -> Unit)? = null,
-    private val onVerseItemClick: ((verseNum: Int) -> Unit)? = null
+    private val onVerseItemClick: ((verse: Verse) -> Unit)? = null
 ) : RecyclerView.Adapter<BibleMainRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -71,7 +71,7 @@ class BibleMainRecyclerViewAdapter(
                 item_num.text = verseNum.toString()
                 content.text = verseContent.toString()
                 setOnClickListener {
-                    onVerseItemClick?.invoke(verseNum)
+                    onVerseItemClick?.invoke(verse)
                 }
             }
         }

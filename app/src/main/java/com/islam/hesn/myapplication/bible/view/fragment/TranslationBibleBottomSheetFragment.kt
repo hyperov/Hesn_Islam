@@ -10,14 +10,16 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.islam.hesn.myapplication.R
-import com.islam.hesn.myapplication.quran.model.response.translation.TranslationsOptionsEnum.*
-import com.islam.hesn.myapplication.quran.viewmodel.AyaTranslationViewModel
-import kotlinx.android.synthetic.main.layout_translation_options_bottom_sheet.*
+import com.islam.hesn.myapplication.bible.model.response.translation.TranslationsBibleOptionsEnum.*
+import com.islam.hesn.myapplication.bible.viewmodel.BibleTranslationViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.layout_bible_translation_options_bottom_sheet.*
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class TranslationBibleBottomSheetFragment : BottomSheetDialogFragment(), View.OnClickListener {
 
-    private val ayaViewModel: AyaTranslationViewModel by activityViewModels()
+    private val translationViewModel: BibleTranslationViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +31,11 @@ class TranslationBibleBottomSheetFragment : BottomSheetDialogFragment(), View.On
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.layout_translation_options_bottom_sheet, container, false)
+        return inflater.inflate(
+            R.layout.layout_bible_translation_options_bottom_sheet,
+            container,
+            false
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,7 +57,7 @@ class TranslationBibleBottomSheetFragment : BottomSheetDialogFragment(), View.On
     override fun onClick(v: View?) {
 
         var lang = ""
-        ayaViewModel.apply {
+        translationViewModel.apply {
             when (v) {
                 english -> {
                     lang = ENGLISH.lang
@@ -68,11 +74,14 @@ class TranslationBibleBottomSheetFragment : BottomSheetDialogFragment(), View.On
                 chinese -> {
                     lang = CHINESE.lang
                 }
+                russian -> {
+                    lang = RUSSIAN.lang
+                }
             }
             dismissAllowingStateLoss()
 
             lifecycleScope.launch {
-                ayaViewModel.getAyah(lang, suraNum.value!!, ayaNum.value!!)
+                translationViewModel.getVerseTranslation(lang)
             }
 
         }

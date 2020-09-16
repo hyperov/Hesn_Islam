@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottomsheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingVertical="@dimen/vertical_margin_16"
+        android:text="@string/translation_options"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/text_size_32"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/english"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_ripple_color"
+        android:drawableEnd="@drawable/ic_english_language"
+        android:drawablePadding="@dimen/vertical_margin_16"
+        android:paddingHorizontal="@dimen/vertical_margin_16"
+        android:paddingVertical="@dimen/vertical_margin_16"
+        android:text="@string/english"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size_18"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/french"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_ripple_color"
+        android:drawableEnd="@drawable/ic_french"
+        android:drawablePadding="@dimen/vertical_margin_16"
+        android:paddingHorizontal="@dimen/vertical_margin_16"
+        android:paddingVertical="@dimen/vertical_margin_16"
+        android:text="@string/french"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size_18"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/english" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/german"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_ripple_color"
+        android:drawableEnd="@drawable/ic_germany"
+        android:drawablePadding="@dimen/vertical_margin_16"
+        android:gravity=""
+        android:paddingHorizontal="@dimen/vertical_margin_16"
+        android:paddingVertical="@dimen/vertical_margin_16"
+        android:text="@string/german"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size_18"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/french" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/spanish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_ripple_color"
+        android:drawableEnd="@drawable/ic_spain"
+        android:drawablePadding="@dimen/vertical_margin_16"
+        android:paddingHorizontal="@dimen/vertical_margin_16"
+        android:paddingVertical="@dimen/vertical_margin_16"
+        android:text="@string/spanish"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size_18"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/german" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/chinese"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_ripple_color"
+        android:drawableEnd="@drawable/ic_china"
+        android:drawablePadding="@dimen/vertical_margin_16"
+        android:paddingHorizontal="@dimen/vertical_margin_16"
+        android:paddingVertical="@dimen/vertical_margin_16"
+        android:text="@string/chinese"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size_18"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spanish" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/russian"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_ripple_color"
+        android:drawableEnd="@drawable/ic_china"
+        android:drawablePadding="@dimen/vertical_margin_16"
+        android:paddingHorizontal="@dimen/vertical_margin_16"
+        android:paddingVertical="@dimen/vertical_margin_16"
+        android:text="@string/russian"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size_18"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chinese" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="64dp"
+        android:layout_height="@dimen/card_corner_radius_4"
+        android:layout_marginBottom="@dimen/card_corner_radius_8"
+        android:background="@drawable/sheet_shape"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/russian" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+

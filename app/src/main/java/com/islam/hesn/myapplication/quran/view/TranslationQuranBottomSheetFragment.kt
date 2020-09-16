@@ -10,9 +10,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.islam.hesn.myapplication.R
-import com.islam.hesn.myapplication.quran.model.response.translation.TranslationsOptionsEnum.*
+import com.islam.hesn.myapplication.quran.model.response.translation.TranslationsQuranOptionsEnum.*
 import com.islam.hesn.myapplication.quran.viewmodel.AyaTranslationViewModel
-import kotlinx.android.synthetic.main.layout_translation_options_bottom_sheet.*
+import kotlinx.android.synthetic.main.layout_quran_translation_options_bottom_sheet.*
 import kotlinx.coroutines.launch
 
 class TranslationQuranBottomSheetFragment : BottomSheetDialogFragment(), View.OnClickListener {
@@ -29,7 +29,7 @@ class TranslationQuranBottomSheetFragment : BottomSheetDialogFragment(), View.On
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.layout_translation_options_bottom_sheet, container, false)
+        return inflater.inflate(R.layout.layout_quran_translation_options_bottom_sheet, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
