@@ -7,7 +7,7 @@ import retrofit2.http.Query
 interface YoutubeApis {
 
 
-    @GET("youtube.playlistItems.list")
+    @GET("playlistItems")
     suspend fun getYoutubeChannelVideos(
         @Query("playlistId") playlistId: String,
         @Query("key") key: String,
@@ -16,7 +16,7 @@ interface YoutubeApis {
 
 
     companion object {
-        const val BASE_URL = "https://developers.google.com/apis-explorer/#p/youtube/v3/"
+        const val BASE_URL = "https://www.googleapis.com/youtube/v3/"
 
     }
 
