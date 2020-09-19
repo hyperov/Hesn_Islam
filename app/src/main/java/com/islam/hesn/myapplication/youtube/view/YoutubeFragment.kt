@@ -4,16 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.islam.hesn.myapplication.R
-import com.islam.hesn.myapplication.youtube.viewmodel.YoutubeViewModel
 import kotlinx.android.synthetic.main.fragment_youtube.*
 
 class YoutubeFragment : Fragment() {
 
     private lateinit var pagerAdapter: ViewPagerAdapter
-    private lateinit var viewModel: YoutubeViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,6 +23,14 @@ class YoutubeFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        tabLayout.setSelectedTabIndicatorColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.colorAccent
+            )
+        )
+
         pagerAdapter = ViewPagerAdapter(this)
         pager.adapter = pagerAdapter
         TabLayoutMediator(tabLayout, pager) { tab, position ->
