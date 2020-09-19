@@ -1,7 +1,6 @@
-package com.islam.hesn.myapplication.bible.model.di
+package com.islam.hesn.myapplication.youtube.model.di
 
-import com.google.gson.GsonBuilder
-import com.islam.hesn.myapplication.bible.model.repo.BibleApis
+import com.islam.hesn.myapplication.youtube.model.repo.YoutubeApis
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -9,17 +8,17 @@ import dagger.hilt.android.components.ApplicationComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.scalars.ScalarsConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 import java.util.concurrent.TimeUnit
 
 
 @Module
 @InstallIn(ApplicationComponent::class)
-object BibleNetworkModule {
+object YoutubeNetworkModule {
 
     @Provides
-    fun getRetrofitInstance(): BibleApis {
+    fun getRetrofitInstance(): YoutubeApis {
 
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -31,10 +30,11 @@ object BibleNetworkModule {
                 .readTimeout(10, TimeUnit.SECONDS)
                 .build()
 
+
         val retrofit = Retrofit.Builder()
-            .baseUrl(BibleApis.BASE_URL)
+            .baseUrl(YoutubeApis.BASE_URL)
             .client(client)
-            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
         return retrofit.create()
     }

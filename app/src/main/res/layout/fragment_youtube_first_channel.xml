@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:name="com.islam.hesn.myapplication.youtube.view.YoutubeFirstChannelFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".youtube.YoutubeFirstChannelFragment">
+    android:background="@android:color/white"
+    app:layoutManager="LinearLayoutManager"
+    tools:context=".youtube.view.YoutubeFirstChannelFragment"
+    tools:listitem="@layout/item_layout_youtube_first_channel" />
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
-</FrameLayout>

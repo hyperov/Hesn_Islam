@@ -1,4 +1,4 @@
-package com.islam.hesn.myapplication.youtube
+package com.islam.hesn.myapplication.youtube.view
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter

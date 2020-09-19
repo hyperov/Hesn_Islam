@@ -1,4 +1,4 @@
-package com.islam.hesn.myapplication.youtube
+package com.islam.hesn.myapplication.youtube.view
 
 import android.os.Bundle
 import android.view.LayoutInflater

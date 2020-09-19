@@ -15,7 +15,7 @@ import java.nio.charset.Charset
 const val arabicFile = "arabic_quran.json"
 
 fun AssetManager.readJsonStringFromAssets(fileName: String): String? {
-    var json: String? = null
+    var json: String?
     val charset: Charset = Charsets.UTF_8
     try {
         val `is` = open(fileName)

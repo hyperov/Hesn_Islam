@@ -44,7 +44,7 @@
         tools:layout="@layout/fragment_chapter" />
     <fragment
         android:id="@+id/youtubeFragment"
-        android:name="com.islam.hesn.myapplication.youtube.YoutubeFragment"
+        android:name="com.islam.hesn.myapplication.youtube.view.YoutubeFragment"
         android:label="fragment_youtube"
         tools:layout="@layout/fragment_youtube" />
     <fragment

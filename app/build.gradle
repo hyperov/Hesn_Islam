@@ -4,6 +4,10 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 
+def apikeyPropertiesFile = rootProject.file("apikey.properties")
+def apikeyProperties = new Properties()
+apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -16,6 +20,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "YOUTUBE_API_KEY", apikeyProperties['YOUTUBE_API_KEY'])
     }
 
     compileOptions {
@@ -77,6 +82,10 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
     //coroutines lifecycle scope
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
+
+    implementation('com.google.api-client:google-api-client-android:1.22.0') {
+        exclude group: 'org.apache.httpcomponents'
+    }
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
