@@ -32,9 +32,27 @@ class YoutubeRecyclerViewAdapter(
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         fun bind(video: Video) = with(itemView) {
-            with(video) {
-                tvName.text = snippet.title
-                Picasso.get().load(snippet.thumbnails.standard.url).into(ivThumbnail)
+            with(video.snippet) {
+                tvName.text = title
+                with(thumbnails) {
+                    standard?.let {
+                        Picasso.get().load(standard.url).into(ivThumbnail)
+                        return@with
+                    }
+                    high?.let {
+                        Picasso.get().load(high.url).into(ivThumbnail)
+                        return@with
+                    }
+                    medium?.let {
+                        Picasso.get().load(medium.url).into(ivThumbnail)
+                        return@with
+                    }
+                    default?.let {
+                        Picasso.get().load(default.url).into(ivThumbnail)
+                        return@with
+                    }
+                }
+
 
 //            setOnClickListener {
 //                onAyaItemClick?.invoke(sura_id, aya_id)
