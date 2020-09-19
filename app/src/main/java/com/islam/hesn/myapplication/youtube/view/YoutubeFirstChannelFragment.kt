@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubeViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_youtube_first_channel.*
 
 @AndroidEntryPoint
 class YoutubeFirstChannelFragment : Fragment() {
@@ -36,8 +37,12 @@ class YoutubeFirstChannelFragment : Fragment() {
     private fun observeData() {
         youtubeViewModel.apply {
 
-            nextPage.observe(viewLifecycleOwner, { nxtPage -> })
-            videoList.observe(viewLifecycleOwner, { videos -> })
+            nextPage.observe(viewLifecycleOwner, { nxtPage ->
+
+            })
+            videoList.observe(viewLifecycleOwner, { videos ->
+                videosList.adapter = YoutubeRecyclerViewAdapter(videos)
+            })
         }
 
     }
