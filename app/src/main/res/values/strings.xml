@@ -2,8 +2,8 @@
     <string name="app_name">حصن الإسلام</string>
     <string name="misconceptions">الرد على الشبهات</string>
     <string name="contact_us">تواصل معنا</string>
-    <string name="youtube_channel">قناة اليوتيوب</string>
     <string name="about_us">من نحن</string>
+    <string name="youtube_channel">قناة اليوتيوب</string>
     <string name="bible">الكتاب المقدس</string>
     <string name="quran">القرأن</string>
     <string name="english">اللغة الإنجليزية</string>
@@ -11,14 +11,30 @@
     <string name="german">اللغة الألمانية</string>
     <string name="spanish">اللغة الأسبانية</string>
     <string name="chinese">اللغة الصينية</string>
-    <string name="translation_options">خيارات الترجمة</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="russian">اللغة الروسية</string>
+    <string name="translation_options">خيارات الترجمة</string>
+
+
     <string name="education_channel">قناة توعية صحن الإسلام</string>
     <string name="main_channel">قناة حصن الإسلام</string>
     <string name="main_channel_id" translatable="false">UUU_L2JZHwNb8_ZzfLRy10Pw</string>
     <string name="education_channel_id" translatable="false">UUmZUO5XuEQdRxmNTbuY9yEA</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="more">المزيد</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
 
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
 </resources>

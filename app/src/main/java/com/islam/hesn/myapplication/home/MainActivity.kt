@@ -31,8 +31,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupNavigation() {
+
         val navController = findNavController(R.id.nav_host_fragment)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
+        appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.quranFragment,
+                R.id.bibleFragment,
+                R.id.misconceptionsFragment,
+                R.id.youtubeFragment
+            )
+        )
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
         // Setting Navigation Controller with the BottomNavigationView
         bottomNavigation.setupWithNavController(navController)
