@@ -16,7 +16,6 @@
         android:layout_gravity="center"
         android:elevation="@dimen/card_corner_radius_4"
         android:gravity="center"
-        android:theme="@style/ToolbarTheme"
         app:popupTheme="@style/ToolbarTheme">
 
         <TextView

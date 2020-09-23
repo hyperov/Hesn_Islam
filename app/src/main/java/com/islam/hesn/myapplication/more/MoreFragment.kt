@@ -1,13 +1,14 @@
 package com.islam.hesn.myapplication.more
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.islam.hesn.myapplication.R
+import kotlinx.android.synthetic.main.fragment_more.*
 
-class MoreFragment : Fragment() {
+class MoreFragment : Fragment(), View.OnClickListener {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -15,6 +16,21 @@ class MoreFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_more, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        tvAboutUs.setOnClickListener(this)
+        tvContactUs.setOnClickListener(this)
+    }
+
+    override fun onClick(v: View?) {
+        when (v) {
+            tvAboutUs -> {
+            }
+            tvContactUs -> {
+            }
+        }
     }
 
 

@@ -1,10 +1,11 @@
 package com.islam.hesn.myapplication.home
 
 import android.os.Bundle
+import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.islam.hesn.myapplication.R
@@ -15,6 +16,8 @@ import kotlinx.android.synthetic.main.tool_bar.*
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var queryListener: SearchView.OnQueryTextListener
+    private lateinit var searchView: SearchView
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,10 +41,12 @@ class MainActivity : AppCompatActivity() {
                 R.id.quranFragment,
                 R.id.bibleFragment,
                 R.id.misconceptionsFragment,
-                R.id.youtubeFragment
+                R.id.youtubeFragment,
+                R.id.moreFragment
             )
         )
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
+
+        setupActionBarWithNavController(this, navController, appBarConfiguration)
         // Setting Navigation Controller with the BottomNavigationView
         bottomNavigation.setupWithNavController(navController)
     }
