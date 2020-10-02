@@ -8,11 +8,14 @@
     <fragment
         android:id="@+id/quranFragment"
         android:name="com.islam.hesn.myapplication.quran.view.QuranFragment"
-        android:label="fragment_quran_list"
+        android:label="@string/quran"
         tools:layout="@layout/fragment_quran_list">
         <action
             android:id="@+id/action_quranFragment_to_surahFragment"
             app:destination="@id/surahFragment" />
+        <action
+            android:id="@+id/action_quranFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/surahFragment"
@@ -22,11 +25,14 @@
     <fragment
         android:id="@+id/bibleFragment"
         android:name="com.islam.hesn.myapplication.bible.view.fragment.BibleFragment"
-        android:label="fragment_bible_list"
+        android:label="@string/bible"
         tools:layout="@layout/fragment_bible_list">
         <action
             android:id="@+id/action_bibleFragment_to_bookFragment"
             app:destination="@id/bookFragment" />
+        <action
+            android:id="@+id/action_bibleFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/bookFragment"
@@ -45,16 +51,21 @@
     <fragment
         android:id="@+id/youtubeFragment"
         android:name="com.islam.hesn.myapplication.youtube.view.YoutubeFragment"
-        android:label="fragment_youtube"
+        android:label="@string/youtube_channel"
         tools:layout="@layout/fragment_youtube" />
     <fragment
         android:id="@+id/misconceptionsFragment"
         android:name="com.islam.hesn.myapplication.misconceptions.MisconceptionsFragment"
-        android:label="fragment_misconceptions"
+        android:label="@string/misconceptions"
         tools:layout="@layout/fragment_misconceptions" />
     <fragment
         android:id="@+id/moreFragment"
         android:name="com.islam.hesn.myapplication.more.MoreFragment"
-        android:label="fragment_more"
+        android:label="@string/more"
         tools:layout="@layout/fragment_more" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.islam.hesn.myapplication.search.view.SearchFragment"
+        android:label="@string/search_title"
+        tools:layout="@layout/search_fragment" />
 </navigation>

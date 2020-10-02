@@ -1,9 +1,10 @@
 package com.islam.hesn.myapplication.bible.view.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -12,14 +13,15 @@ import com.islam.hesn.myapplication.bible.view.AdapterStateBibleEnum.BOOKS
 import com.islam.hesn.myapplication.bible.view.BibleLangEnum
 import com.islam.hesn.myapplication.bible.view.BibleMainRecyclerViewAdapter
 import com.islam.hesn.myapplication.bible.viewmodel.BibleViewModel
-import com.islam.hesn.myapplication.home.changeToolbarTitle
+import com.islam.hesn.myapplication.search.view.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_quran_list.*
 
 @AndroidEntryPoint
-class BibleFragment : Fragment() {
+class BibleFragment : Fragment(), TextView.OnEditorActionListener {
 
     private val bibleViewModel: BibleViewModel by activityViewModels()
+    private val searchViewModel: SearchViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,11 +32,11 @@ class BibleFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         super.onViewCreated(view, savedInstanceState)
-        changeToolbarTitle(getString(R.string.bible))
         observeData()
         getBooks()
+        etSearch.setOnEditorActionListener(this)
+        setSearchIconClick()
     }
 
     private fun getBooks() {
@@ -52,6 +54,35 @@ class BibleFragment : Fragment() {
                         findNavController().navigate(R.id.bookFragment)
                     })
         })
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setSearchIconClick() {
+        etSearch.setOnTouchListener { v, event ->
+            val DRAWABLE_RIGHT = 2
+
+            if (event.action == MotionEvent.ACTION_UP) {
+                if (event.rawX >= etSearch.right - etSearch.compoundDrawables[DRAWABLE_RIGHT].bounds.width()) {
+                    // your action here
+                    gotoSearchScreen(etSearch.text.toString())
+                    return@setOnTouchListener true
+                }
+            }
+            false
+        }
+    }
+
+    override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            gotoSearchScreen(etSearch.text.toString())
+        }
+        return true
+    }
+
+    private fun gotoSearchScreen(searchText: String) {
+        searchViewModel.searchQuery.value = searchText
+        searchViewModel.isFromQuranScreen.value = false
+        findNavController().navigate(R.id.searchFragment)
     }
 
 }

@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="@dimen/vertical_margin_16"
-    android:layout_marginTop="1dp"
-    android:layout_marginBottom="@dimen/card_corner_radius_16"
+    android:layout_marginTop="@dimen/vertical_margin_16"
+    android:layoutDirection="rtl"
     app:cardBackgroundColor="@android:color/white"
     app:cardCornerRadius="@dimen/card_corner_radius_16"
     app:cardElevation="@dimen/card_corner_radius_4">
@@ -20,15 +20,15 @@
             android:layout_width="@dimen/vertical_margin_32"
             android:layout_height="@dimen/vertical_margin_32"
             android:layout_marginVertical="@dimen/vertical_margin_16"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginBottom="@dimen/vertical_margin_16"
             android:background="@drawable/bg_round_green"
             android:gravity="center"
             android:textColor="@android:color/white"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="1" />
 
@@ -42,8 +42,8 @@
             android:textColor="@color/colorPrimaryDark"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/item_num"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/item_num"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="الفاتحة" />
     </androidx.constraintlayout.widget.ConstraintLayout>

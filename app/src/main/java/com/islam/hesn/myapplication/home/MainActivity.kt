@@ -1,6 +1,7 @@
 package com.islam.hesn.myapplication.home
 
 import android.os.Bundle
+import android.view.View
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -24,7 +25,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-
+        if (window.decorView.layoutDirection == View.LAYOUT_DIRECTION_LTR) {
+            window.decorView.layoutDirection = View.LAYOUT_DIRECTION_RTL
+        }
     }
 
 

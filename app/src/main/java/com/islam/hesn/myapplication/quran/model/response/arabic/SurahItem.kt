@@ -1,5 +1,9 @@
 package com.islam.hesn.myapplication.quran.model.response.arabic
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class SurahItem(
     val aya_id: Int,
     val aya_id_display: String,
@@ -13,4 +17,4 @@ data class SurahItem(
     val sura_name_en: String,
     val sura_name_romanization: String,
     val uthmani: String
-)
+) : Parcelable

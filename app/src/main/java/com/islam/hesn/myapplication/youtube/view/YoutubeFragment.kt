@@ -35,8 +35,8 @@ class YoutubeFragment : Fragment() {
         pager.adapter = pagerAdapter
         TabLayoutMediator(tabLayout, pager) { tab, position ->
             when (position) {
-                0 -> tab.text = getString(R.string.education_channel)
-                1 -> tab.text = getString(R.string.main_channel)
+                0 -> tab.text = getString(R.string.main_channel)
+                1 -> tab.text = getString(R.string.education_channel)
             }
 
         }.attach()

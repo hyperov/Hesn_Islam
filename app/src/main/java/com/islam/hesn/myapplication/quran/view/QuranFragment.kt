@@ -1,32 +1,31 @@
 package com.islam.hesn.myapplication.quran.view
 
-import android.app.SearchManager
-import android.content.ComponentName
-import android.content.Context
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.*
+import android.view.View.OnTouchListener
+import android.view.inputmethod.EditorInfo
 import android.widget.SearchView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.islam.hesn.myapplication.R
-import com.islam.hesn.myapplication.home.changeToolbarTitle
 import com.islam.hesn.myapplication.quran.model.response.arabic.AdapterStateQuranEnum.QURAN_SURAH_LIST
 import com.islam.hesn.myapplication.quran.viewmodel.QuranViewModel
-import com.islam.hesn.myapplication.search.SearchActivity
+import com.islam.hesn.myapplication.search.view.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_quran_list.*
 
+
+const val SEARCH_QUERY = "SEARCH_QUERY"
+
 @AndroidEntryPoint
-class QuranFragment : Fragment() {
+class QuranFragment : Fragment(), TextView.OnEditorActionListener {
 
     private lateinit var searchView: SearchView
     private val quranViewModel: QuranViewModel by activityViewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
+    private val searchViewModel: SearchViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,11 +36,28 @@ class QuranFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         super.onViewCreated(view, savedInstanceState)
-        changeToolbarTitle(getString(R.string.quran))
         observeData()
         getSurahs()
+        etSearch.setOnEditorActionListener(this)
+        setSearchIconClick()
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setSearchIconClick() {
+        etSearch.setOnTouchListener(OnTouchListener { v, event ->
+
+            val DRAWABLE_RIGHT = 2
+
+            if (event.action == MotionEvent.ACTION_UP) {
+                if (event.rawX >= etSearch.right - etSearch.compoundDrawables[DRAWABLE_RIGHT].bounds.width()) {
+                    // your action here
+                    gotoSearchScreen(etSearch.text.toString())
+                    return@OnTouchListener true
+                }
+            }
+            false
+        })
     }
 
     private fun getSurahs() {
@@ -59,26 +75,20 @@ class QuranFragment : Fragment() {
         })
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
 
-        inflater.inflate(R.menu.options_menu, menu)
-
-        val searchManager = activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
-
-        searchView = menu.findItem(R.id.action_search).actionView as SearchView
-        searchView.apply {
-            setSearchableInfo(
-                searchManager.getSearchableInfo(
-                    ComponentName(
-                        context,
-                        SearchActivity::class.java
-                    )
-                )
-            )
-
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            gotoSearchScreen(etSearch.text.toString())
         }
-        super.onCreateOptionsMenu(menu, inflater)
+        return true
+
     }
 
+    private fun gotoSearchScreen(searchText: String) {
+        searchViewModel.searchQuery.value = searchText
+        searchViewModel.isFromQuranScreen.value = true
+        searchViewModel.ayat.postValue(quranViewModel.ayat.value)
+        findNavController().navigate(R.id.searchFragment)
+    }
 
 }

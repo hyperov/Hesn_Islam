@@ -3,29 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_bar"
+    app:elevation="0dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:fitsSystemWindows="true"
-    android:theme="@style/Widget.MaterialComponents.AppBarLayout.Primary">
-
+    android:layout_height="?attr/actionBarSize"
+    android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_gravity="center"
+        android:layout_height="match_parent"
+        android:background="?attr/colorPrimary"
         android:elevation="@dimen/card_corner_radius_4"
-        android:gravity="center"
-        app:popupTheme="@style/ToolbarTheme">
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
+        app:popupTheme="@style/ToolbarTheme"
+        app:titleTextAppearance="@style/Toolbar.TitleText"
+        app:titleTextColor="@color/colorAccent"
+        tools:title="@string/quran">
 
-        <TextView
-            android:id="@+id/toolbarText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/transparent"
-            android:gravity="center"
-            android:textColor="@color/colorAccent"
-            tools:text="القرأن" />
     </com.google.android.material.appbar.MaterialToolbar>
 
 </com.google.android.material.appbar.AppBarLayout>

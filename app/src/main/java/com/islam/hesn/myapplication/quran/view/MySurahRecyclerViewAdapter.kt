@@ -46,7 +46,7 @@ class MySurahRecyclerViewAdapter(
                     }
                     QURAN_SURAH -> {
                         item_num.text = aya_id.toString()
-                        content.text = uthmani
+                        content.text = standard_full
                         setOnClickListener {
                             onAyaItemClick?.invoke(sura_id, aya_id)
                         }

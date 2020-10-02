@@ -2,7 +2,6 @@ package com.islam.hesn.myapplication.home
 
 import android.content.res.AssetManager
 import android.view.View
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.MaterialToolbar
@@ -40,9 +39,8 @@ fun View.showSnackBar(message: String) {
 
 fun Fragment.changeToolbarTitle(text: String) {
     val toolbar = activity?.findViewById<MaterialToolbar>(R.id.toolbar)
-    val title = toolbar?.findViewById<TextView>(R.id.toolbarText)
 
-    title?.text = text
+    toolbar?.title = text
 }
 
 fun Fragment.createDialog(title: String, message: String) {

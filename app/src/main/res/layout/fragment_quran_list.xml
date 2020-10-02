@@ -1,13 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/list"
-    android:name="com.islam.hesn.myapplication.QuranFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="@dimen/vertical_margin_16"
-    android:background="@android:color/white"
-    app:layoutManager="LinearLayoutManager"
-    tools:context=".quran.view.QuranFragment"
-    tools:listitem="@layout/item_layout_surah" />
+    android:elevation="@dimen/card_corner_radius_4"
+    android:background="@color/colorPrimary">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvSearch"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/vertical_margin_16"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardElevation="@dimen/card_corner_radius_16"
+        app:cardCornerRadius="@dimen/card_corner_radius_8"
+        app:rippleColor="@color/colorAccent"
+        app:layout_constraintEnd_toEndOf="@+id/list"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etSearch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawableStart="@drawable/ic_search"
+            android:drawablePadding="@dimen/vertical_margin_16"
+            android:hint="@string/search_title"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:lines="1"
+            android:maxLength="30"
+            android:paddingStart="@dimen/vertical_margin_16"
+            android:paddingEnd="@dimen/vertical_margin_16"
+            android:textColor="@color/colorPrimary"
+            app:backgroundTint="@android:color/white" />
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list"
+        android:name="com.islam.hesn.myapplication.QuranFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/vertical_margin_16"
+        android:background="@android:color/white"
+        app:layoutManager="LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cvSearch"
+        tools:listitem="@layout/item_layout_surah" />
+</androidx.constraintlayout.widget.ConstraintLayout>

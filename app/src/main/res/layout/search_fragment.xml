@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    tools:context=".bible.view.fragment.BibleFragment">
+    android:background="@color/colorPrimary">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cvSearch"
@@ -14,10 +13,11 @@
         android:layout_margin="@dimen/vertical_margin_16"
         app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="@dimen/card_corner_radius_8"
-        app:cardElevation="@dimen/card_corner_radius_4"
+        app:cardElevation="@dimen/card_corner_radius_16"
         app:layout_constraintEnd_toEndOf="@+id/list"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:rippleColor="@color/colorAccent">
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etSearch"
@@ -38,10 +38,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
-        android:name="com.islam.hesn.myapplication.bible.view.BibleFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/vertical_margin_16"
+        android:layout_marginTop="@dimen/card_corner_radius_16"
         android:background="@android:color/white"
         app:layoutManager="LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -50,3 +49,4 @@
         app:layout_constraintTop_toBottomOf="@+id/cvSearch"
         tools:listitem="@layout/item_layout_surah" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+
