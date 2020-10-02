@@ -13,10 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity
-            android:name=".search.view.SearchActivity"
-            android:launchMode="singleTop"/>
-
         <activity android:name=".home.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
