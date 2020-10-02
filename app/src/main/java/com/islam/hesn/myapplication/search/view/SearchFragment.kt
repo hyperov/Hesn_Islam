@@ -104,7 +104,7 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener {
                     }
                 }
                 etSearch.compoundDrawables[DRAWABLE_LEFT]?.let {
-                    if (event.rawX >= etSearch.left - it.bounds.width()) {
+                    if (event.rawX <= it.bounds.width() + 2 * etSearch.paddingLeft) {
                         etSearch.editableText.clear()
                         return@OnTouchListener true
                     }

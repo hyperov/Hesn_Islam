@@ -59,13 +59,23 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
     @SuppressLint("ClickableViewAccessibility")
     private fun setSearchIconClick() {
         etSearch.setOnTouchListener { v, event ->
+
+            val DRAWABLE_LEFT = 0
             val DRAWABLE_RIGHT = 2
 
             if (event.action == MotionEvent.ACTION_UP) {
-                if (event.rawX >= etSearch.right - etSearch.compoundDrawables[DRAWABLE_RIGHT].bounds.width()) {
-                    // your action here
-                    gotoSearchScreen(etSearch.text.toString())
-                    return@setOnTouchListener true
+                etSearch.compoundDrawables[DRAWABLE_RIGHT]?.let {
+                    if (event.rawX >= etSearch.right - etSearch.compoundDrawables[DRAWABLE_RIGHT].bounds.width()) {
+
+                        gotoSearchScreen(etSearch.text.toString())
+                        return@setOnTouchListener true
+                    }
+                }
+                etSearch.compoundDrawables[DRAWABLE_LEFT]?.let {
+                    if (event.rawX <= it.bounds.width() + 2 * etSearch.paddingLeft) {
+                        etSearch.editableText.clear()
+                        return@setOnTouchListener true
+                    }
                 }
             }
             false
