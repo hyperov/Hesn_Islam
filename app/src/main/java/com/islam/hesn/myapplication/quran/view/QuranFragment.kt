@@ -2,6 +2,8 @@ package com.islam.hesn.myapplication.quran.view
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.*
 import android.view.View.OnTouchListener
 import android.view.inputmethod.EditorInfo
@@ -13,7 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.quran.model.response.arabic.AdapterStateQuranEnum.QURAN_SURAH_LIST
 import com.islam.hesn.myapplication.quran.viewmodel.QuranViewModel
-import com.islam.hesn.myapplication.search.view.SearchViewModel
+import com.islam.hesn.myapplication.search.viewmodel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_quran_list.*
 
@@ -41,19 +43,59 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
         getSurahs()
         etSearch.setOnEditorActionListener(this)
         setSearchIconClick()
+        setSearchTypingListener()
+    }
+
+    private fun setSearchTypingListener() {
+        etSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s?.toString().isNullOrBlank()) {
+                    etSearch.setCompoundDrawablesWithIntrinsicBounds(
+                        0,
+                        0,
+                        R.drawable.ic_search,
+                        0
+                    )
+                } else if (s?.toString()?.isNotBlank()!! && s.toString().isNotEmpty()) {
+                    etSearch.setCompoundDrawablesWithIntrinsicBounds(
+                        android.R.drawable.ic_menu_close_clear_cancel,
+                        0,
+                        R.drawable.ic_search,
+                        0
+                    )
+                }
+            }
+        })
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setSearchIconClick() {
         etSearch.setOnTouchListener(OnTouchListener { v, event ->
 
+            val DRAWABLE_LEFT = 0
             val DRAWABLE_RIGHT = 2
 
             if (event.action == MotionEvent.ACTION_UP) {
-                if (event.rawX >= etSearch.right - etSearch.compoundDrawables[DRAWABLE_RIGHT].bounds.width()) {
-                    // your action here
-                    gotoSearchScreen(etSearch.text.toString())
-                    return@OnTouchListener true
+                etSearch.compoundDrawables[DRAWABLE_RIGHT]?.let {
+                    if (event.rawX >= etSearch.right - it.bounds.width()) {
+
+                        gotoSearchScreen(etSearch.text.toString())
+                        return@OnTouchListener true
+                    }
+                }
+                etSearch.compoundDrawables[DRAWABLE_LEFT]?.let {
+                    if (event.rawX <= it.bounds.width() + 2 * etSearch.paddingLeft) {
+                        etSearch.editableText.clear()
+                        return@OnTouchListener true
+                    }
                 }
             }
             false

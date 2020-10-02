@@ -13,7 +13,7 @@ import com.islam.hesn.myapplication.bible.view.AdapterStateBibleEnum.BOOKS
 import com.islam.hesn.myapplication.bible.view.BibleLangEnum
 import com.islam.hesn.myapplication.bible.view.BibleMainRecyclerViewAdapter
 import com.islam.hesn.myapplication.bible.viewmodel.BibleViewModel
-import com.islam.hesn.myapplication.search.view.SearchViewModel
+import com.islam.hesn.myapplication.search.viewmodel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_quran_list.*
 

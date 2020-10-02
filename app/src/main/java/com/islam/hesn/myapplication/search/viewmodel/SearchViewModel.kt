@@ -1,4 +1,4 @@
-package com.islam.hesn.myapplication.search.view
+package com.islam.hesn.myapplication.search.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
