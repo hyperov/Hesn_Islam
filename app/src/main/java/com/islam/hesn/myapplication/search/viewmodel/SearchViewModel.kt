@@ -2,7 +2,10 @@ package com.islam.hesn.myapplication.search.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.islam.hesn.myapplication.bible.model.response.bible.Book
+import com.islam.hesn.myapplication.bible.model.response.bible.Verse
 import com.islam.hesn.myapplication.quran.model.response.arabic.SurahItem
+import com.islam.hesn.myapplication.search.model.SearchedVerse
 import com.islam.hesn.myapplication.search.model.Section
 
 
@@ -14,6 +17,12 @@ class SearchViewModel : ViewModel() {
     val searchedAyatSections = MutableLiveData<ArrayList<Section<SurahItem>>>()
 
     private val sectionsQuranList = arrayListOf<Section<SurahItem>>()
+    private val sectionsBibleList = arrayListOf<Section<Verse>>()
+
+    val booksBible = MutableLiveData<List<Book>>()
+    private val searchVerses = ArrayList<SearchedVerse>()
+
+    val searchedVersesSections = MutableLiveData<ArrayList<Section<Verse>>>()
 
     fun getQuranValues() {
 
@@ -26,6 +35,31 @@ class SearchViewModel : ViewModel() {
         ayatMap?.forEach { entry -> sectionsQuranList.add(Section(entry.key, entry.value)) }
 
         searchedAyatSections.value = sectionsQuranList
+    }
+
+    fun getBibleValues() {
+        searchVerses.clear()
+        booksBible.value?.forEach { book ->
+            book.chaptersMap.values.forEach { chapter ->
+                val filteredVerses = chapter.verseMap.values.filter {
+                    it.verseContent.contains(
+                        searchQuery.value!!, true
+                    )
+                }
+                if (filteredVerses.isNotEmpty()) {
+                    searchVerses.add(SearchedVerse(book.bookName,
+                        chapter.chapterNum.toString(),
+                        filteredVerses))
+                }
+            }
+
+        }
+
+        searchVerses.forEach {
+            sectionsBibleList.add(Section("${it.bookName} ${it.chapterName} ",
+                it.verseList))
+        }
+        searchedVersesSections.value =sectionsBibleList
     }
 
 }

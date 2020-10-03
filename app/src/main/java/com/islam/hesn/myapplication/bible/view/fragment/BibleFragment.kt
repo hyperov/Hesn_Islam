@@ -2,6 +2,8 @@ package com.islam.hesn.myapplication.bible.view.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
@@ -37,6 +39,7 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
         getBooks()
         etSearch.setOnEditorActionListener(this)
         setSearchIconClick()
+        setSearchTypingListener()
     }
 
     private fun getBooks() {
@@ -92,7 +95,38 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
     private fun gotoSearchScreen(searchText: String) {
         searchViewModel.searchQuery.value = searchText
         searchViewModel.isFromQuranScreen.value = false
+        searchViewModel.booksBible.postValue(bibleViewModel.bookModels.value)
         findNavController().navigate(R.id.searchFragment)
+    }
+
+    private fun setSearchTypingListener() {
+        etSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s?.toString().isNullOrBlank()) {
+                    etSearch.setCompoundDrawablesWithIntrinsicBounds(
+                        0,
+                        0,
+                        R.drawable.ic_search,
+                        0
+                    )
+                } else if (s?.toString()?.isNotBlank()!! && s.toString().isNotEmpty()) {
+                    etSearch.setCompoundDrawablesWithIntrinsicBounds(
+                        android.R.drawable.ic_menu_close_clear_cancel,
+                        0,
+                        R.drawable.ic_search,
+                        0
+                    )
+                }
+            }
+        })
     }
 
 }

@@ -12,15 +12,19 @@ import androidx.fragment.app.activityViewModels
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.search.model.SearchExpandableAdapter
 import com.islam.hesn.myapplication.search.viewmodel.SearchViewModel
+import com.thoughtbot.expandablerecyclerview.listeners.GroupExpandCollapseListener
+import com.thoughtbot.expandablerecyclerview.listeners.OnGroupClickListener
+import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup
 import kotlinx.android.synthetic.main.search_fragment.*
 
-class SearchFragment : Fragment(), TextView.OnEditorActionListener {
+class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClickListener {
 
     private val searchViewModel: SearchViewModel by activityViewModels()
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         return inflater.inflate(R.layout.search_fragment, container, false)
     }
@@ -28,24 +32,38 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         observeData()
-        getQuranSearchValues()
+        getQuranOrBibleSearchValues()
         etSearch.setOnEditorActionListener(this)
         setSearchIconClick()
         setSearchTypingListener()
     }
 
-    private fun getQuranSearchValues() {
-        searchViewModel.getQuranValues()
+    private fun getQuranOrBibleSearchValues() {
+        when (searchViewModel.isFromQuranScreen.value) {
+            true -> {
+                searchViewModel.getQuranValues()
+            }
+            false -> {
+                searchViewModel.getBibleValues()
+            }
+        }
+
     }
 
     private fun observeData() {
         searchViewModel.searchedAyatSections.observe(viewLifecycleOwner, { sections ->
             when (searchViewModel.isFromQuranScreen.value) {
                 true -> {
-                    list.adapter = SearchExpandableAdapter(sections)
+                    list.adapter = SearchExpandableAdapter(sections).also {
+                        it.setOnGroupClickListener(this@SearchFragment)
+                    }
                 }
+            }
+        })
+        searchViewModel.searchedVersesSections.observe(viewLifecycleOwner, { sections ->
+            when (searchViewModel.isFromQuranScreen.value) {
                 false -> {
-//                    list.adapter = SearchExpandableAdapter<Verse>()
+                    list.adapter = SearchExpandableAdapter(sections)
                 }
             }
         })
@@ -116,7 +134,12 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener {
 
     private fun createNewSearchQuery(searchText: String) {
         searchViewModel.searchQuery.value = searchText
-        getQuranSearchValues()
+        getQuranOrBibleSearchValues()
     }
+
+    override fun onGroupClick(flatPos: Int): Boolean {
+        TODO("Not yet implemented")
+    }
+
 
 }

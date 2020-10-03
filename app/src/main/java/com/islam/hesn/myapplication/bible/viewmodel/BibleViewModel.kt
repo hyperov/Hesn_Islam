@@ -23,6 +23,7 @@ class BibleViewModel @ViewModelInject constructor(
     val selectedChapter = MutableLiveData<Int>()
 
     fun getBible(translation: String) {
+
         viewModelScope.launch {
 
             val bookValues = bibleRepo.getBible(translation).booksMap.values.toList()

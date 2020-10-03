@@ -42,4 +42,5 @@ class SearchExpandableAdapter<T : Parcelable>(groups: List<ExpandableGroup<T>>) 
         holder.setSectionTitle(group!!)
     }
 
+
 }
