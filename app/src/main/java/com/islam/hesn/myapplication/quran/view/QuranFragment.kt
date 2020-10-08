@@ -7,7 +7,7 @@ import android.text.TextWatcher
 import android.view.*
 import android.view.View.OnTouchListener
 import android.view.inputmethod.EditorInfo
-import android.widget.SearchView
+import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -18,20 +18,17 @@ import com.islam.hesn.myapplication.quran.viewmodel.QuranViewModel
 import com.islam.hesn.myapplication.search.viewmodel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_quran_list.*
-
-
-const val SEARCH_QUERY = "SEARCH_QUERY"
+import kotlinx.android.synthetic.main.layout_dialog_surah_fast_navigation.*
 
 @AndroidEntryPoint
 class QuranFragment : Fragment(), TextView.OnEditorActionListener {
 
-    private lateinit var searchView: SearchView
     private val quranViewModel: QuranViewModel by activityViewModels()
     private val searchViewModel: SearchViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
 
         return inflater.inflate(R.layout.fragment_quran_list, container, false)
@@ -44,6 +41,10 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
         etSearch.setOnEditorActionListener(this)
         setSearchIconClick()
         setSearchTypingListener()
+        fabJump.setOnClickListener {
+            fabJump.isExpanded = !fabJump.isExpanded
+        }
+
     }
 
     private fun setSearchTypingListener() {
@@ -114,6 +115,7 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
                         quranViewModel.surahId.value = surahId
                     findNavController().navigate(R.id.surahFragment)
                 })
+            setupSpinnerAdapter()
         })
     }
 
@@ -131,6 +133,18 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
         searchViewModel.isFromQuranScreen.value = true
         searchViewModel.ayat.postValue(quranViewModel.ayat.value)
         findNavController().navigate(R.id.searchFragment)
+    }
+
+    private fun setupSpinnerAdapter() {
+        ArrayAdapter(
+            requireContext(),
+            R.layout.layout_spinner_drop_down_resource,
+            quranViewModel.surahs.value?.map { it -> it.sura_name }!!
+
+        ).also { adapter ->
+            adapter.setDropDownViewResource(R.layout.layout_spinner_drop_down_resource)
+            spinnerSurah.adapter = adapter
+        }
     }
 
 }
