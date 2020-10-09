@@ -26,7 +26,7 @@ class SurahFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
 
         return inflater.inflate(R.layout.fragment_surah, container, false)
@@ -57,7 +57,7 @@ class SurahFragment : Fragment() {
                     }
                 }
             )
-
+            surahRecyclerView.scrollToPosition(quranViewModel.ayaFastForwardId.value!! - 1)
         })
 
         ayaViewModel.aya.observe(viewLifecycleOwner, { aya ->

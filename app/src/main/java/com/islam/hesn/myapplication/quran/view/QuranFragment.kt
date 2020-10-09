@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import android.view.*
 import android.view.View.OnTouchListener
 import android.view.inputmethod.EditorInfo
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -36,6 +37,7 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        resetFastForward()
         observeData()
         getSurahs()
         etSearch.setOnEditorActionListener(this)
@@ -44,7 +46,20 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
         fabJump.setOnClickListener {
             fabJump.isExpanded = !fabJump.isExpanded
         }
+        btFastForwardDone.setOnClickListener {
 
+            fabJump.isExpanded = !fabJump.isExpanded
+            etAya.text.toString().apply {
+                if (isNotBlank()) {
+                    quranViewModel.ayaFastForwardId.value = this.toInt()
+                    findNavController().navigate(R.id.surahFragment)
+                }
+            }
+        }
+    }
+
+    private fun resetFastForward() {
+        quranViewModel.ayaFastForwardId.value = 0
     }
 
     private fun setSearchTypingListener() {
@@ -136,6 +151,7 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
     }
 
     private fun setupSpinnerAdapter() {
+
         ArrayAdapter(
             requireContext(),
             R.layout.layout_spinner_drop_down_resource,
@@ -144,6 +160,21 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
         ).also { adapter ->
             adapter.setDropDownViewResource(R.layout.layout_spinner_drop_down_resource)
             spinnerSurah.adapter = adapter
+        }
+
+        spinnerSurah.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long,
+            ) {
+                quranViewModel.surahId.value = position + 1
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
         }
     }
 

@@ -13,6 +13,7 @@ class QuranViewModel @ViewModelInject constructor(
     val surahs = MutableLiveData<ArrayList<SurahItem>>()
     val ayat = MutableLiveData<ArrayList<SurahItem>>()
     val surahId = MutableLiveData<Int>()
+    val ayaFastForwardId = MutableLiveData<Int>()
 
     fun getAllArabicSurah() {
         val ayatList = quranRepo.getAllArabicSurah().list
