@@ -38,6 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_margin"
             android:layout_marginStart="16dp"
+            android:fontFamily="@font/cairo_regular"
             android:textAppearance="?attr/textAppearanceListItem"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="18sp"

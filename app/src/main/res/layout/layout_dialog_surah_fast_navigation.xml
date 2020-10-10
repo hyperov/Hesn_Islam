@@ -15,25 +15,15 @@
         android:layout_height="wrap_content"
         android:background="@android:color/white">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/instant_navigation"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/text_size_24"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
         <Spinner
             android:id="@+id/spinnerSurah"
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
+            android:layout_height="@dimen/vertical_margin_48"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layoutDirection="rtl"
+            android:paddingHorizontal="@dimen/vertical_margin_16"
             app:layout_constraintEnd_toStartOf="@+id/etAya"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -47,36 +37,30 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:fontFamily="@font/cairo_regular"
             android:gravity="center"
-            android:hint="@string/more"
             android:inputType="numberSigned"
             android:layoutDirection="rtl"
+            android:textColor="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/spinnerSurah"
-            app:layout_constraintTop_toBottomOf="@+id/tvEnterAyaNumberFromTo" />
+            app:layout_constraintTop_toBottomOf="@+id/tvEnterAyaNumberFromTo"
+            tools:hint="@string/more" />
 
         <TextView
             android:id="@+id/tvEnterAyaNumberFromTo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="ادخل رقم الأية من"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/janna_bold"
             android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/text_size_24"
+            android:textSize="@dimen/text_size_16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/frame_icon"
+            tools:text="ادخل رقم الأية من" />
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="@dimen/vertical_margin_48"
-            android:layout_height="@dimen/vertical_margin_48"
-            android:layout_marginTop="24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_fast_forward" />
 
         <Button
             android:id="@+id/btFastForwardDone"
@@ -84,11 +68,57 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
+            android:fontFamily="@font/janna_bold"
             android:text="@string/ok"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etAya" />
+
+        <FrameLayout
+            android:id="@+id/frame_icon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            app:layout_constraintBottom_toTopOf="@+id/tvEnterAyaNumberFromTo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="@dimen/vertical_margin_32"
+                    android:layout_height="@dimen/vertical_margin_32"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_fast_forward_color" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:fontFamily="@font/cairo_regular"
+                    android:text="@string/instant_navigation"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_18"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.circularreveal.CircularRevealFrameLayout>
