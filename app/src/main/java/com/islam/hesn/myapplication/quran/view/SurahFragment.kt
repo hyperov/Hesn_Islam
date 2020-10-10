@@ -16,6 +16,7 @@ import com.islam.hesn.myapplication.quran.viewmodel.QuranViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_surah.*
 
+
 @AndroidEntryPoint
 class SurahFragment : Fragment() {
 

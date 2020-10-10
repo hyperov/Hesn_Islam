@@ -3,12 +3,15 @@ package com.islam.hesn.myapplication.quran.view
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewGroup.MarginLayoutParams
+import androidx.core.view.updateMargins
 import androidx.recyclerview.widget.RecyclerView
+import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.quran.model.response.arabic.AdapterStateQuranEnum
 import com.islam.hesn.myapplication.quran.model.response.arabic.AdapterStateQuranEnum.QURAN_SURAH
 import com.islam.hesn.myapplication.quran.model.response.arabic.AdapterStateQuranEnum.QURAN_SURAH_LIST
-import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.quran.model.response.arabic.SurahItem
+import com.islam.hesn.myapplication.utils.convertDpToPixel
 import kotlinx.android.synthetic.main.item_layout_surah.view.*
 
 
@@ -16,7 +19,7 @@ class MySurahRecyclerViewAdapter(
     private val values: ArrayList<SurahItem>,
     private val state: AdapterStateQuranEnum,
     private val onSurahItemClick: ((surahId: Int) -> Unit)? = null,
-    private val onAyaItemClick: ((surahId: Int, ayaId: Int) -> Unit)? = null
+    private val onAyaItemClick: ((surahId: Int, ayaId: Int) -> Unit)? = null,
 ) : RecyclerView.Adapter<MySurahRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,14 +30,22 @@ class MySurahRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
-        holder.bind(item)
+        holder.bind(item, position)
     }
 
     override fun getItemCount(): Int = values.size
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        fun bind(surahItem: SurahItem) = with(itemView) {
+        fun bind(surahItem: SurahItem, position: Int) = with(itemView) {
+
+            if (position == itemCount - 1) {
+                val layoutParams = cardText.layoutParams as MarginLayoutParams
+                layoutParams.updateMargins(bottom = context.convertDpToPixel(16F)
+                    .toInt())
+                cardText.requestLayout()
+            }
+
             with(surahItem) {
                 when (state) {
                     QURAN_SURAH_LIST -> {
@@ -47,7 +58,7 @@ class MySurahRecyclerViewAdapter(
                     QURAN_SURAH -> {
                         item_num.text = aya_id.toString()
                         content.text = standard_full
-                        setOnClickListener {
+                        content.setOnClickListener {
                             onAyaItemClick?.invoke(sura_id, aya_id)
                         }
                     }

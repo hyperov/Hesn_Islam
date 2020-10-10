@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/darker_gray"
-        android:paddingTop="@dimen/vertical_margin_16"
         app:layoutManager="LinearLayoutManager"
         tools:context=".quran.view.SurahFragment"
         tools:listitem="@layout/item_layout_surah" />

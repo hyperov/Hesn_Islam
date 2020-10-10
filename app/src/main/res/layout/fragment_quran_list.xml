@@ -78,6 +78,6 @@
         android:layout_marginBottom="@dimen/vertical_margin_16"
         android:backgroundTint="@color/colorAccent"
         android:layoutDirection="rtl"
-        app:srcCompat="@drawable/ic_youtube" />
+        app:srcCompat="@drawable/ic_fast_forward" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
