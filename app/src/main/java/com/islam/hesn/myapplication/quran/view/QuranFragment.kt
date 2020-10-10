@@ -3,6 +3,7 @@ package com.islam.hesn.myapplication.quran.view
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputFilter
 import android.text.TextWatcher
 import android.view.*
 import android.view.View.OnTouchListener
@@ -17,9 +18,11 @@ import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.quran.model.response.arabic.AdapterStateQuranEnum.QURAN_SURAH_LIST
 import com.islam.hesn.myapplication.quran.viewmodel.QuranViewModel
 import com.islam.hesn.myapplication.search.viewmodel.SearchViewModel
+import com.islam.hesn.myapplication.utils.MinMaxFilter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_quran_list.*
 import kotlinx.android.synthetic.main.layout_dialog_surah_fast_navigation.*
+
 
 @AndroidEntryPoint
 class QuranFragment : Fragment(), TextView.OnEditorActionListener {
@@ -170,6 +173,15 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
                 id: Long,
             ) {
                 quranViewModel.surahId.value = position + 1
+                setupAyaMinMax(position)
+            }
+
+            private fun setupAyaMinMax(position: Int) {
+                val ayaCount = quranViewModel.ayat.value?.count { it.sura_id == position + 1 }
+                etAya.filters = arrayOf<InputFilter>(MinMaxFilter(1, ayaCount!!))
+                etAya.hint = "1 الى $ayaCount"
+                tvEnterAyaNumberFromTo.text = "ادخل رقم الأية من 1 الى $ayaCount"
+
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
