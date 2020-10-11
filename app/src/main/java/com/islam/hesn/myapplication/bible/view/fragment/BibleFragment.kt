@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.bible.model.response.bible.Book
 import com.islam.hesn.myapplication.bible.model.response.bible.Chapter
+import com.islam.hesn.myapplication.bible.model.response.bible.Verse
 import com.islam.hesn.myapplication.bible.view.AdapterStateBibleEnum.BOOKS
 import com.islam.hesn.myapplication.bible.view.BibleLangEnum
 import com.islam.hesn.myapplication.bible.view.BibleMainRecyclerViewAdapter
@@ -31,6 +32,9 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
 
     private val bibleViewModel: BibleViewModel by activityViewModels()
     private val searchViewModel: SearchViewModel by activityViewModels()
+
+    lateinit var selectedBook: Book
+    lateinit var selectedChapter: Chapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,7 +57,9 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
         btFastForwardDone.setOnClickListener {
 
             fabJump.isExpanded = !fabJump.isExpanded
-
+            bibleViewModel.selectedBook.value = selectedBook
+            bibleViewModel.selectedChapter.value = selectedChapter.chapterNum
+            findNavController().navigate(R.id.chapterFragment)
         }
     }
 
@@ -149,6 +155,7 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
     private fun setupFastForwardSpinnerAdapter(books: List<Book>) {
 
         lateinit var chapters: List<Chapter>
+        lateinit var verses: List<Verse>
 
         setupSpinnerArrayAdapter(books.map { it.bookName }, spinnerBook)
 
@@ -161,7 +168,8 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
                 position: Int,
                 id: Long,
             ) {
-                chapters = books[position].chaptersMap.values.toList()
+                selectedBook = books[position]
+                chapters = selectedBook.chaptersMap.values.toList()
                 setupSpinnerArrayAdapter(chapters.map { it.chapterNum }, spinnerChapter)
 
             }
@@ -176,7 +184,8 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
                 position: Int,
                 id: Long,
             ) {
-                val verses = chapters[position].verseMap.values.toList()
+                selectedChapter = chapters[position]
+                verses = selectedChapter.verseMap.values.toList()
                 setupSpinnerArrayAdapter(verses.map { it.verseNum }, spinnerVerse)
 
             }
