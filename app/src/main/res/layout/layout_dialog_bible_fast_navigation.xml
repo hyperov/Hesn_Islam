@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.circularreveal.CircularRevealFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorAccent"
+    android:clickable="true"
+    android:elevation="@dimen/vertical_margin_16"
+    android:focusable="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/dialogMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white">
+
+
+        <Spinner
+            android:id="@+id/spinnerBook"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/vertical_margin_48"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/vertical_margin_16"
+            app:layout_constraintStart_toEndOf="@+id/guideline4"
+            app:layout_constraintTop_toBottomOf="@+id/frame_icon"
+            tools:listitem="@layout/layout_spinner_drop_down_resource" />
+
+        <TextView
+            android:id="@+id/tvBook"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/vertical_margin_48"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/cairo_regular"
+            android:gravity="center"
+            android:text="@string/choose_book"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="@+id/guideline4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frame_icon" />
+
+        <Spinner
+            android:id="@+id/spinnerChapter"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/vertical_margin_48"
+            android:layout_marginTop="@dimen/vertical_margin_16"
+            android:gravity="center"
+            android:layoutDirection="rtl"
+            android:paddingHorizontal="@dimen/vertical_margin_16"
+            app:layout_constraintEnd_toEndOf="@+id/spinnerBook"
+            app:layout_constraintStart_toStartOf="@+id/spinnerBook"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerBook"
+            tools:listitem="@layout/layout_spinner_drop_down_resource" />
+
+        <TextView
+            android:id="@+id/tvChapter"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/vertical_margin_48"
+            android:layout_marginTop="@dimen/vertical_margin_16"
+            android:fontFamily="@font/cairo_regular"
+            android:gravity="center"
+            android:text="@string/choose_chapter"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="@+id/tvBook"
+            app:layout_constraintStart_toStartOf="@+id/tvBook"
+            app:layout_constraintTop_toBottomOf="@+id/tvBook" />
+
+        <Spinner
+            android:id="@+id/spinnerVerse"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/vertical_margin_48"
+            android:layout_marginTop="@dimen/vertical_margin_16"
+            android:gravity="center"
+            android:layoutDirection="rtl"
+            android:paddingHorizontal="@dimen/vertical_margin_16"
+            app:layout_constraintEnd_toEndOf="@+id/spinnerChapter"
+            app:layout_constraintStart_toStartOf="@+id/spinnerChapter"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerChapter"
+            tools:listitem="@layout/layout_spinner_drop_down_resource" />
+
+        <TextView
+            android:id="@+id/tvVerse"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/vertical_margin_48"
+            android:layout_marginTop="@dimen/vertical_margin_16"
+            android:fontFamily="@font/cairo_regular"
+            android:gravity="center"
+            android:text="@string/choose_verse"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="@+id/tvChapter"
+            app:layout_constraintStart_toStartOf="@+id/tvChapter"
+            app:layout_constraintTop_toBottomOf="@+id/tvChapter" />
+
+
+        <Button
+            android:id="@+id/btFastForwardDone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/janna_bold"
+            android:text="@string/ok"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvVerse" />
+
+        <FrameLayout
+            android:id="@+id/frame_icon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="@dimen/vertical_margin_32"
+                    android:layout_height="@dimen/vertical_margin_32"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_fast_forward_color" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:fontFamily="@font/cairo_regular"
+                    android:text="@string/instant_navigation"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_18"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </FrameLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/btFastForwardDone"
+            app:layout_constraintGuide_percent="0.4"
+            app:layout_constraintTop_toBottomOf="@+id/frame_icon" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.circularreveal.CircularRevealFrameLayout>

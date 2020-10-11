@@ -26,5 +26,8 @@
     <string name="search_title">بحث</string>
     <string name="instant_navigation">انتقال سريع</string>
     <string name="ok">موافق</string>
+    <string name="choose_book">اخنر السفر</string>
+    <string name="choose_chapter">اختر الاصحاح</string>
+    <string name="choose_verse">اختر العدد</string>
 
 </resources>

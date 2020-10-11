@@ -6,11 +6,16 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
 import android.view.inputmethod.EditorInfo
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.islam.hesn.myapplication.R
+import com.islam.hesn.myapplication.bible.model.response.bible.Book
+import com.islam.hesn.myapplication.bible.model.response.bible.Chapter
 import com.islam.hesn.myapplication.bible.view.AdapterStateBibleEnum.BOOKS
 import com.islam.hesn.myapplication.bible.view.BibleLangEnum
 import com.islam.hesn.myapplication.bible.view.BibleMainRecyclerViewAdapter
@@ -18,6 +23,8 @@ import com.islam.hesn.myapplication.bible.viewmodel.BibleViewModel
 import com.islam.hesn.myapplication.search.viewmodel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_quran_list.*
+import kotlinx.android.synthetic.main.layout_dialog_bible_fast_navigation.*
+import kotlinx.android.synthetic.main.layout_dialog_surah_fast_navigation.btFastForwardDone
 
 @AndroidEntryPoint
 class BibleFragment : Fragment(), TextView.OnEditorActionListener {
@@ -27,7 +34,7 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
 
         return inflater.inflate(R.layout.fragment_bible_list, container, false)
@@ -40,6 +47,14 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
         etSearch.setOnEditorActionListener(this)
         setSearchIconClick()
         setSearchTypingListener()
+        fabJump.setOnClickListener {
+            fabJump.isExpanded = !fabJump.isExpanded
+        }
+        btFastForwardDone.setOnClickListener {
+
+            fabJump.isExpanded = !fabJump.isExpanded
+
+        }
     }
 
     private fun getBooks() {
@@ -52,11 +67,13 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
                 BibleMainRecyclerViewAdapter(
                     books = it!!,
                     state = BOOKS,
-                    onBookItemClick = { bookNum ->
-                        bibleViewModel.selectedBook.value = bookNum
+                    onBookItemClick = { book ->
+                        bibleViewModel.selectedBook.value = book
                         findNavController().navigate(R.id.bookFragment)
                     })
+            setupFastForwardSpinnerAdapter(it)
         })
+
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -127,6 +144,57 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
                 }
             }
         })
+    }
+
+    private fun setupFastForwardSpinnerAdapter(books: List<Book>) {
+
+        lateinit var chapters: List<Chapter>
+
+        setupSpinnerArrayAdapter(books.map { it.bookName }, spinnerBook)
+
+        spinnerBook.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long,
+            ) {
+                chapters = books[position].chaptersMap.values.toList()
+                setupSpinnerArrayAdapter(chapters.map { it.chapterNum }, spinnerChapter)
+
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+
+        spinnerChapter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long,
+            ) {
+                val verses = chapters[position].verseMap.values.toList()
+                setupSpinnerArrayAdapter(verses.map { it.verseNum }, spinnerVerse)
+
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+    }
+
+    private fun setupSpinnerArrayAdapter(books: List<Any>, spinner: Spinner) {
+        ArrayAdapter(
+            requireContext(),
+            R.layout.layout_spinner_drop_down_resource,
+            books
+
+        ).also { adapter ->
+            adapter.setDropDownViewResource(R.layout.layout_spinner_drop_down_resource)
+            spinner.adapter = adapter
+        }
     }
 
 }

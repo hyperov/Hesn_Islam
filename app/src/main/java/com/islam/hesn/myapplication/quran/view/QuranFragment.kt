@@ -46,6 +46,10 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
         etSearch.setOnEditorActionListener(this)
         setSearchIconClick()
         setSearchTypingListener()
+        setFastForwardListener()
+    }
+
+    private fun setFastForwardListener() {
         fabJump.setOnClickListener {
             fabJump.isExpanded = !fabJump.isExpanded
         }
@@ -133,7 +137,7 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
                         quranViewModel.surahId.value = surahId
                     findNavController().navigate(R.id.surahFragment)
                 })
-            setupSpinnerAdapter()
+            setupFastForwardSpinnerAdapter()
         })
     }
 
@@ -156,7 +160,7 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
         findNavController().navigate(R.id.searchFragment)
     }
 
-    private fun setupSpinnerAdapter() {
+    private fun setupFastForwardSpinnerAdapter() {
 
         ArrayAdapter(
             requireContext(),
