@@ -63,6 +63,7 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
                 }
             }
         }
+        btCancel.setOnClickListener { fabJump.isExpanded = !fabJump.isExpanded }
     }
 
     private fun resetFastForward() {

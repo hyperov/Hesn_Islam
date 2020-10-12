@@ -61,6 +61,7 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
             bibleViewModel.selectedChapter.value = selectedChapter.chapterNum
             findNavController().navigate(R.id.chapterFragment)
         }
+        btCancel.setOnClickListener { fabJump.isExpanded = !fabJump.isExpanded }
     }
 
     private fun getBooks() {

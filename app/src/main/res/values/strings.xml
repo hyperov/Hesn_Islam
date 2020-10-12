@@ -29,5 +29,6 @@
     <string name="choose_book">اخنر السفر</string>
     <string name="choose_chapter">اختر الاصحاح</string>
     <string name="choose_verse">اختر العدد</string>
+    <string name="cancel">الغاء</string>
 
 </resources>
