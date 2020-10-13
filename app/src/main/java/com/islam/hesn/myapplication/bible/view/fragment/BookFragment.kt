@@ -38,7 +38,7 @@ class BookFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        changeToolbarTitle(bibleViewModel.selectedBook.value!!.bookName)
+        changeToolbarTitle(bibleViewModel.selectedTitle.value!!)
         observeData()
         getChapters()
         fabJump.setOnClickListener {

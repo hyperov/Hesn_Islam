@@ -74,8 +74,10 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
                 BibleMainRecyclerViewAdapter(
                     books = it!!,
                     state = BOOKS,
-                    onBookItemClick = { book ->
+                    onBookItemClick = { book, title ->
+
                         bibleViewModel.selectedBook.value = book
+                        bibleViewModel.selectedTitle.value = title
                         findNavController().navigate(R.id.bookFragment)
                     })
             setupFastForwardSpinnerAdapter(it)

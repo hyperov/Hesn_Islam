@@ -22,6 +22,8 @@ class BibleViewModel @ViewModelInject constructor(
     val selectedBook = MutableLiveData<Book>()
     val selectedChapter = MutableLiveData<Int>()
 
+    val selectedTitle = MutableLiveData<String>()
+
     fun getBible(translation: String) {
 
         viewModelScope.launch {

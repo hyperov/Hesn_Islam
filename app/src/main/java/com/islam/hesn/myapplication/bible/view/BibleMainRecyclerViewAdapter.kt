@@ -19,7 +19,7 @@ class BibleMainRecyclerViewAdapter(
     private val chapters: List<Chapter>? = null,
     private val verses: List<Verse>? = null,
     private val state: AdapterStateBibleEnum,
-    private val onBookItemClick: ((book: Book) -> Unit)? = null,
+    private val onBookItemClick: ((book: Book, title: String) -> Unit)? = null,
     private val onChapterItemClick: ((chapterNum: Int) -> Unit)? = null,
     private val onVerseItemClick: ((verse: Verse) -> Unit)? = null,
 ) : RecyclerView.Adapter<BibleMainRecyclerViewAdapter.ViewHolder>() {
@@ -53,9 +53,10 @@ class BibleMainRecyclerViewAdapter(
 
             with(book) {
                 item_num.text = bookNum.toString()
-                content.text = bookName
+                val arabicTitles = resources.getStringArray(R.array.bible_books)
+                content.text = arabicTitles[position]
                 setOnClickListener {
-                    onBookItemClick?.invoke(this)
+                    onBookItemClick?.invoke(this, arabicTitles[position])
                 }
             }
         }
