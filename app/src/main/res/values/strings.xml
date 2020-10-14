@@ -102,4 +102,74 @@
 
     </string-array>
 
+    <string-array name="bible_books_dialog">
+        <item>اَلتَّكْوِينُ</item>
+        <item>اَلْخُرُوجُ</item>
+        <item>اَللَّاوِيِّينَ</item>
+        <item>اَلْعَدَد</item>
+        <item>اَلتَّثْنِيَة</item>
+        <item>يَشُوع</item>
+        <item>اَلْقُضَاة</item>
+        <item>رَاعُوث</item>
+        <item>صَمُوئِيلَ ٱلْأَوَّلُ</item>
+        <item> صَمُوئِيلَ ٱلثَّانِي</item>
+        <item>اَلْمُلُوكِ ٱلْأَوَّلُ</item>
+        <item>اَلْمُلُوكِ ٱلثَّانِي</item>
+        <item>أٱلْأَيَّامِ ٱلْأَوَّلُ</item>
+        <item>أٱلْأَيَّامِ ٱلثَّانِي</item>
+        <item>عَزْرَا</item>
+        <item>نَحَمْيَا</item>
+        <item>أَسْتِير</item>
+        <item>أَيُّوبَ</item>
+        <item>اَلْمَزَامِيرُ</item>
+        <item>أَمْثَالٌ</item>
+        <item>اَلْجَامِعَةِ</item>
+        <item>نَشِيدُ ٱلْأَنْشَادِ</item>
+        <item>إِشَعْيَاءَ</item>
+        <item>إِرْمِيَا</item>
+        <item>مَرَاثِي إِرْمِيَا</item>
+        <item>حِزْقِيَال</item>
+        <item>دَانِيآل</item>
+        <item>هُوشَع</item>
+        <item>يُوئِيل</item>
+        <item>عَامُوس</item>
+        <item>عُوبَدْيَا</item>
+        <item>يُونَان</item>
+        <item>مِيخَا</item>
+        <item>نَاحُوم</item>
+        <item>حَبَقُّوق</item>
+        <item>صَفَنْيَا</item>
+        <item>حَجَّي</item>
+        <item>زَكَريَّا</item>
+        <item>مَلَاخِي</item>
+        <item>مَتَّى</item>
+        <item>مَرْقُس</item>
+        <item>لُوقا</item>
+        <item>يوحنَّا</item>
+        <item>أَعْمَالُ ٱلرُّسُلِ</item>
+        <item>رُومِيَةَ</item>
+        <item>كُورِنْثُوسَ ١</item>
+        <item>كُورِنْثُوسَ ۲</item>
+        <item>غَلاطِيَّة</item>
+        <item>أفَسُس</item>
+        <item>فِيلِبِّي</item>
+        <item>كُولُوسِي</item>
+        <item>تسالونيكي ۱</item>
+        <item>تسالونيكي ۲</item>
+        <item>تيموثاوس ١</item>
+        <item>تيموثاوس ۲</item>
+        <item>تِيطُس</item>
+        <item>فِلِيْمُون</item>
+        <item>عِبرانِيّين</item>
+        <item>يَعقُوب</item>
+        <item>بطرس ١</item>
+        <item>بطرس ٢</item>
+        <item>يوحنَّا ١</item>
+        <item>يوحنَّا ٢</item>
+        <item>يوحنَّا ٣</item>
+        <item>يَهُوذا</item>
+        <item>رُؤيا</item>
+
+    </string-array>
+
 </resources>

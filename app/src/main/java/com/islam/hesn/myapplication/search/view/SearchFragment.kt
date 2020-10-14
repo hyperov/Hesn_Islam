@@ -12,9 +12,7 @@ import androidx.fragment.app.activityViewModels
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.search.model.SearchExpandableAdapter
 import com.islam.hesn.myapplication.search.viewmodel.SearchViewModel
-import com.thoughtbot.expandablerecyclerview.listeners.GroupExpandCollapseListener
 import com.thoughtbot.expandablerecyclerview.listeners.OnGroupClickListener
-import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup
 import kotlinx.android.synthetic.main.search_fragment.*
 
 class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClickListener {
@@ -44,7 +42,8 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClick
                 searchViewModel.getQuranValues()
             }
             false -> {
-                searchViewModel.getBibleValues()
+                searchViewModel.getBibleValues(resources.getStringArray(R.array.bible_books)
+                    .toList())
             }
         }
 

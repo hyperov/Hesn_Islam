@@ -160,7 +160,8 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
         lateinit var chapters: List<Chapter>
         lateinit var verses: List<Verse>
 
-        setupSpinnerArrayAdapter(books.map { it.bookName }, spinnerBook)
+        val arabicTitles = resources.getStringArray(R.array.bible_books_dialog)
+        setupSpinnerArrayAdapter(arabicTitles.toList(), spinnerBook)
 
         spinnerBook.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 

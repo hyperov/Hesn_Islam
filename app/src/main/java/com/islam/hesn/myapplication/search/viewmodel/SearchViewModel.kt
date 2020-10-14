@@ -24,6 +24,7 @@ class SearchViewModel : ViewModel() {
 
     val searchedVersesSections = MutableLiveData<ArrayList<Section<Verse>>>()
 
+
     fun getQuranValues() {
 
         val ayatContainingSearchQuery =
@@ -37,9 +38,9 @@ class SearchViewModel : ViewModel() {
         searchedAyatSections.value = sectionsQuranList
     }
 
-    fun getBibleValues() {
+    fun getBibleValues(bookTitlesArabic: List<String>) {
         searchVerses.clear()
-        booksBible.value?.forEach { book ->
+        booksBible.value?.forEachIndexed { index, book ->
             book.chaptersMap.values.forEach { chapter ->
                 val filteredVerses = chapter.verseMap.values.filter {
                     it.verseContent.contains(
@@ -47,7 +48,8 @@ class SearchViewModel : ViewModel() {
                     )
                 }
                 if (filteredVerses.isNotEmpty()) {
-                    searchVerses.add(SearchedVerse(book.bookName,
+
+                    searchVerses.add(SearchedVerse(bookTitlesArabic[index],
                         chapter.chapterNum.toString(),
                         filteredVerses))
                 }
@@ -56,10 +58,10 @@ class SearchViewModel : ViewModel() {
         }
 
         searchVerses.forEach {
-            sectionsBibleList.add(Section("${it.bookName} ${it.chapterName} ",
+            sectionsBibleList.add(Section(" ${it.bookName}   ${it.chapterName}",
                 it.verseList))
         }
-        searchedVersesSections.value =sectionsBibleList
+        searchedVersesSections.value = sectionsBibleList
     }
 
 }
