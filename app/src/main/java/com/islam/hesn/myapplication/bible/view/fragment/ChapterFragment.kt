@@ -14,8 +14,8 @@ import com.islam.hesn.myapplication.bible.viewmodel.BibleViewModel
 import com.islam.hesn.myapplication.home.changeToolbarTitle
 import com.islam.hesn.myapplication.home.createDialog
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_quran_list.*
-import kotlinx.android.synthetic.main.fragment_surah.*
+import kotlinx.android.synthetic.main.fragment_chapter.*
+import kotlinx.android.synthetic.main.fragment_quran_list.list
 
 @AndroidEntryPoint
 class ChapterFragment : Fragment() {
@@ -43,7 +43,8 @@ class ChapterFragment : Fragment() {
 
     private fun observeTranslationData() {
         translationViewModel.loading.observe(viewLifecycleOwner, { isVisible ->
-            progress.visibility = if (isVisible) View.VISIBLE else View.GONE
+            progressChapter.visibility = if (isVisible) View.VISIBLE else View.GONE
+            list.visibility = if (isVisible) View.GONE else View.VISIBLE
         })
 
         translationViewModel.verse.observe(viewLifecycleOwner, { verse ->

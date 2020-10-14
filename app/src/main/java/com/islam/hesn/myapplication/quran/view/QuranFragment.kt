@@ -132,13 +132,20 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
 
     private fun observeData() {
         quranViewModel.surahs.observe(viewLifecycleOwner, {
+            quranViewModel.loading.value = false
             list.adapter =
                 MySurahRecyclerViewAdapter(it, QURAN_SURAH_LIST, { surahId ->
+
                     if (quranViewModel.surahId.value != surahId)
                         quranViewModel.surahId.value = surahId
                     findNavController().navigate(R.id.surahFragment)
                 })
             setupFastForwardSpinnerAdapter()
+        })
+
+        quranViewModel.loading.observe(viewLifecycleOwner, { isVisible ->
+            progress.visibility = if (isVisible) View.VISIBLE else View.GONE
+            list.visibility = if (isVisible) View.GONE else View.VISIBLE
         })
     }
 

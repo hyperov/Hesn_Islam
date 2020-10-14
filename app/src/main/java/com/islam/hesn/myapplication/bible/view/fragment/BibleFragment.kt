@@ -23,7 +23,10 @@ import com.islam.hesn.myapplication.bible.view.BibleMainRecyclerViewAdapter
 import com.islam.hesn.myapplication.bible.viewmodel.BibleViewModel
 import com.islam.hesn.myapplication.search.viewmodel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_quran_list.*
+import kotlinx.android.synthetic.main.fragment_bible_list.*
+import kotlinx.android.synthetic.main.fragment_quran_list.etSearch
+import kotlinx.android.synthetic.main.fragment_quran_list.fabJump
+import kotlinx.android.synthetic.main.fragment_quran_list.list
 import kotlinx.android.synthetic.main.layout_dialog_bible_fast_navigation.*
 import kotlinx.android.synthetic.main.layout_dialog_surah_fast_navigation.btFastForwardDone
 
@@ -83,6 +86,10 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
             setupFastForwardSpinnerAdapter(it)
         })
 
+        bibleViewModel.loading.observe(viewLifecycleOwner, { isVisible ->
+            progressBible.visibility = if (isVisible) View.VISIBLE else View.GONE
+            list.visibility = if (isVisible) View.GONE else View.VISIBLE
+        })
     }
 
     @SuppressLint("ClickableViewAccessibility")

@@ -137,7 +137,7 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClick
     }
 
     override fun onGroupClick(flatPos: Int): Boolean {
-        TODO("Not yet implemented")
+        return false
     }
 
 

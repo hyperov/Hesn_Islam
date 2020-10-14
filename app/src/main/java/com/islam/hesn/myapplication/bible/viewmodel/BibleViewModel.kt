@@ -24,13 +24,15 @@ class BibleViewModel @ViewModelInject constructor(
 
     val selectedTitle = MutableLiveData<String>()
 
-    fun getBible(translation: String) {
+    val loading = MutableLiveData<Boolean>()
 
+    fun getBible(translation: String) {
+        loading.value = true
         viewModelScope.launch {
 
             val bookValues = bibleRepo.getBible(translation).booksMap.values.toList()
             bookModels.value = bookValues
-
+            loading.value = false
         }
 
     }
