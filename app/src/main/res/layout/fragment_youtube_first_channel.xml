@@ -1,14 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/videosList"
     android:name="com.islam.hesn.myapplication.youtube.view.YoutubeFirstChannelFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    app:layoutManager="LinearLayoutManager"
-    tools:context=".youtube.view.YoutubeFirstChannelFragment"
-    tools:itemCount="5"
-    tools:listitem="@layout/item_layout_youtube_first_channel" />
+    tools:context=".youtube.view.YoutubeFirstChannelFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/videosList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        app:layoutManager="LinearLayoutManager"
+        tools:itemCount="5"
+        tools:listitem="@layout/item_layout_youtube_first_channel" />
+
+    <ProgressBar
+        android:id="@+id/progressYoutube"
+        android:layout_width="@dimen/vertical_margin_48"
+        android:layout_height="@dimen/vertical_margin_48"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/videosList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
 

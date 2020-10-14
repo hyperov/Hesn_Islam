@@ -43,6 +43,12 @@ class YoutubeSecondChannelFragment : Fragment() {
             videoList.observe(viewLifecycleOwner, { videos ->
                 videosList.adapter = YoutubeRecyclerViewAdapter(videos)
             })
+
+            loading.observe(viewLifecycleOwner, { isVisible ->
+                progressYoutube.visibility = if (isVisible) View.VISIBLE else View.GONE
+                videosList.visibility = if (isVisible) View.GONE else View.VISIBLE
+
+            })
         }
 
     }

@@ -13,13 +13,16 @@ class YoutubeViewModel @ViewModelInject constructor(private val repo: YoutubeRep
     val nextPage = MutableLiveData<String>()
     val videoList = MutableLiveData<List<Video>>()
 
+    val loading = MutableLiveData<Boolean>()
+
     fun getYoutubeChannelVideos(channelId: String) {
+        loading.value = true
         viewModelScope.launch {
             repo.getYoutubeChannelVideos(channelId)
                 .apply {
                     nextPage.value = nextPageToken
                     videoList.value = items
-
+                    loading.value = false
                 }
         }
     }
