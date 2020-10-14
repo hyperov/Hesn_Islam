@@ -90,7 +90,7 @@ class BibleMainRecyclerViewAdapter(
 
             with(verse) {
                 item_num.text = verseNum.toString()
-                content.text = verseContent.toString()
+                content.text = verseContent
                 setOnClickListener {
                     onVerseItemClick?.invoke(verse)
                 }
