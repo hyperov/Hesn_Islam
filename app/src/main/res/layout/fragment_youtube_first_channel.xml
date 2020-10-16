@@ -5,6 +5,7 @@
     android:name="com.islam.hesn.myapplication.youtube.view.YoutubeFirstChannelFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context=".youtube.view.YoutubeFirstChannelFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -16,15 +17,23 @@
         tools:itemCount="5"
         tools:listitem="@layout/item_layout_youtube_first_channel" />
 
-    <ProgressBar
+    <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/progressYoutube"
-        android:layout_width="@dimen/vertical_margin_48"
-        android:layout_height="@dimen/vertical_margin_48"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDark"
+        android:padding="@dimen/vertical_margin_16"
+        android:scaleType="center"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/videosList"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_colorFilter="@color/colorAccent"
+        app:lottie_fileName="video.json"
+        app:lottie_loop="true"
+        app:lottie_speed="1.5" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 

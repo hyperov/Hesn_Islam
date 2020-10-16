@@ -22,7 +22,7 @@ class QuranViewModel @ViewModelInject constructor(
         val ayatList = quranRepo.getAllArabicSurah().list
         ayat.postValue(ayatList)
         surahs.postValue(ayatList.distinctBy { it.sura_id } as ArrayList<SurahItem>)
-
+        loading.value = false
     }
 
 }

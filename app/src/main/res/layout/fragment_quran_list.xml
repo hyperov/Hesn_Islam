@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/darker_gray">
+    android:layout_height="match_parent">
 
     <include
         android:id="@+id/expandSheet"
@@ -67,17 +66,21 @@
             app:layout_constraintTop_toBottomOf="@+id/cvSearch"
             tools:listitem="@layout/item_layout_surah" />
 
-        <ProgressBar
+
+        <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/progress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccent"
             android:padding="@dimen/vertical_margin_16"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="loading_book.json"
+            app:lottie_loop="true" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

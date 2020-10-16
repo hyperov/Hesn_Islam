@@ -87,8 +87,19 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
         })
 
         bibleViewModel.loading.observe(viewLifecycleOwner, { isVisible ->
-            progressBible.visibility = if (isVisible) View.VISIBLE else View.GONE
-            list.visibility = if (isVisible) View.GONE else View.VISIBLE
+
+            if (isVisible) {
+                fabJump.hide()
+                list.visibility = View.GONE
+                progressBible.visibility = View.VISIBLE
+                progressBible.playAnimation()
+            } else {
+                fabJump.show()
+                list.visibility = View.VISIBLE
+                progressBible.visibility = View.GONE
+                progressBible.cancelAnimation()
+            }
+
         })
     }
 
