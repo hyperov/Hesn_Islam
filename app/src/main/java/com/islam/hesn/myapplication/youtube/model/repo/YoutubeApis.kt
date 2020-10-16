@@ -11,8 +11,9 @@ interface YoutubeApis {
     suspend fun getYoutubeChannelVideos(
         @Query("playlistId") playlistId: String,
         @Query("key") key: String,
+        @Query("pageToken") pageToken: String = "",
         @Query("part") part: String = "snippet",
-        @Query("maxResults") maxResults: Int = 10
+        @Query("maxResults") maxResults: Int = 10,
     ): YoutubeVideosResponse
 
 

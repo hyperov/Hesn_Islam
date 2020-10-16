@@ -5,13 +5,13 @@ import javax.inject.Inject
 
 class YoutubeRepoImpl @Inject constructor(
     private val apis: YoutubeApis,
-    private val apiKey: String
+    private val apiKey: String,
 ) :
     YoutubeRepo {
 
     override suspend fun getYoutubeChannelVideos(
-        playlistId: String
+        playlistId: String, nextPage: String,
     ): YoutubeVideosResponse {
-        return apis.getYoutubeChannelVideos(playlistId, apiKey)
+        return apis.getYoutubeChannelVideos(playlistId, apiKey, nextPage)
     }
 }

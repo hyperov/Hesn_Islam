@@ -4,17 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_youtube_first_channel.*
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class YoutubeFirstChannelFragment : Fragment() {
 
     private val youtubeViewModel: YoutubeViewModel by viewModels()
+    private val pagingAdapter = YoutubeRecyclerViewPagingAdapter(VideoComparator)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,31 +32,28 @@ class YoutubeFirstChannelFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeData()
+        videosList.adapter = pagingAdapter
         getVideos()
     }
 
     private fun getVideos() {
         youtubeViewModel.getYoutubeChannelVideos(getString(R.string.education_channel_id))
+        getPagingMovies()
     }
 
-    private fun observeData() {
-        youtubeViewModel.apply {
-
-            nextPage.observe(viewLifecycleOwner, { nxtPage ->
-
-            })
-            videoList.observe(viewLifecycleOwner, { videos ->
-                videosList.adapter = YoutubeRecyclerViewAdapter(videos)
-            })
-
-            loading.observe(viewLifecycleOwner, { isVisible ->
-                progressYoutube.visibility = if (isVisible) View.VISIBLE else View.GONE
-                videosList.visibility = if (isVisible) View.GONE else View.VISIBLE
-
-            })
+    private fun getPagingMovies() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            youtubeViewModel.flow.collectLatest { pagingData ->
+                pagingAdapter.submitData(pagingData)
+            }
+            pagingAdapter.loadStateFlow.collectLatest { loadStates ->
+                progressYoutube.isVisible = loadStates.refresh is LoadState.Loading
+                videosList.isVisible = loadStates.refresh is LoadState.NotLoading
+//                retry.isVisible = loadStates.refresh !is LoadState.Loading
+//                errorMsg.isVisible = loadState.refresh is LoadState.Error
+            }
         }
-
     }
+
 
 }
