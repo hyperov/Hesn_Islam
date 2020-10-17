@@ -12,7 +12,10 @@ import com.islam.hesn.myapplication.youtube.view.YoutubeRecyclerViewPagingAdapte
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_layout_youtube_first_channel.view.*
 
-class YoutubeRecyclerViewPagingAdapter(diffCallback: DiffUtil.ItemCallback<Video>) :
+class YoutubeRecyclerViewPagingAdapter(
+    diffCallback: DiffUtil.ItemCallback<Video>,
+    private val onVideoClick: ((videoId: String) -> Unit),
+) :
     PagingDataAdapter<Video, YoutubeViewHolder>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): YoutubeViewHolder {
@@ -49,7 +52,7 @@ class YoutubeRecyclerViewPagingAdapter(diffCallback: DiffUtil.ItemCallback<Video
                         return@with
                     }
                 }
-
+                setOnClickListener { onVideoClick(video.snippet.resourceId.videoId) }
 
             }
         }

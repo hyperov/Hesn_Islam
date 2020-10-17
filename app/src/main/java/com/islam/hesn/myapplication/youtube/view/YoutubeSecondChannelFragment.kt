@@ -6,10 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.islam.hesn.myapplication.R
+import com.islam.hesn.myapplication.youtube.viewmodel.YoutubePlayerViewModel
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_youtube_first_channel.*
@@ -20,7 +23,12 @@ import kotlinx.coroutines.launch
 class YoutubeSecondChannelFragment : Fragment() {
 
     private val youtubeViewModel: YoutubeViewModel by viewModels()
-    private val pagingAdapter = YoutubeRecyclerViewPagingAdapter(VideoComparator)
+    private val youtubePlayerViewModel: YoutubePlayerViewModel by activityViewModels()
+
+    private val pagingAdapter = YoutubeRecyclerViewPagingAdapter(VideoComparator) { videoId ->
+        youtubePlayerViewModel.videoId.value = videoId
+        findNavController().navigate(R.id.youtubePlayerFragment)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

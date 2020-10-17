@@ -52,7 +52,11 @@
         android:id="@+id/youtubeFragment"
         android:name="com.islam.hesn.myapplication.youtube.view.YoutubeFragment"
         android:label="@string/youtube_channel"
-        tools:layout="@layout/fragment_youtube" />
+        tools:layout="@layout/fragment_youtube">
+        <action
+            android:id="@+id/action_youtubeFragment_to_youtubePlayerFragment"
+            app:destination="@id/youtubePlayerFragment" />
+    </fragment>
     <fragment
         android:id="@+id/misconceptionsFragment"
         android:name="com.islam.hesn.myapplication.misconceptions.MisconceptionsFragment"
@@ -68,4 +72,9 @@
         android:name="com.islam.hesn.myapplication.search.view.SearchFragment"
         android:label="@string/search_title"
         tools:layout="@layout/search_fragment" />
+    <fragment
+        android:id="@+id/youtubePlayerFragment"
+        android:name="com.islam.hesn.myapplication.youtube.view.YoutubePlayerFragment"
+        android:label="YoutubePlayerFragment"
+        tools:layout="@layout/fragment_youtube_player" />
 </navigation>
