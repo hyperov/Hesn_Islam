@@ -25,10 +25,12 @@ class YoutubeSecondChannelFragment : Fragment() {
     private val youtubeViewModel: YoutubeViewModel by viewModels()
     private val youtubePlayerViewModel: YoutubePlayerViewModel by activityViewModels()
 
-    private val pagingAdapter = YoutubeRecyclerViewPagingAdapter(VideoComparator) { videoId ->
-        youtubePlayerViewModel.videoId.value = videoId
-        findNavController().navigate(R.id.youtubePlayerFragment)
-    }
+    private val pagingAdapter =
+        YoutubeRecyclerViewPagingAdapter(VideoComparator) { videoId, videoTitle ->
+            youtubePlayerViewModel.videoId.value = videoId
+            youtubePlayerViewModel.videoTitle.value = videoTitle
+            findNavController().navigate(R.id.youtubePlayerFragment)
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

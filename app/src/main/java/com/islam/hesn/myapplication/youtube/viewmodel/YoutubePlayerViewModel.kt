@@ -6,5 +6,6 @@ import androidx.lifecycle.ViewModel
 class YoutubePlayerViewModel : ViewModel() {
 
     val videoId = MutableLiveData<String>()
+    val videoTitle = MutableLiveData<String>()
 
 }

@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.item_layout_youtube_first_channel.view.*
 
 class YoutubeRecyclerViewPagingAdapter(
     diffCallback: DiffUtil.ItemCallback<Video>,
-    private val onVideoClick: ((videoId: String) -> Unit),
+    private val onVideoClick: ((videoId: String, videoTitle: String) -> Unit),
 ) :
     PagingDataAdapter<Video, YoutubeViewHolder>(diffCallback) {
 
@@ -52,7 +52,10 @@ class YoutubeRecyclerViewPagingAdapter(
                         return@with
                     }
                 }
-                setOnClickListener { onVideoClick(video.snippet.resourceId.videoId) }
+                video.snippet.apply {
+                    setOnClickListener { onVideoClick(resourceId.videoId, title) }
+                }
+
 
             }
         }

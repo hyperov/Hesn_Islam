@@ -26,8 +26,9 @@ class YoutubeFirstChannelFragment : Fragment() {
     private val youtubePlayerViewModel: YoutubePlayerViewModel by activityViewModels()
 
     private val pagingAdapter =
-        YoutubeRecyclerViewPagingAdapter(VideoComparator) { videoId ->
+        YoutubeRecyclerViewPagingAdapter(VideoComparator) { videoId, videoTitle ->
             youtubePlayerViewModel.videoId.value = videoId
+            youtubePlayerViewModel.videoTitle.value = videoTitle
             findNavController().navigate(R.id.youtubePlayerFragment)
         }
 
