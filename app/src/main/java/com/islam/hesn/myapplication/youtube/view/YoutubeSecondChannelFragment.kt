@@ -52,16 +52,25 @@ class YoutubeSecondChannelFragment : Fragment() {
     }
 
     private fun getPagingMovies() {
+
         viewLifecycleOwner.lifecycleScope.launch {
+
             youtubeViewModel.flow.collectLatest { pagingData ->
                 pagingAdapter.submitData(pagingData)
             }
+
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+
             pagingAdapter.loadStateFlow.collectLatest { loadStates ->
+
                 progressYoutube.isVisible = loadStates.refresh is LoadState.Loading
                 videosList.isVisible = loadStates.refresh is LoadState.NotLoading
 //                retry.isVisible = loadStates.refresh !is LoadState.Loading
 //                errorMsg.isVisible = loadState.refresh is LoadState.Error
             }
+
         }
     }
 
