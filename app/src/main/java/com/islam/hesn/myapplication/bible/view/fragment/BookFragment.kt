@@ -10,6 +10,7 @@ import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.bible.model.response.bible.Chapter
 import com.islam.hesn.myapplication.bible.model.response.bible.Verse
@@ -18,12 +19,13 @@ import com.islam.hesn.myapplication.bible.view.BibleMainRecyclerViewAdapter
 import com.islam.hesn.myapplication.bible.viewmodel.BibleViewModel
 import com.islam.hesn.myapplication.home.changeToolbarTitle
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_bible_list.*
 import kotlinx.android.synthetic.main.fragment_quran_list.*
+import kotlinx.android.synthetic.main.fragment_quran_list.fabJump
 import kotlinx.android.synthetic.main.layout_dialog_bible_fast_navigation.*
 
 @AndroidEntryPoint
 class BookFragment : Fragment() {
-
 
     private lateinit var selectedChapter: Chapter
     private val bibleViewModel: BibleViewModel by activityViewModels()
@@ -35,10 +37,10 @@ class BookFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_book, container, false)
     }
 
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         changeToolbarTitle(bibleViewModel.selectedTitle.value!!)
+        setListDivider()
         observeData()
         getChapters()
         fabJump.setOnClickListener {
@@ -53,13 +55,18 @@ class BookFragment : Fragment() {
         btCancel.setOnClickListener { fabJump.isExpanded = !fabJump.isExpanded }
     }
 
+    private fun setListDivider() {
+        bibleList.addItemDecoration(DividerItemDecoration(context,
+            DividerItemDecoration.VERTICAL))
+    }
+
     private fun getChapters() {
         bibleViewModel.getChaptersForSelectedBook()
     }
 
     private fun observeData() {
         bibleViewModel.chapterModels.observe(viewLifecycleOwner, {
-            list.adapter =
+            bibleList.adapter =
                 BibleMainRecyclerViewAdapter(
                     chapters = it,
                     state = AdapterStateBibleEnum.CHAPTERS,

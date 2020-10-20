@@ -14,13 +14,17 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.quran.model.response.arabic.AdapterStateQuranEnum.QURAN_SURAH_LIST
 import com.islam.hesn.myapplication.quran.viewmodel.QuranViewModel
 import com.islam.hesn.myapplication.search.viewmodel.SearchViewModel
 import com.islam.hesn.myapplication.utils.MinMaxFilter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_bible_list.*
 import kotlinx.android.synthetic.main.fragment_quran_list.*
+import kotlinx.android.synthetic.main.fragment_quran_list.etSearch
+import kotlinx.android.synthetic.main.fragment_quran_list.fabJump
 import kotlinx.android.synthetic.main.layout_dialog_surah_fast_navigation.*
 
 
@@ -40,6 +44,7 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setListDivider()
         resetFastForward()
         observeData()
         getSurahs()
@@ -47,6 +52,11 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
         setSearchIconClick()
         setSearchTypingListener()
         setFastForwardListener()
+    }
+
+    private fun setListDivider() {
+        list.addItemDecoration(DividerItemDecoration(context,
+            DividerItemDecoration.VERTICAL))
     }
 
     private fun setFastForwardListener() {

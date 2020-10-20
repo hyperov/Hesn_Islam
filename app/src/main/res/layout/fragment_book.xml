@@ -16,7 +16,7 @@
         app:layout_behavior="com.google.android.material.transformation.FabTransformationSheetBehavior" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list"
+        android:id="@+id/bibleList"
         android:name="com.islam.hesn.myapplication.bible.view.fragment.BookFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

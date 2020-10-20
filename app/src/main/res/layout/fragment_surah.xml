@@ -3,15 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/darker_gray">
+    android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/surahRecyclerView"
         android:name="com.islam.hesn.myapplication.SurahFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/darker_gray"
         app:layoutManager="LinearLayoutManager"
         tools:context=".quran.view.SurahFragment"
         tools:listitem="@layout/item_layout_surah" />

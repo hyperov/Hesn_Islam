@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.bible.model.response.bible.Book
 import com.islam.hesn.myapplication.bible.model.response.bible.Chapter
@@ -24,9 +25,9 @@ import com.islam.hesn.myapplication.bible.viewmodel.BibleViewModel
 import com.islam.hesn.myapplication.search.viewmodel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_bible_list.*
+import kotlinx.android.synthetic.main.fragment_quran_list.*
 import kotlinx.android.synthetic.main.fragment_quran_list.etSearch
 import kotlinx.android.synthetic.main.fragment_quran_list.fabJump
-import kotlinx.android.synthetic.main.fragment_quran_list.list
 import kotlinx.android.synthetic.main.layout_dialog_bible_fast_navigation.*
 import kotlinx.android.synthetic.main.layout_dialog_surah_fast_navigation.btFastForwardDone
 
@@ -49,6 +50,7 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setListDivider()
         observeData()
         getBooks()
         etSearch.setOnEditorActionListener(this)
@@ -67,13 +69,19 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
         btCancel.setOnClickListener { fabJump.isExpanded = !fabJump.isExpanded }
     }
 
+    private fun setListDivider() {
+        bibleList.addItemDecoration(DividerItemDecoration(context,
+            DividerItemDecoration.VERTICAL))
+    }
+
     private fun getBooks() {
         bibleViewModel.getBible(BibleLangEnum.VAN_DYKE.lang)
     }
 
     private fun observeData() {
         bibleViewModel.bookModels.observe(viewLifecycleOwner, {
-            list.adapter =
+
+            bibleList.adapter =
                 BibleMainRecyclerViewAdapter(
                     books = it!!,
                     state = BOOKS,
@@ -90,12 +98,12 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
 
             if (isVisible) {
                 fabJump.hide()
-                list.visibility = View.GONE
+                bibleList.visibility = View.GONE
                 progressBible.visibility = View.VISIBLE
                 progressBible.playAnimation()
             } else {
                 fabJump.show()
-                list.visibility = View.VISIBLE
+                bibleList.visibility = View.VISIBLE
                 progressBible.visibility = View.GONE
                 progressBible.cancelAnimation()
             }

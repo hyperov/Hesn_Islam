@@ -49,8 +49,6 @@ class BibleMainRecyclerViewAdapter(
 
         fun bind(book: Book, position: Int) = with(itemView) {
 
-            addPaddingToLastItem(position)
-
             with(book) {
                 item_num.text = bookNum.toString()
                 val arabicTitles = resources.getStringArray(R.array.bible_books)
@@ -61,19 +59,7 @@ class BibleMainRecyclerViewAdapter(
             }
         }
 
-        private fun View.addPaddingToLastItem(position: Int) {
-            if (position == itemCount - 1) {
-                val layoutParams = cardText.layoutParams as ViewGroup.MarginLayoutParams
-                layoutParams.updateMargins(bottom = context.convertDpToPixel(16F)
-                    .toInt())
-                cardText.requestLayout()
-            }
-        }
-
-
         fun bind(chapter: Chapter, position: Int) = with(itemView) {
-
-            addPaddingToLastItem(position)
 
             with(chapter) {
                 item_num.text = chapterNum.toString()
@@ -86,11 +72,9 @@ class BibleMainRecyclerViewAdapter(
 
         fun bind(verse: Verse, position: Int) = with(itemView) {
 
-            addPaddingToLastItem(position)
-
             with(verse) {
                 item_num.text = verseNum.toString()
-                content.text = verseContent
+                content.text = verseContent.trim()
                 setOnClickListener {
                     onVerseItemClick?.invoke(verse)
                 }

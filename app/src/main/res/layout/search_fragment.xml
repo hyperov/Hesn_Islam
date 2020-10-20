@@ -14,7 +14,7 @@
         app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="@dimen/card_corner_radius_8"
         app:cardElevation="@dimen/card_corner_radius_16"
-        app:layout_constraintEnd_toEndOf="@+id/list"
+        app:layout_constraintEnd_toEndOf="@+id/bibleList"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:rippleColor="@color/colorAccent">
@@ -37,7 +37,7 @@
     </com.google.android.material.card.MaterialCardView>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list"
+        android:id="@+id/bibleList"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/card_corner_radius_16"

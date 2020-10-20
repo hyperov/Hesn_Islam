@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.home.changeToolbarTitle
 import com.islam.hesn.myapplication.home.createDialog
@@ -14,7 +15,11 @@ import com.islam.hesn.myapplication.quran.model.response.arabic.SurahItem
 import com.islam.hesn.myapplication.quran.viewmodel.AyaTranslationViewModel
 import com.islam.hesn.myapplication.quran.viewmodel.QuranViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_chapter.*
+import kotlinx.android.synthetic.main.fragment_quran_list.*
 import kotlinx.android.synthetic.main.fragment_surah.*
+import kotlinx.android.synthetic.main.fragment_surah.fab
+import kotlinx.android.synthetic.main.fragment_surah.progress
 
 
 @AndroidEntryPoint
@@ -34,10 +39,15 @@ class SurahFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         super.onViewCreated(view, savedInstanceState)
+        setListDivider()
         setupViewModelObservers()
         fab.setOnClickListener { surahRecyclerView.smoothScrollToPosition(0) }
+    }
+
+    private fun setListDivider() {
+        surahRecyclerView.addItemDecoration(DividerItemDecoration(context,
+            DividerItemDecoration.VERTICAL))
     }
 
     private fun setupViewModelObservers() {

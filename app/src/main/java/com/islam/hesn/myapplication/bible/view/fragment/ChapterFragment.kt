@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.bible.view.AdapterStateBibleEnum
 import com.islam.hesn.myapplication.bible.view.BibleMainRecyclerViewAdapter
@@ -15,7 +16,6 @@ import com.islam.hesn.myapplication.home.changeToolbarTitle
 import com.islam.hesn.myapplication.home.createDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_chapter.*
-import kotlinx.android.synthetic.main.fragment_quran_list.list
 
 @AndroidEntryPoint
 class ChapterFragment : Fragment() {
@@ -36,15 +36,21 @@ class ChapterFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         changeToolbarTitle(bibleViewModel.selectedChapter.value.toString())
+        setListDivider()
         observeData()
         observeTranslationData()
         getVerses()
     }
 
+    private fun setListDivider() {
+        bibleList.addItemDecoration(DividerItemDecoration(context,
+            DividerItemDecoration.VERTICAL))
+    }
+
     private fun observeTranslationData() {
         translationViewModel.loading.observe(viewLifecycleOwner, { isVisible ->
             progressChapter.visibility = if (isVisible) View.VISIBLE else View.GONE
-            list.visibility = if (isVisible) View.GONE else View.VISIBLE
+            bibleList.visibility = if (isVisible) View.GONE else View.VISIBLE
         })
 
         translationViewModel.verse.observe(viewLifecycleOwner, { verse ->
@@ -64,7 +70,7 @@ class ChapterFragment : Fragment() {
 
     private fun observeData() {
         bibleViewModel.verseModels.observe(viewLifecycleOwner, {
-            list.adapter =
+            bibleList.adapter =
                 BibleMainRecyclerViewAdapter(
                     verses = it,
                     state = AdapterStateBibleEnum.VERSES,
@@ -80,9 +86,7 @@ class ChapterFragment : Fragment() {
                             verseNum.value = verse.verseNum
                         }
 
-
                         bottomSheet = TranslationBibleBottomSheetFragment.newInstance().apply {
-
                             showNow(this@ChapterFragment.parentFragmentManager, "translation")
                         }
                     })
