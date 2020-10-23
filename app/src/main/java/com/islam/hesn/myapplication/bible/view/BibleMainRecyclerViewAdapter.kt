@@ -3,14 +3,12 @@ package com.islam.hesn.myapplication.bible.view
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.updateMargins
 import androidx.recyclerview.widget.RecyclerView
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.bible.model.response.bible.Book
 import com.islam.hesn.myapplication.bible.model.response.bible.Chapter
 import com.islam.hesn.myapplication.bible.model.response.bible.Verse
 import com.islam.hesn.myapplication.bible.view.AdapterStateBibleEnum.*
-import com.islam.hesn.myapplication.utils.convertDpToPixel
 import kotlinx.android.synthetic.main.item_layout_surah.view.*
 
 
@@ -26,7 +24,7 @@ class BibleMainRecyclerViewAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_layout_surah, parent, false)
+            .inflate(R.layout.item_layout_chapter, parent, false)
         return ViewHolder(view)
     }
 

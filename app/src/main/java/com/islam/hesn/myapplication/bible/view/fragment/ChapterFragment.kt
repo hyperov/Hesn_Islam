@@ -36,6 +36,7 @@ class ChapterFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         changeToolbarTitle(bibleViewModel.selectedChapter.value.toString())
+        fab.setOnClickListener { bibleList.smoothScrollToPosition(0) }
         setListDivider()
         observeData()
         observeTranslationData()
