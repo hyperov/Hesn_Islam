@@ -1,6 +1,7 @@
-package com.islam.hesn.myapplication.youtube.viewmodel
+package com.islam.hesn.myapplication.youtube.view
 
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -12,21 +13,24 @@ import com.islam.hesn.myapplication.youtube.model.repo.YoutubeRepo
 import com.islam.hesn.myapplication.youtube.model.response.Video
 import kotlinx.coroutines.flow.Flow
 
-class YoutubeViewModel @ViewModelInject constructor(private val repo: YoutubeRepo) : ViewModel() {
+class YoutubeSearchViewModel @ViewModelInject constructor(private val repo: YoutubeRepo) :
+    ViewModel() {
+
+    val searchQuery = MutableLiveData<String>()
+    val selectedTabPosition = MutableLiveData<Int>()
 
     lateinit var flow: Flow<PagingData<Video>>
 
-    fun getYoutubeChannelVideos(channelPlayListId: String) {
+    fun getSearchedYoutubeVideos(channelId: String) {
 
         flow = Pager(
             // Configure how data is loaded by passing additional properties to
             // PagingConfig, such as prefetchDistance.
             PagingConfig(pageSize = 10)
         ) {
-            YoutubePagingSource(repo, channelPlayListId, false)
+            YoutubePagingSource(repo, channelId, true, searchQuery.value!!)
         }.flow
             .cachedIn(viewModelScope)
 
     }
-
 }

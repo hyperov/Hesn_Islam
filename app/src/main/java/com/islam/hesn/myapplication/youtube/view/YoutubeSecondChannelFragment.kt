@@ -47,7 +47,7 @@ class YoutubeSecondChannelFragment : Fragment() {
     }
 
     private fun getVideos() {
-        youtubeViewModel.getYoutubeChannelVideos(getString(R.string.main_channel_id))
+        youtubeViewModel.getYoutubeChannelVideos(getString(R.string.education_channel_playlist_id))
         getPagingMovies()
     }
 

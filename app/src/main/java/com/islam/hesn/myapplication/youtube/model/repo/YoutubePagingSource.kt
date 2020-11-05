@@ -8,12 +8,15 @@ import java.io.IOException
 class YoutubePagingSource(
     val api: YoutubeRepo,
     val playlistId: String,
+    val isSearch: Boolean,
+    var searchQuery: String = "",
 ) : PagingSource<String, Video>() {
 
     override suspend fun load(params: LoadParams<String>): LoadResult<String, Video> {
         return try {
             val nextPage = params.key ?: ""
-            val response = api.getYoutubeChannelVideos(playlistId, nextPage)
+            val response = if (!isSearch) api.getYoutubeChannelVideos(playlistId,
+                nextPage) else api.getSearchedYoutubeVideos(searchQuery, playlistId, nextPage)
             LoadResult.Page(
                 data = response.items!!,
                 prevKey = null, // Only paging forward.
@@ -28,5 +31,8 @@ class YoutubePagingSource(
         }
 
     }
+
+    override val keyReuseSupported: Boolean
+        get() = isSearch
 
 }

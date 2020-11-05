@@ -7,22 +7,21 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.islam.hesn.myapplication.R
+import com.islam.hesn.myapplication.home.changeToolbarTitle
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubePlayerViewModel
-import com.islam.hesn.myapplication.youtube.viewmodel.YoutubeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_youtube_first_channel.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class YoutubeFirstChannelFragment : Fragment() {
+class YoutubeSearchFragment : Fragment() {
 
-    private val youtubeViewModel: YoutubeViewModel by viewModels()
+    private val youtubeSearchViewModel: YoutubeSearchViewModel by activityViewModels()
     private val youtubePlayerViewModel: YoutubePlayerViewModel by activityViewModels()
 
     private val pagingAdapter =
@@ -36,18 +35,23 @@ class YoutubeFirstChannelFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-
-        return inflater.inflate(R.layout.fragment_youtube_first_channel, container, false)
+        return inflater.inflate(R.layout.youtube_search_fragment, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        changeToolbarTitle(youtubeSearchViewModel.searchQuery.value+ "فى :"+ when (youtubeSearchViewModel.selectedTabPosition.value) {
+            0 -> getString(R.string.main_channel)
+            1 -> getString(R.string.education_channel)
+            else -> ""
+        })
         videosList.adapter = pagingAdapter
-        getVideos()
-    }
-
-    private fun getVideos() {
-        youtubeViewModel.getYoutubeChannelVideos(getString(R.string.main_channel_playlist_id))
+        val channelId = when (youtubeSearchViewModel.selectedTabPosition.value) {
+            0 -> getString(R.string.main_channel_id)
+            1 -> getString(R.string.education_channel_id)
+            else -> ""
+        }
+        youtubeSearchViewModel.getSearchedYoutubeVideos(channelId)
         getPagingMovies()
     }
 
@@ -64,7 +68,7 @@ class YoutubeFirstChannelFragment : Fragment() {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            youtubeViewModel.flow.collectLatest { pagingData ->
+            youtubeSearchViewModel.flow.collectLatest { pagingData ->
                 pagingAdapter.submitData(pagingData)
             }
         }

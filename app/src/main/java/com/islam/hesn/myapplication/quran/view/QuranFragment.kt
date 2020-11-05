@@ -21,10 +21,7 @@ import com.islam.hesn.myapplication.quran.viewmodel.QuranViewModel
 import com.islam.hesn.myapplication.search.viewmodel.SearchViewModel
 import com.islam.hesn.myapplication.utils.MinMaxFilter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_bible_list.*
 import kotlinx.android.synthetic.main.fragment_quran_list.*
-import kotlinx.android.synthetic.main.fragment_quran_list.etSearch
-import kotlinx.android.synthetic.main.fragment_quran_list.fabJump
 import kotlinx.android.synthetic.main.layout_dialog_surah_fast_navigation.*
 
 
@@ -120,8 +117,8 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
             if (event.action == MotionEvent.ACTION_UP) {
                 etSearch.compoundDrawables[DRAWABLE_RIGHT]?.let {
                     if (event.rawX >= etSearch.right - it.bounds.width()) {
-
-                        gotoSearchScreen(etSearch.text.toString())
+                        if (etSearch.text!!.isNotEmpty())
+                            gotoSearchScreen(etSearch.text.toString())
                         return@OnTouchListener true
                     }
                 }
@@ -174,7 +171,8 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
     override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
 
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-            gotoSearchScreen(etSearch.text.toString())
+            if (etSearch.text!!.isNotEmpty())
+                gotoSearchScreen(etSearch.text.toString())
         }
         return true
 

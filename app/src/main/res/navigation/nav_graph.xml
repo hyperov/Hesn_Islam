@@ -56,6 +56,9 @@
         <action
             android:id="@+id/action_youtubeFragment_to_youtubePlayerFragment"
             app:destination="@id/youtubePlayerFragment" />
+        <action
+            android:id="@+id/action_youtubeFragment_to_youtubeSearchFragment"
+            app:destination="@id/youtubeSearchFragment" />
     </fragment>
     <fragment
         android:id="@+id/misconceptionsFragment"
@@ -77,4 +80,9 @@
         android:name="com.islam.hesn.myapplication.youtube.view.YoutubePlayerFragment"
         android:label="YoutubePlayerFragment"
         tools:layout="@layout/fragment_youtube_player" />
+    <fragment
+        android:id="@+id/youtubeSearchFragment"
+        android:name="com.islam.hesn.myapplication.youtube.view.YoutubeSearchFragment"
+        android:label="youtube_search_fragment"
+        tools:layout="@layout/youtube_search_fragment" />
 </navigation>

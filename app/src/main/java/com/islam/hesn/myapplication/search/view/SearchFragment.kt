@@ -51,19 +51,15 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClick
 
     private fun observeData() {
         searchViewModel.searchedAyatSections.observe(viewLifecycleOwner, { sections ->
-            when (searchViewModel.isFromQuranScreen.value) {
-                true -> {
-                    bibleList.adapter = SearchExpandableAdapter(sections).also {
-                        it.setOnGroupClickListener(this@SearchFragment)
-                    }
+            if (searchViewModel.isFromQuranScreen.value!!) {
+                bibleList.adapter = SearchExpandableAdapter(sections).also {
+                    it.setOnGroupClickListener(this@SearchFragment)
                 }
             }
         })
         searchViewModel.searchedVersesSections.observe(viewLifecycleOwner, { sections ->
-            when (searchViewModel.isFromQuranScreen.value) {
-                false -> {
-                    bibleList.adapter = SearchExpandableAdapter(sections)
-                }
+            if (!searchViewModel.isFromQuranScreen.value!!) {
+                bibleList.adapter = SearchExpandableAdapter(sections)
             }
         })
     }

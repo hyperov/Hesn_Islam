@@ -16,6 +16,18 @@ interface YoutubeApis {
         @Query("maxResults") maxResults: Int = 10,
     ): YoutubeVideosResponse
 
+    @GET("search")
+    suspend fun getSearchedYoutubeVideos(
+        @Query("q") searchQuery: String,
+        @Query("channelId") channelId: String,
+        @Query("key") key: String,
+        @Query("pageToken") pageToken: String = "",
+        @Query("type") type: String = "video",
+        @Query("order") order: String = "date",
+        @Query("part") part: String = "snippet",
+        @Query("maxResults") maxResults: Int = 10
+    ): YoutubeVideosResponse
+
 
     companion object {
         const val BASE_URL = "https://www.googleapis.com/youtube/v3/"

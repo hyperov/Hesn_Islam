@@ -14,4 +14,13 @@ class YoutubeRepoImpl @Inject constructor(
     ): YoutubeVideosResponse {
         return apis.getYoutubeChannelVideos(playlistId, apiKey, nextPage)
     }
+
+    override suspend fun getSearchedYoutubeVideos(
+        searchQuery: String,
+        channelId: String,
+        nextPage: String,
+    ): YoutubeVideosResponse {
+        return apis.getSearchedYoutubeVideos(searchQuery, channelId, apiKey, nextPage)
+    }
+
 }
