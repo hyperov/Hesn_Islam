@@ -1,8 +1,8 @@
 package com.islam.hesn.myapplication.youtube.model.response
 
-data class Video(
-    val id: String,
-):CommonVideo()
+data class SearchVideo(
+    val id: ResourceId,
+) : CommonVideo()
 
 //"id": {
 //            "kind": "youtube#video",

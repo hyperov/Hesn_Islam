@@ -1,8 +1,12 @@
 package com.islam.hesn.myapplication.youtube.model.response
 
-data class Video(
-    val id: String,
-):CommonVideo()
+open class CommonVideo(
+) {
+    lateinit var snippet: Snippet
+    override fun equals(other: Any?): Boolean {
+        return this === other
+    }
+}
 
 //"id": {
 //            "kind": "youtube#video",

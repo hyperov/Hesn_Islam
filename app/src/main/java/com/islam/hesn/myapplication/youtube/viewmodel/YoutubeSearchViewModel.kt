@@ -1,4 +1,4 @@
-package com.islam.hesn.myapplication.youtube.view
+package com.islam.hesn.myapplication.youtube.viewmodel
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
@@ -8,9 +8,9 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.islam.hesn.myapplication.youtube.model.repo.YoutubePagingSource
 import com.islam.hesn.myapplication.youtube.model.repo.YoutubeRepo
-import com.islam.hesn.myapplication.youtube.model.response.Video
+import com.islam.hesn.myapplication.youtube.model.repo.YoutubeSearchPagingSource
+import com.islam.hesn.myapplication.youtube.model.response.SearchVideo
 import kotlinx.coroutines.flow.Flow
 
 class YoutubeSearchViewModel @ViewModelInject constructor(private val repo: YoutubeRepo) :
@@ -19,7 +19,7 @@ class YoutubeSearchViewModel @ViewModelInject constructor(private val repo: Yout
     val searchQuery = MutableLiveData<String>()
     val selectedTabPosition = MutableLiveData<Int>()
 
-    lateinit var flow: Flow<PagingData<Video>>
+    lateinit var flow: Flow<PagingData<SearchVideo>>
 
     fun getSearchedYoutubeVideos(channelId: String) {
 
@@ -28,7 +28,7 @@ class YoutubeSearchViewModel @ViewModelInject constructor(private val repo: Yout
             // PagingConfig, such as prefetchDistance.
             PagingConfig(pageSize = 10)
         ) {
-            YoutubePagingSource(repo, channelId, true, searchQuery.value!!)
+            YoutubeSearchPagingSource(repo, channelId, searchQuery.value!!)
         }.flow
             .cachedIn(viewModelScope)
 

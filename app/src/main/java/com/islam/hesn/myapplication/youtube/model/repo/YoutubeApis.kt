@@ -1,5 +1,6 @@
 package com.islam.hesn.myapplication.youtube.model.repo
 
+import com.islam.hesn.myapplication.youtube.model.response.YoutubeSearchVideosResponse
 import com.islam.hesn.myapplication.youtube.model.response.YoutubeVideosResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -25,8 +26,8 @@ interface YoutubeApis {
         @Query("type") type: String = "video",
         @Query("order") order: String = "date",
         @Query("part") part: String = "snippet",
-        @Query("maxResults") maxResults: Int = 10
-    ): YoutubeVideosResponse
+        @Query("maxResults") maxResults: Int = 10,
+    ): YoutubeSearchVideosResponse
 
 
     companion object {

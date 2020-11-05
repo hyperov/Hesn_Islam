@@ -1,5 +1,6 @@
 package com.islam.hesn.myapplication.youtube.model.repo
 
+import com.islam.hesn.myapplication.youtube.model.response.YoutubeSearchVideosResponse
 import com.islam.hesn.myapplication.youtube.model.response.YoutubeVideosResponse
 
 interface YoutubeRepo {
@@ -9,6 +10,6 @@ interface YoutubeRepo {
     suspend fun getSearchedYoutubeVideos(
         searchQuery: String,
         channelId: String,
-        nextPage: String
-    ): YoutubeVideosResponse
+        nextPage: String,
+    ): YoutubeSearchVideosResponse
 }

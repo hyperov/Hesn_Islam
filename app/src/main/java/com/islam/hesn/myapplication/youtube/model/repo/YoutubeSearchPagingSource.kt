@@ -1,21 +1,20 @@
 package com.islam.hesn.myapplication.youtube.model.repo
 
 import androidx.paging.PagingSource
-import com.islam.hesn.myapplication.youtube.model.response.Video
+import com.islam.hesn.myapplication.youtube.model.response.SearchVideo
 import retrofit2.HttpException
 import java.io.IOException
 
-class YoutubePagingSource(
+class YoutubeSearchPagingSource(
     val api: YoutubeRepo,
     val playlistId: String,
     var searchQuery: String = "",
-) : PagingSource<String, Video>() {
+) : PagingSource<String, SearchVideo>() {
 
-    override suspend fun load(params: LoadParams<String>): LoadResult<String, Video> {
+    override suspend fun load(params: LoadParams<String>): LoadResult<String, SearchVideo> {
         return try {
             val nextPage = params.key ?: ""
-            val response = api.getYoutubeChannelVideos(playlistId,
-                nextPage)
+            val response = api.getSearchedYoutubeVideos(searchQuery, playlistId, nextPage)
             LoadResult.Page(
                 data = response.items!!,
                 prevKey = null, // Only paging forward.
@@ -30,5 +29,8 @@ class YoutubePagingSource(
         }
 
     }
+
+    override val keyReuseSupported = true
+
 
 }

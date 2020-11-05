@@ -13,6 +13,7 @@ import androidx.paging.LoadState
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.home.changeToolbarTitle
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubePlayerViewModel
+import com.islam.hesn.myapplication.youtube.viewmodel.YoutubeSearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_youtube_first_channel.*
 import kotlinx.coroutines.flow.collectLatest
@@ -25,7 +26,7 @@ class YoutubeSearchFragment : Fragment() {
     private val youtubePlayerViewModel: YoutubePlayerViewModel by activityViewModels()
 
     private val pagingAdapter =
-        YoutubeRecyclerViewPagingAdapter(VideoComparator) { videoId, videoTitle ->
+        YoutubeRecyclerViewSearchPagingAdapter(VideoSearchComparator) { videoId, videoTitle ->
             youtubePlayerViewModel.videoId.value = videoId
             youtubePlayerViewModel.videoTitle.value = videoTitle
             findNavController().navigate(R.id.youtubePlayerFragment)
@@ -40,7 +41,7 @@ class YoutubeSearchFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        changeToolbarTitle(youtubeSearchViewModel.searchQuery.value+ "فى :"+ when (youtubeSearchViewModel.selectedTabPosition.value) {
+        changeToolbarTitle(youtubeSearchViewModel.searchQuery.value + "فى :" + when (youtubeSearchViewModel.selectedTabPosition.value) {
             0 -> getString(R.string.main_channel)
             1 -> getString(R.string.education_channel)
             else -> ""

@@ -1,5 +1,6 @@
 package com.islam.hesn.myapplication.youtube.model.repo
 
+import com.islam.hesn.myapplication.youtube.model.response.YoutubeSearchVideosResponse
 import com.islam.hesn.myapplication.youtube.model.response.YoutubeVideosResponse
 import javax.inject.Inject
 
@@ -19,7 +20,7 @@ class YoutubeRepoImpl @Inject constructor(
         searchQuery: String,
         channelId: String,
         nextPage: String,
-    ): YoutubeVideosResponse {
+    ): YoutubeSearchVideosResponse {
         return apis.getSearchedYoutubeVideos(searchQuery, channelId, apiKey, nextPage)
     }
 

@@ -7,17 +7,16 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.islam.hesn.myapplication.R
-import com.islam.hesn.myapplication.youtube.model.response.CommonVideo
-import com.islam.hesn.myapplication.youtube.model.response.Video
-import com.islam.hesn.myapplication.youtube.view.YoutubeRecyclerViewPagingAdapter.YoutubeViewHolder
+import com.islam.hesn.myapplication.youtube.model.response.SearchVideo
+import com.islam.hesn.myapplication.youtube.view.YoutubeRecyclerViewSearchPagingAdapter.YoutubeViewHolder
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_layout_youtube_first_channel.view.*
 
-class YoutubeRecyclerViewPagingAdapter(
-    diffCallback: DiffUtil.ItemCallback<Video>,
+class YoutubeRecyclerViewSearchPagingAdapter(
+    diffCallback: DiffUtil.ItemCallback<SearchVideo>,
     private val onVideoClick: ((videoId: String, videoTitle: String) -> Unit),
 ) :
-    PagingDataAdapter<Video, YoutubeViewHolder>(diffCallback) {
+    PagingDataAdapter<SearchVideo, YoutubeViewHolder>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): YoutubeViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -32,7 +31,7 @@ class YoutubeRecyclerViewPagingAdapter(
 
     inner class YoutubeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        fun bind(video: CommonVideo) = with(itemView) {
+        fun bind(video: SearchVideo) = with(itemView) {
             with(video.snippet) {
                 tvName.text = title
                 with(thumbnails) {
@@ -53,8 +52,9 @@ class YoutubeRecyclerViewPagingAdapter(
                         return@with
                     }
                 }
-                video.snippet.apply {
-                    setOnClickListener { onVideoClick(resourceId!!.videoId, title) }
+                video.apply {
+
+                    setOnClickListener { onVideoClick((video as SearchVideo).id.videoId, title) }
                 }
 
 

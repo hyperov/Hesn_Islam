@@ -7,7 +7,7 @@ data class Snippet(
     val playlistId: String,
     val position: Int,
     val publishedAt: String,
-    val resourceId: ResourceId,
+    val resourceId: ResourceId?,
     val thumbnails: Thumbnails,
     val title: String
 )
