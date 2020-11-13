@@ -44,6 +44,7 @@ class YoutubeFirstChannelFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         videosList.adapter = pagingAdapter
+        setRefreshListener()
         getVideos()
     }
 
@@ -52,16 +53,30 @@ class YoutubeFirstChannelFragment : Fragment() {
         getPagingMovies()
     }
 
+    private fun setRefreshListener() {
+        refresh.setOnRefreshListener {
+            pagingAdapter.refresh()
+
+        }
+    }
+
     private fun getPagingMovies() {
         viewLifecycleOwner.lifecycleScope.launch {
 
             pagingAdapter.loadStateFlow.collectLatest { loadStates ->
+                refresh.isRefreshing = false
                 progressYoutube.isVisible = loadStates.refresh is LoadState.Loading
                 videosList.isVisible = loadStates.refresh is LoadState.NotLoading
-//                retry.isVisible = loadStates.refresh !is LoadState.Loading
                 videosList.isVisible = loadStates.refresh !is LoadState.Error
-                if (loadStates.refresh is LoadState.Error) openYoutubeChannelIntent(getString(R.string.main_channel_playlist_id))
-//                val x =(loadStates.refresh as LoadState.Error).error.localizedMessage
+                error.isVisible = loadStates.refresh is LoadState.Error
+                errorText.isVisible = loadStates.refresh is LoadState.Error
+                if (loadStates.refresh is LoadState.Error) {
+                    val error = (loadStates.refresh as LoadState.Error).error
+                    if (error.message!!.contains("quotaExceeded"))
+                        openYoutubeChannelIntent(getString(R.string.main_channel_playlist_id))
+                }
+
+
             }
 
         }
@@ -72,6 +87,11 @@ class YoutubeFirstChannelFragment : Fragment() {
             }
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        refresh.isRefreshing = false
     }
 
 }

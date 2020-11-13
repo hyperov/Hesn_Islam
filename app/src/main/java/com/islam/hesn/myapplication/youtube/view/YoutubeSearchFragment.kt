@@ -1,8 +1,5 @@
 package com.islam.hesn.myapplication.youtube.view
 
-import android.content.ActivityNotFoundException
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -60,6 +57,8 @@ class YoutubeSearchFragment : Fragment() {
         youtubeSearchViewModel.getSearchedYoutubeVideos(channelId)
         getPagingMovies()
     }
+
+
 
     private fun getPagingMovies() {
         viewLifecycleOwner.lifecycleScope.launch {

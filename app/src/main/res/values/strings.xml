@@ -32,6 +32,7 @@
     <string name="choose_chapter">اختر الاصحاح</string>
     <string name="choose_verse">اختر العدد</string>
     <string name="cancel">الغاء</string>
+    <string name="swipe_to_refresh">للتحديث اسحب لأسفل</string>
 
     /////////////////////////////////////
     <string-array name="bible_books">
