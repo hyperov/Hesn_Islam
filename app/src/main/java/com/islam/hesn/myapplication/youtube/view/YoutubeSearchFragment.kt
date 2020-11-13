@@ -1,5 +1,8 @@
 package com.islam.hesn.myapplication.youtube.view
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,9 +22,11 @@ import kotlinx.android.synthetic.main.fragment_youtube_first_channel.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+
 @AndroidEntryPoint
 class YoutubeSearchFragment : Fragment() {
 
+    private var channelId: String = ""
     private val youtubeSearchViewModel: YoutubeSearchViewModel by activityViewModels()
     private val youtubePlayerViewModel: YoutubePlayerViewModel by activityViewModels()
 
@@ -47,7 +52,7 @@ class YoutubeSearchFragment : Fragment() {
             else -> ""
         })
         videosList.adapter = pagingAdapter
-        val channelId = when (youtubeSearchViewModel.selectedTabPosition.value) {
+        channelId = when (youtubeSearchViewModel.selectedTabPosition.value) {
             0 -> getString(R.string.main_channel_id)
             1 -> getString(R.string.education_channel_id)
             else -> ""
@@ -60,10 +65,13 @@ class YoutubeSearchFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
 
             pagingAdapter.loadStateFlow.collectLatest { loadStates ->
+
                 progressYoutube.isVisible = loadStates.refresh is LoadState.Loading
                 videosList.isVisible = loadStates.refresh is LoadState.NotLoading
 //                retry.isVisible = loadStates.refresh !is LoadState.Loading
-//                errorMsg.isVisible = loadState.refresh is LoadState.Error
+                videosList.isVisible = loadStates.refresh !is LoadState.Error
+//                if (loadStates.refresh is LoadState.Error) openYoutubeChannelIntent()
+//                errorMsg.isVisible = loadStates.refresh is LoadState.Error
             }
 
         }

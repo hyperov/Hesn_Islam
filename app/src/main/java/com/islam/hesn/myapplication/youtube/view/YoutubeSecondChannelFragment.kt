@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.islam.hesn.myapplication.R
+import com.islam.hesn.myapplication.utils.openYoutubeChannelIntent
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubePlayerViewModel
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -68,10 +69,12 @@ class YoutubeSecondChannelFragment : Fragment() {
                 progressYoutube.isVisible = loadStates.refresh is LoadState.Loading
                 videosList.isVisible = loadStates.refresh is LoadState.NotLoading
 //                retry.isVisible = loadStates.refresh !is LoadState.Loading
-//                errorMsg.isVisible = loadState.refresh is LoadState.Error
+                videosList.isVisible = loadStates.refresh !is LoadState.Error
+                if (loadStates.refresh is LoadState.Error) openYoutubeChannelIntent(getString(R.string.education_channel_playlist_id))
             }
 
         }
     }
+
 
 }

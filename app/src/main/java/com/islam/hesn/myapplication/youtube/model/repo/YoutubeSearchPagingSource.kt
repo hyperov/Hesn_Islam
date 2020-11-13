@@ -12,14 +12,18 @@ class YoutubeSearchPagingSource(
 ) : PagingSource<String, SearchVideo>() {
 
     override suspend fun load(params: LoadParams<String>): LoadResult<String, SearchVideo> {
+
         return try {
+
             val nextPage = params.key ?: ""
             val response = api.getSearchedYoutubeVideos(searchQuery, playlistId, nextPage)
+
             LoadResult.Page(
                 data = response.items!!,
                 prevKey = null, // Only paging forward.
                 nextKey = response.nextPageToken
             )
+
         } catch (e: IOException) {
             // IOException for network failures.
             LoadResult.Error(e)
@@ -31,6 +35,5 @@ class YoutubeSearchPagingSource(
     }
 
     override val keyReuseSupported = true
-
 
 }
