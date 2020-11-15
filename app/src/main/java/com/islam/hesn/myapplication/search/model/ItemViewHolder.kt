@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.TextView
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.bible.model.response.bible.Verse
-import com.islam.hesn.myapplication.quran.model.response.arabic.SurahItem
+import com.islam.hesn.myapplication.quran.model.response.arabic.AyaItem
 
 import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder
 
@@ -21,7 +21,7 @@ class ItemViewHolder<T>(itemView: View) : ChildViewHolder(itemView) {
             itemName.text = verse.verseContent
             itemNum.text = verse.verseNum.toString()
         }
-        if (verse is SurahItem) {
+        if (verse is AyaItem) {
             itemName.text = verse.standard_full
             itemNum.text = verse.aya_id.toString()
         }

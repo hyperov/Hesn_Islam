@@ -26,6 +26,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="144dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/colorAccent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAboutUs" />
+
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvContactUs"
         android:layout_width="0dp"
@@ -45,12 +56,31 @@
         app:layout_constraintTop_toBottomOf="@+id/view2" />
 
     <View
-        android:id="@+id/view2"
+        android:id="@+id/view3"
         android:layout_width="144dp"
         android:layout_height="2dp"
         android:layout_marginTop="16dp"
         android:background="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAboutUs" />
+        app:layout_constraintTop_toBottomOf="@+id/tvContactUs" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvLastRead"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:drawablePadding="@dimen/vertical_margin_16"
+        android:gravity="center|start"
+        android:paddingStart="@dimen/vertical_margin_16"
+        android:paddingEnd="@dimen/vertical_margin_16"
+        android:text="@string/last_read"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size_18"
+        android:textStyle="bold"
+        app:drawableStartCompat="@drawable/ic_book34"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view3" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

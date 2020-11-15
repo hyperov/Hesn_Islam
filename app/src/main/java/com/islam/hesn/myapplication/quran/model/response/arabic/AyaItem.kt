@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class SurahItem(
+data class AyaItem(
     val aya_id: Int,
     val aya_id_display: String,
     val gid: Int,

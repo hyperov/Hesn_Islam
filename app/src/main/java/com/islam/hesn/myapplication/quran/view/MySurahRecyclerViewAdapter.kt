@@ -8,12 +8,12 @@ import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.quran.model.response.arabic.AdapterStateQuranEnum
 import com.islam.hesn.myapplication.quran.model.response.arabic.AdapterStateQuranEnum.QURAN_SURAH
 import com.islam.hesn.myapplication.quran.model.response.arabic.AdapterStateQuranEnum.QURAN_SURAH_LIST
-import com.islam.hesn.myapplication.quran.model.response.arabic.SurahItem
+import com.islam.hesn.myapplication.quran.model.response.arabic.AyaItem
 import kotlinx.android.synthetic.main.item_layout_surah.view.*
 
 
 class MySurahRecyclerViewAdapter(
-    private val values: ArrayList<SurahItem>,
+    private val values: ArrayList<AyaItem>,
     private val state: AdapterStateQuranEnum,
     private val onSurahItemClick: ((surahId: Int) -> Unit)? = null,
     private val onAyaItemClick: ((surahId: Int, ayaId: Int) -> Unit)? = null,
@@ -34,9 +34,9 @@ class MySurahRecyclerViewAdapter(
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        fun bind(surahItem: SurahItem) = with(itemView) {
+        fun bind(ayaItem: AyaItem) = with(itemView) {
 
-            with(surahItem) {
+            with(ayaItem) {
                 when (state) {
                     QURAN_SURAH_LIST -> {
                         item_num.text = sura_id.toString()

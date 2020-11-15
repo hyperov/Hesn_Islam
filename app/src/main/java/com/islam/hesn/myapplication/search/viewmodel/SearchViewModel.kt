@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.islam.hesn.myapplication.bible.model.response.bible.Book
 import com.islam.hesn.myapplication.bible.model.response.bible.Verse
-import com.islam.hesn.myapplication.quran.model.response.arabic.SurahItem
+import com.islam.hesn.myapplication.quran.model.response.arabic.AyaItem
 import com.islam.hesn.myapplication.search.model.SearchedVerse
 import com.islam.hesn.myapplication.search.model.Section
 
@@ -13,10 +13,10 @@ class SearchViewModel : ViewModel() {
 
     val searchQuery = MutableLiveData<String>()
     val isFromQuranScreen = MutableLiveData<Boolean>()
-    val ayat = MutableLiveData<ArrayList<SurahItem>>()
-    val searchedAyatSections = MutableLiveData<ArrayList<Section<SurahItem>>>()
+    val ayat = MutableLiveData<ArrayList<AyaItem>>()
+    val searchedAyatSections = MutableLiveData<ArrayList<Section<AyaItem>>>()
 
-    private val sectionsQuranList = arrayListOf<Section<SurahItem>>()
+    private val sectionsQuranList = arrayListOf<Section<AyaItem>>()
     private val sectionsBibleList = arrayListOf<Section<Verse>>()
 
     val booksBible = MutableLiveData<List<Book>>()

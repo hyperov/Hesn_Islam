@@ -33,6 +33,9 @@
     <string name="choose_verse">اختر العدد</string>
     <string name="cancel">الغاء</string>
     <string name="swipe_to_refresh">للتحديث اسحب لأسفل</string>
+    <string name="last_read">اخر قراءة</string>
+    <string name="about_us_video_id">O5g86ppqXZc</string>
+    <string name="about_us_video_title">رسالة إلى كل المفترين على الإسلام</string>
 
     /////////////////////////////////////
     <string-array name="bible_books">

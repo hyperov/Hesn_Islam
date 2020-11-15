@@ -11,12 +11,10 @@ import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.home.changeToolbarTitle
 import com.islam.hesn.myapplication.home.createDialog
 import com.islam.hesn.myapplication.quran.model.response.arabic.AdapterStateQuranEnum.QURAN_SURAH
-import com.islam.hesn.myapplication.quran.model.response.arabic.SurahItem
+import com.islam.hesn.myapplication.quran.model.response.arabic.AyaItem
 import com.islam.hesn.myapplication.quran.viewmodel.AyaTranslationViewModel
 import com.islam.hesn.myapplication.quran.viewmodel.QuranViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_chapter.*
-import kotlinx.android.synthetic.main.fragment_quran_list.*
 import kotlinx.android.synthetic.main.fragment_surah.*
 import kotlinx.android.synthetic.main.fragment_surah.fab
 import kotlinx.android.synthetic.main.fragment_surah.progress
@@ -57,7 +55,7 @@ class SurahFragment : Fragment() {
             changeToolbarTitle(surah!!.first().sura_name)
 
             surahRecyclerView.adapter = MySurahRecyclerViewAdapter(
-                surah as ArrayList<SurahItem>,
+                surah as ArrayList<AyaItem>,
                 QURAN_SURAH, onAyaItemClick = { surahId, ayaId ->
 
                     ayaViewModel.ayaNum.value = ayaId
