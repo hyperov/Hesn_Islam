@@ -66,6 +66,8 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
             etAya.text.toString().apply {
                 if (isNotBlank()) {
                     quranViewModel.ayaFastForwardId.value = this.toInt()
+                    quranViewModel.isBookMark.value = false
+                    quranViewModel.surahId.value = spinnerSurah.selectedItemPosition + 1
                     findNavController().navigate(R.id.surahFragment)
                 }
             }
@@ -75,6 +77,7 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
 
     private fun resetFastForward() {
         quranViewModel.ayaFastForwardId.value = 0
+        setupAyaMinMax(spinnerSurah.selectedItemPosition)
     }
 
     private fun setSearchTypingListener() {
@@ -139,12 +142,12 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
 
     private fun observeData() {
         quranViewModel.surahs.observe(viewLifecycleOwner, {
-
             list.adapter =
                 MySurahRecyclerViewAdapter(it, QURAN_SURAH_LIST, { surahId ->
 
                     if (quranViewModel.surahId.value != surahId)
                         quranViewModel.surahId.value = surahId
+                    quranViewModel.isBookMark.value = false
                     findNavController().navigate(R.id.surahFragment)
                 })
             setupFastForwardSpinnerAdapter()
@@ -207,22 +210,26 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
                 position: Int,
                 id: Long,
             ) {
-                quranViewModel.surahId.value = position + 1
+
                 setupAyaMinMax(position)
             }
 
-            private fun setupAyaMinMax(position: Int) {
-                val ayaCount = quranViewModel.ayat.value?.count { it.sura_id == position + 1 }
-                etAya.filters = arrayOf<InputFilter>(MinMaxFilter(1, ayaCount!!))
-                etAya.hint = "1 الى $ayaCount"
-                tvEnterAyaNumberFromTo.text = "ادخل رقم الأية من 1 الى $ayaCount"
-
-            }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
         }
+    }
+
+    private fun setupAyaMinMax(position: Int) {
+        val ayaCount = quranViewModel.ayat.value?.count { it.sura_id == position + 1 }
+        ayaCount?.let {
+            etAya.filters = arrayOf<InputFilter>(MinMaxFilter(1, ayaCount))
+            etAya.hint = "1 الى $ayaCount"
+            tvEnterAyaNumberFromTo.text = "ادخل رقم الأية من 1 الى $ayaCount"
+        }
+
+
     }
 
 }

@@ -36,6 +36,10 @@
     <string name="last_read">اخر قراءة</string>
     <string name="about_us_video_id">O5g86ppqXZc</string>
     <string name="about_us_video_title">رسالة إلى كل المفترين على الإسلام</string>
+    <string name="save_last_read">حفظ اخر قراءة</string>
+    <string name="no_bookmarks">عذراً..لا يوجد حفظ لأخر تلاوة حتى الآن</string>
+    <string name="dismiss">إلغاء</string>
+    <string name="bookmark_saved_successfully">تم حفظ أخر تلاوة بنجاح</string>
 
     /////////////////////////////////////
     <string-array name="bible_books">

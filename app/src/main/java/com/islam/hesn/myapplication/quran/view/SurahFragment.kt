@@ -14,15 +14,15 @@ import com.islam.hesn.myapplication.quran.model.response.arabic.AdapterStateQura
 import com.islam.hesn.myapplication.quran.model.response.arabic.AyaItem
 import com.islam.hesn.myapplication.quran.viewmodel.AyaTranslationViewModel
 import com.islam.hesn.myapplication.quran.viewmodel.QuranViewModel
+import com.islam.hesn.myapplication.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_surah.*
-import kotlinx.android.synthetic.main.fragment_surah.fab
-import kotlinx.android.synthetic.main.fragment_surah.progress
 
 
 @AndroidEntryPoint
 class SurahFragment : Fragment() {
 
+    private lateinit var surahName: String
     private val quranViewModel: QuranViewModel by activityViewModels()
     private val ayaViewModel: AyaTranslationViewModel by activityViewModels()
 
@@ -51,8 +51,15 @@ class SurahFragment : Fragment() {
     private fun setupViewModelObservers() {
         quranViewModel.surahId.observe(viewLifecycleOwner, { surahId ->
 
-            val surah = quranViewModel.ayat.value?.filter { it.sura_id == surahId }
-            changeToolbarTitle(surah!!.first().sura_name)
+            val surah =
+                quranViewModel.ayat.value?.filter {
+                    it.sura_id == if (quranViewModel.isBookMark.value!!.not()) surahId
+                    else Prefs.getInt(
+                        BOOKMARK_SURAH_NUMBER,
+                        1)
+                }
+            surahName = surah!!.first().sura_name
+            changeToolbarTitle(surahName)
 
             surahRecyclerView.adapter = MySurahRecyclerViewAdapter(
                 surah as ArrayList<AyaItem>,
@@ -64,9 +71,29 @@ class SurahFragment : Fragment() {
 
                         showNow(this@SurahFragment.parentFragmentManager, "translation")
                     }
+                },
+                onLastReadClick = { surahId, ayaId ->
+                    quranViewModel.surahId.removeObservers(viewLifecycleOwner)
+
+                    Prefs.putAny(BOOKMARK_SURAH_NUMBER, surahId)
+                    Prefs.putAny(BOOKMARK_AYA_NUMBER, ayaId)
+
+                    Prefs.putAny(BOOKMARK_SURAH_NAME, surahName)
+
+                    quranViewModel.surahId.value = quranViewModel.surahId.value
+
+                    requireContext().showSnackBar(surahRecyclerView,
+                        getString(R.string.bookmark_saved_successfully))
+
                 }
             )
-            surahRecyclerView.scrollToPosition(quranViewModel.ayaFastForwardId.value!! - 1)
+
+            quranViewModel.apply {
+                val ayaScrollId =
+                    if (isBookMark.value!!) Prefs.getInt(BOOKMARK_AYA_NUMBER, 1) - 1
+                    else ayaFastForwardId.value!! - 1
+                surahRecyclerView.scrollToPosition(ayaScrollId)
+            }
         })
 
         ayaViewModel.aya.observe(viewLifecycleOwner, { aya ->

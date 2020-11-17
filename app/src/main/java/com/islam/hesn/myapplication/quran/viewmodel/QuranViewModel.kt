@@ -14,6 +14,7 @@ class QuranViewModel @ViewModelInject constructor(
     val ayat = MutableLiveData<ArrayList<AyaItem>>()
     val surahId = MutableLiveData<Int>()
     val ayaFastForwardId = MutableLiveData<Int>()
+    val isBookMark = MutableLiveData(false)
 
     val loading = MutableLiveData<Boolean>()
 
