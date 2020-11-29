@@ -37,7 +37,7 @@ class MisconceptionsFragment : Fragment() {
         }
     }
 
-    class MyWebViewClient(val progress: LottieAnimationView) : WebViewClient() {
+    class MyWebViewClient(private val progress: LottieAnimationView) : WebViewClient() {
         override fun shouldOverrideUrlLoading(webView: WebView, url: String): Boolean {
             return false
         }

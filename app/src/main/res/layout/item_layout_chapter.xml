@@ -38,10 +38,10 @@
         android:textAppearance="?attr/textAppearanceListItem"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="@dimen/text_size_18"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/item_num"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/item_num"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/item_num"
         tools:text="الفاتحة" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

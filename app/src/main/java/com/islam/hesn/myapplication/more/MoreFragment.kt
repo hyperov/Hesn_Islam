@@ -36,28 +36,28 @@ class MoreFragment : Fragment(), View.OnClickListener {
         if (Prefs.contains(BOOKMARK_SURAH_NAME)) {
 
             tvLastRead.text =
-                getString(R.string.last_read) + " ( " + Prefs.getString(BOOKMARK_SURAH_NAME,
+                getString(R.string.last_read) + "\n" + " ( " + Prefs.getString(BOOKMARK_SURAH_NAME,
                     "الفاتحة") + " الأية " + Prefs.getInt(
                     BOOKMARK_AYA_NUMBER, 1) + ")"
         }
     }
 
     private fun setClickListeners() {
-        tvAboutUs.setOnClickListener(this)
-        tvContactUs.setOnClickListener(this)
-        tvLastRead.setOnClickListener(this)
+        cvAboutUs.setOnClickListener(this)
+        cvContactUs.setOnClickListener(this)
+        cvLastRead.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         when (v) {
-            tvAboutUs -> {
+            cvAboutUs -> {
                 youtubePlayerViewModel.videoId.value = getString(R.string.about_us_video_id)
                 youtubePlayerViewModel.videoTitle.value = getString(R.string.about_us_video_title)
                 findNavController().navigate(R.id.youtubePlayerFragment)
             }
-            tvContactUs -> {
+            cvContactUs -> {
             }
-            tvLastRead -> {
+            cvLastRead -> {
 
                 if (Prefs.contains(BOOKMARK_SURAH_NUMBER) && Prefs.contains(BOOKMARK_AYA_NUMBER)) {
                     quranViewModel.isBookMark.value = true

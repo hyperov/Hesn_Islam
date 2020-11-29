@@ -26,7 +26,7 @@ class SearchExpandableAdapter<T : Parcelable>(
         val view: View = if (isFromQuran)
             LayoutInflater.from(parent.context).inflate(R.layout.item_layout_surah, parent, false)
         else
-            LayoutInflater.from(parent.context).inflate(R.layout.item_layout_book, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_layout_chapter, parent, false)
         return ItemViewHolder(view)
     }
 
@@ -45,7 +45,7 @@ class SearchExpandableAdapter<T : Parcelable>(
         flatPosition: Int,
         group: ExpandableGroup<*>?,
     ) =
-        holder.setSectionTitle(group!!, onGroupClick(flatPosition))
+        holder.setSectionTitle(group!!)
 
 
 }

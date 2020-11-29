@@ -100,11 +100,13 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
                 searchList.visibility = View.GONE
                 progressBible.visibility = View.VISIBLE
                 progressBible.playAnimation()
+                etSearch.isEnabled = false
             } else {
                 fabJump.show()
                 searchList.visibility = View.VISIBLE
                 progressBible.visibility = View.GONE
                 progressBible.cancelAnimation()
+                etSearch.isEnabled = true
             }
 
         })

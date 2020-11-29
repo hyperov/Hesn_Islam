@@ -9,11 +9,15 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.search.model.SearchExpandableAdapter
 import com.islam.hesn.myapplication.search.viewmodel.SearchViewModel
 import com.thoughtbot.expandablerecyclerview.listeners.OnGroupClickListener
+import kotlinx.android.synthetic.main.fragment_bible_list.*
 import kotlinx.android.synthetic.main.search_fragment.*
+import kotlinx.android.synthetic.main.search_fragment.etSearch
+import kotlinx.android.synthetic.main.search_fragment.searchList
 
 class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClickListener {
 

@@ -5,94 +5,163 @@
     android:id="@+id/moreLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     android:layoutDirection="rtl"
     tools:context=".more.MoreFragment"
     tools:ignore="UnusedAttribute">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tvAboutUs"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:drawablePadding="@dimen/vertical_margin_16"
-        android:foreground="?attr/selectableItemBackground"
-        android:gravity="center|start"
-        android:paddingVertical="8dp"
-        android:paddingStart="@dimen/vertical_margin_16"
-        android:paddingEnd="@dimen/vertical_margin_16"
-        android:text="@string/about_us"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/text_size_18"
-        android:textStyle="bold"
-        app:drawableStartCompat="@drawable/ic_info"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvLastRead"
+        android:layout_width="200dp"
+        android:layout_height="180dp"
+        app:cardBackgroundColor="@color/colorAccent"
+        app:cardCornerRadius="@dimen/card_corner_radius_16"
+        app:cardElevation="@dimen/cardview_default_elevation"
+        app:layout_constraintBottom_toTopOf="@+id/cvAboutUs"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.53"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view4" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_bookmark2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvLastRead"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="32dp"
+                android:gravity="center"
+                android:fontFamily="@font/janna_bold"
+                android:text="@string/last_read"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_size_18"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <View
-        android:id="@+id/view2"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/colorAccent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAboutUs" />
+    </com.google.android.material.card.MaterialCardView>
 
-    <View
-        android:id="@+id/view4"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/colorAccent"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvAboutUs"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:cardBackgroundColor="@color/colorAccent"
+        app:cardCornerRadius="@dimen/card_corner_radius_16"
+        app:cardElevation="@dimen/cardview_default_elevation"
+        app:layout_constraintBottom_toTopOf="@+id/cvContactUs"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvLastRead" />
+        app:layout_constraintTop_toBottomOf="@+id/cvLastRead">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tvContactUs"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:drawablePadding="@dimen/vertical_margin_16"
-        android:foreground="?attr/selectableItemBackground"
-        android:gravity="center|start"
-        android:paddingVertical="8dp"
-        android:paddingStart="@dimen/vertical_margin_16"
-        android:paddingEnd="@dimen/vertical_margin_16"
-        android:text="@string/contact_us"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/text_size_18"
-        android:textStyle="bold"
-        app:drawableStartCompat="@drawable/ic_chat2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view2" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintTop_toBottomOf="@+id/cvLastRead">
 
-    <View
-        android:id="@+id/view3"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/colorAccent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvContactUs" />
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_information"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tvLastRead"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:drawablePadding="@dimen/vertical_margin_16"
-        android:foreground="?attr/selectableItemBackground"
-        android:gravity="center|start"
-        android:paddingVertical="8dp"
-        android:paddingStart="@dimen/vertical_margin_16"
-        android:paddingEnd="@dimen/vertical_margin_16"
-        android:text="@string/last_read"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/text_size_18"
-        android:textStyle="bold"
-        app:drawableStartCompat="@drawable/ic_bookmark2"
+            <TextView
+                android:id="@+id/tvAboutUs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/about_us"
+                android:fontFamily="@font/cairo_regular"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_size_24"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvContactUs"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:cardBackgroundColor="@color/colorAccent"
+        app:cardCornerRadius="@dimen/card_corner_radius_16"
+        app:cardElevation="@dimen/cardview_default_elevation"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/cvAboutUs">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="@+id/moreLayout"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_contact5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvContactUs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/contact_us"
+                android:fontFamily="@font/cairo_regular"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_size_24"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
