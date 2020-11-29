@@ -69,7 +69,7 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
     }
 
     private fun setListDivider() {
-        bibleList.addItemDecoration(DividerItemDecoration(context,
+        searchList.addItemDecoration(DividerItemDecoration(context,
             DividerItemDecoration.VERTICAL))
     }
 
@@ -80,7 +80,7 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
     private fun observeData() {
         bibleViewModel.bookModels.observe(viewLifecycleOwner, {
 
-            bibleList.adapter =
+            searchList.adapter =
                 BibleMainRecyclerViewAdapter(
                     books = it!!,
                     state = BOOKS,
@@ -97,12 +97,12 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
 
             if (isVisible) {
                 fabJump.hide()
-                bibleList.visibility = View.GONE
+                searchList.visibility = View.GONE
                 progressBible.visibility = View.VISIBLE
                 progressBible.playAnimation()
             } else {
                 fabJump.show()
-                bibleList.visibility = View.VISIBLE
+                searchList.visibility = View.VISIBLE
                 progressBible.visibility = View.GONE
                 progressBible.cancelAnimation()
             }

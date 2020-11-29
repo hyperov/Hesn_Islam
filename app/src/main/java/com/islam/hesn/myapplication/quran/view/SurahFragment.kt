@@ -59,7 +59,7 @@ class SurahFragment : Fragment() {
                         1)
                 }
             surahName = surah!!.first().sura_name
-            changeToolbarTitle(surahName)
+            changeToolbarTitle("سورة $surahName")
 
             surahRecyclerView.adapter = MySurahRecyclerViewAdapter(
                 surah as ArrayList<AyaItem>,

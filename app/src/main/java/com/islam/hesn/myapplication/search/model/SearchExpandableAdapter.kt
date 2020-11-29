@@ -6,22 +6,27 @@ import android.view.View
 import android.view.ViewGroup
 import com.islam.hesn.myapplication.R
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter
-import com.thoughtbot.expandablerecyclerview.listeners.GroupExpandCollapseListener
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup
 
 
-class SearchExpandableAdapter<T : Parcelable>(groups: List<ExpandableGroup<T>>) :
+class SearchExpandableAdapter<T : Parcelable>(
+    groups: List<ExpandableGroup<T>>,
+    val isFromQuran: Boolean,
+) :
     ExpandableRecyclerViewAdapter<GroupViewHolder, ItemViewHolder<T>>(groups) {
 
     override fun onCreateGroupViewHolder(parent: ViewGroup, viewType: Int): GroupViewHolder {
         val view: View =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_layout_section_quran, parent, false)
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_layout_section_quran, parent, false)
         return GroupViewHolder(view)
     }
 
     override fun onCreateChildViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder<T> {
-        val view: View =
+        val view: View = if (isFromQuran)
             LayoutInflater.from(parent.context).inflate(R.layout.item_layout_surah, parent, false)
+        else
+            LayoutInflater.from(parent.context).inflate(R.layout.item_layout_book, parent, false)
         return ItemViewHolder(view)
     }
 
@@ -29,7 +34,7 @@ class SearchExpandableAdapter<T : Parcelable>(groups: List<ExpandableGroup<T>>) 
         holder: ItemViewHolder<T>,
         flatPosition: Int,
         group: ExpandableGroup<*>,
-        childIndex: Int
+        childIndex: Int,
     ) {
         val verse = group.items[childIndex]
         holder.setVerse(verse as T)
@@ -38,10 +43,9 @@ class SearchExpandableAdapter<T : Parcelable>(groups: List<ExpandableGroup<T>>) 
     override fun onBindGroupViewHolder(
         holder: GroupViewHolder,
         flatPosition: Int,
-        group: ExpandableGroup<*>?
-    ) {
-        holder.setSectionTitle(group!!)
-    }
+        group: ExpandableGroup<*>?,
+    ) =
+        holder.setSectionTitle(group!!, onGroupClick(flatPosition))
 
 
 }

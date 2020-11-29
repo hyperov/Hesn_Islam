@@ -52,7 +52,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/bibleList"
+            android:id="@+id/searchList"
             android:name="com.islam.hesn.myapplication.bible.view.BibleFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"

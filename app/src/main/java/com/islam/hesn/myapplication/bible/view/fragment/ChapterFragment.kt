@@ -36,7 +36,7 @@ class ChapterFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         changeToolbarTitle(bibleViewModel.selectedChapter.value.toString())
-        fab.setOnClickListener { bibleList.smoothScrollToPosition(0) }
+        fab.setOnClickListener { searchList.smoothScrollToPosition(0) }
         setListDivider()
         observeData()
         observeTranslationData()
@@ -44,14 +44,14 @@ class ChapterFragment : Fragment() {
     }
 
     private fun setListDivider() {
-        bibleList.addItemDecoration(DividerItemDecoration(context,
+        searchList.addItemDecoration(DividerItemDecoration(context,
             DividerItemDecoration.VERTICAL))
     }
 
     private fun observeTranslationData() {
         translationViewModel.loading.observe(viewLifecycleOwner, { isVisible ->
             progressChapter.visibility = if (isVisible) View.VISIBLE else View.GONE
-            bibleList.visibility = if (isVisible) View.GONE else View.VISIBLE
+            searchList.visibility = if (isVisible) View.GONE else View.VISIBLE
         })
 
         translationViewModel.verse.observe(viewLifecycleOwner, { verse ->
@@ -71,7 +71,7 @@ class ChapterFragment : Fragment() {
 
     private fun observeData() {
         bibleViewModel.verseModels.observe(viewLifecycleOwner, {
-            bibleList.adapter =
+            searchList.adapter =
                 BibleMainRecyclerViewAdapter(
                     verses = it,
                     state = AdapterStateBibleEnum.VERSES,

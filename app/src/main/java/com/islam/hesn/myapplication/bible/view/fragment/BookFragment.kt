@@ -20,7 +20,6 @@ import com.islam.hesn.myapplication.bible.viewmodel.BibleViewModel
 import com.islam.hesn.myapplication.home.changeToolbarTitle
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_bible_list.*
-import kotlinx.android.synthetic.main.fragment_quran_list.*
 import kotlinx.android.synthetic.main.fragment_quran_list.fabJump
 import kotlinx.android.synthetic.main.layout_dialog_bible_fast_navigation.*
 
@@ -39,7 +38,7 @@ class BookFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        changeToolbarTitle(bibleViewModel.selectedTitle.value!!)
+        changeToolbarTitle("سفر  ${ bibleViewModel.selectedTitle.value!!}" )
         setListDivider()
         observeData()
         getChapters()
@@ -56,7 +55,7 @@ class BookFragment : Fragment() {
     }
 
     private fun setListDivider() {
-        bibleList.addItemDecoration(DividerItemDecoration(context,
+        searchList.addItemDecoration(DividerItemDecoration(context,
             DividerItemDecoration.VERTICAL))
     }
 
@@ -66,7 +65,7 @@ class BookFragment : Fragment() {
 
     private fun observeData() {
         bibleViewModel.chapterModels.observe(viewLifecycleOwner, {
-            bibleList.adapter =
+            searchList.adapter =
                 BibleMainRecyclerViewAdapter(
                     chapters = it,
                     state = AdapterStateBibleEnum.CHAPTERS,
