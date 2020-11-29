@@ -27,9 +27,11 @@ class TranslationQuranBottomSheetFragment : BottomSheetDialogFragment(), View.On
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
-        return inflater.inflate(R.layout.layout_quran_translation_options_bottom_sheet, container, false)
+        return inflater.inflate(R.layout.layout_quran_translation_options_bottom_sheet,
+            container,
+            false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

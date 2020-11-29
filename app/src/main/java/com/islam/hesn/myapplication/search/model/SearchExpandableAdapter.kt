@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.islam.hesn.myapplication.R
+import com.islam.hesn.myapplication.bible.model.response.bible.Verse
+import com.islam.hesn.myapplication.quran.model.response.arabic.AyaItem
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup
 
@@ -12,6 +14,9 @@ import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup
 class SearchExpandableAdapter<T : Parcelable>(
     groups: List<ExpandableGroup<T>>,
     val isFromQuran: Boolean,
+    val searchVerseItemClick: ((verse: Verse) -> Unit)? = null,
+    val searchAyaItemClick: ((verse: AyaItem) -> Unit)? = null,
+    val onLastReadClick: ((surahId: Int, ayaId: Int,surahName:String) -> Unit)? = null,
 ) :
     ExpandableRecyclerViewAdapter<GroupViewHolder, ItemViewHolder<T>>(groups) {
 
@@ -37,7 +42,8 @@ class SearchExpandableAdapter<T : Parcelable>(
         childIndex: Int,
     ) {
         val verse = group.items[childIndex]
-        holder.setVerse(verse as T)
+        holder.setVerse(verse as T, searchVerseItemClick, searchAyaItemClick,isFromQuran,onLastReadClick,this as SearchExpandableAdapter<AyaItem>)
+
     }
 
     override fun onBindGroupViewHolder(
