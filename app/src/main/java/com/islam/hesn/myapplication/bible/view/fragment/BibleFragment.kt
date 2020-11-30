@@ -55,9 +55,11 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
         etSearch.setOnEditorActionListener(this)
         setSearchIconClick()
         setSearchTypingListener()
+
         fabJump.setOnClickListener {
             fabJump.isExpanded = !fabJump.isExpanded
         }
+
         btFastForwardDone.setOnClickListener {
 
             fabJump.isExpanded = !fabJump.isExpanded
@@ -65,6 +67,7 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
             bibleViewModel.selectedChapter.value = selectedChapter.chapterNum
             findNavController().navigate(R.id.chapterFragment)
         }
+
         btCancel.setOnClickListener { fabJump.isExpanded = !fabJump.isExpanded }
     }
 

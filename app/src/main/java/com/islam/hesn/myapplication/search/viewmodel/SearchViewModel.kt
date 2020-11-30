@@ -22,6 +22,8 @@ class SearchViewModel : ViewModel() {
     val booksBible = MutableLiveData<List<Book>>()
     private val searchVerses = ArrayList<SearchedVerse>()
 
+    val searchedVersesLiveData = MutableLiveData<ArrayList<SearchedVerse>>()
+
     val searchedVersesSections = MutableLiveData<ArrayList<Section<Verse>>>()
 
 
@@ -51,11 +53,12 @@ class SearchViewModel : ViewModel() {
 
                     searchVerses.add(SearchedVerse(bookTitlesArabic[index],
                         chapter.chapterNum.toString(),
-                        filteredVerses))
+                        filteredVerses,book.bookName))
                 }
             }
 
         }
+        searchedVersesLiveData.value = searchVerses
 
         searchVerses.forEach {
             sectionsBibleList.add(Section(" ${it.bookName}   ${it.chapterName}",

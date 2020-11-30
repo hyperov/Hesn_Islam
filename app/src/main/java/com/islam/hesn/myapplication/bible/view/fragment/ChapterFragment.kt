@@ -51,7 +51,6 @@ class ChapterFragment : Fragment() {
     private fun observeTranslationData() {
         translationViewModel.loading.observe(viewLifecycleOwner, { isVisible ->
             progressChapter.visibility = if (isVisible) View.VISIBLE else View.GONE
-            searchList.visibility = if (isVisible) View.GONE else View.VISIBLE
         })
 
         translationViewModel.verse.observe(viewLifecycleOwner, { verse ->

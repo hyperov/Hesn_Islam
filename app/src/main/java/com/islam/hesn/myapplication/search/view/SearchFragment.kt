@@ -11,7 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.bible.model.response.bible.Verse
+import com.islam.hesn.myapplication.bible.view.fragment.TranslationBibleBottomSheetFragment
 import com.islam.hesn.myapplication.bible.viewmodel.BibleTranslationViewModel
+import com.islam.hesn.myapplication.bible.viewmodel.BibleViewModel
 import com.islam.hesn.myapplication.home.createDialog
 import com.islam.hesn.myapplication.quran.model.response.arabic.AyaItem
 import com.islam.hesn.myapplication.quran.view.TranslationQuranBottomSheetFragment
@@ -20,6 +22,7 @@ import com.islam.hesn.myapplication.search.model.SearchExpandableAdapter
 import com.islam.hesn.myapplication.search.viewmodel.SearchViewModel
 import com.islam.hesn.myapplication.utils.*
 import com.thoughtbot.expandablerecyclerview.listeners.OnGroupClickListener
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_bible_list.*
 import kotlinx.android.synthetic.main.fragment_chapter.*
 import kotlinx.android.synthetic.main.fragment_surah.*
@@ -27,13 +30,15 @@ import kotlinx.android.synthetic.main.search_fragment.*
 import kotlinx.android.synthetic.main.search_fragment.etSearch
 import kotlinx.android.synthetic.main.search_fragment.searchList
 
+@AndroidEntryPoint
 class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClickListener {
 
     private val searchViewModel: SearchViewModel by activityViewModels()
     private val ayaViewModel: AyaTranslationViewModel by activityViewModels()
-    private val bibleViewModel: BibleTranslationViewModel by activityViewModels()
-
-    private lateinit var bottomSheet: TranslationQuranBottomSheetFragment
+    private val bibleTranslationViewModel: BibleTranslationViewModel by activityViewModels()
+    private val bibleViewModel: BibleViewModel by activityViewModels()
+    private lateinit var bottomSheetQuran: TranslationQuranBottomSheetFragment
+    private lateinit var bottomSheetBible: TranslationBibleBottomSheetFragment
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,16 +70,15 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClick
             progressSearch.visibility = if (isVisible) View.VISIBLE else View.GONE
         })
 
-        bibleViewModel.loading.observe(viewLifecycleOwner, { isVisible ->
-            progressChapter.visibility = if (isVisible) View.VISIBLE else View.GONE
-            searchList.visibility = if (isVisible) View.GONE else View.VISIBLE
+        bibleTranslationViewModel.loading.observe(viewLifecycleOwner, { isVisible ->
+            progressSearch.visibility = if (isVisible) View.VISIBLE else View.GONE
         })
 
-        bibleViewModel.verse.observe(viewLifecycleOwner, { verse ->
+        bibleTranslationViewModel.verse.observe(viewLifecycleOwner, { verse ->
             verse?.let {
 
                 createDialog(verse.verseNum.toString(), verse.verseContent)
-                bibleViewModel.verse.value = null
+                bibleTranslationViewModel.verse.value = null
             }
         })
     }
@@ -100,19 +104,16 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClick
                     searchAyaItemClick = { verse: AyaItem ->
                         ayaViewModel.ayaNum.value = verse.aya_id
                         ayaViewModel.suraNum.value = verse.sura_id
-                        bottomSheet = TranslationQuranBottomSheetFragment.newInstance().apply {
+                        bottomSheetQuran = TranslationQuranBottomSheetFragment.newInstance().apply {
 
                             showNow(this@SearchFragment.parentFragmentManager, "translation")
                         }
                     }, onLastReadClick = { surahId: Int, ayaId: Int, surahName: String ->
-//                        quranViewModel.surahId.removeObservers(viewLifecycleOwner)
+
 
                         Prefs.putAny(BOOKMARK_SURAH_NUMBER, surahId)
                         Prefs.putAny(BOOKMARK_AYA_NUMBER, ayaId)
-
                         Prefs.putAny(BOOKMARK_SURAH_NAME, surahName)
-
-//                        quranViewModel.surahId.value = quranViewModel.surahId.value
 
                         requireContext().showSnackBar(searchList,
                             getString(R.string.bookmark_saved_successfully))
@@ -121,26 +122,31 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClick
                 }
             }
         })
+
         searchViewModel.searchedVersesSections.observe(viewLifecycleOwner, { sections ->
             if (!searchViewModel.isFromQuranScreen.value!!) {
                 searchList.adapter = SearchExpandableAdapter(sections, false, { verse: Verse ->
-//                    bibleViewModel.apply {
-//
-//                        bookName.value =
-//                            bibleViewModel.selectedBook.value!!.bookName
-//
-//                        chapterNum.value =
-//                            bibleViewModel.selectedChapter.value
-//
-//                        verseNum.value = verse.verseNum
-//                    }
-//
-//                    bottomSheet = TranslationBibleBottomSheetFragment.newInstance().apply {
-//                        showNow(this@SearchFragment.parentFragmentManager, "translation")
-//                    }
+                    bibleTranslationViewModel.apply {
+
+                        val searchedVerse = searchViewModel.searchedVersesLiveData.value?.first {
+                            it.verseList.contains(verse)
+                        }
+                        bookName.value =
+                            searchedVerse?.bookNameEn
+
+                        chapterNum.value =
+                            searchedVerse?.chapterName?.toInt()
+
+                        verseNum.value = verse.verseNum
+                    }
+
+                    bottomSheetBible = TranslationBibleBottomSheetFragment.newInstance().apply {
+                        showNow(this@SearchFragment.parentFragmentManager, "translation")
+                    }
                 })
             }
         })
+
     }
 
     override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {

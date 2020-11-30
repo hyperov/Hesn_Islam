@@ -14,11 +14,11 @@ import com.islam.hesn.myapplication.utils.Prefs
 import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder
 
 
-class ItemViewHolder<T>(itemView: View) : ChildViewHolder(itemView) {
+class ItemViewHolder<T>(var parentView: View) : ChildViewHolder(parentView) {
 
-    private val itemName: TextView = itemView.findViewById(R.id.content)
-    private val itemNum: TextView = itemView.findViewById(R.id.item_num)
-    private val ivLastRead: ImageView = itemView.findViewById(R.id.ivLastRead)
+    private val itemName: TextView = parentView.findViewById(R.id.content)
+    private val itemNum: TextView = parentView.findViewById(R.id.item_num)
+
 
     fun setVerse(
         verse: T,
@@ -40,6 +40,8 @@ class ItemViewHolder<T>(itemView: View) : ChildViewHolder(itemView) {
 
         if (isFromQuran) {
             val verseItem = verse as AyaItem
+            val ivLastRead: ImageView = parentView.findViewById(R.id.ivLastRead)
+
             ivLastRead.setOnClickListener {
 
                 onLastReadClick?.invoke(verseItem.sura_id, verseItem.aya_id, verseItem.sura_name)
