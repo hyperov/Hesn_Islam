@@ -9,6 +9,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.bible.model.response.bible.Verse
 import com.islam.hesn.myapplication.bible.view.fragment.TranslationBibleBottomSheetFragment
@@ -114,8 +115,8 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClick
                         Prefs.putAny(BOOKMARK_SURAH_NUMBER, surahId)
                         Prefs.putAny(BOOKMARK_AYA_NUMBER, ayaId)
                         Prefs.putAny(BOOKMARK_SURAH_NAME, surahName)
-
-                        requireContext().showSnackBar(searchList,
+                        val bottomNavView: BottomNavigationView =  activity?.findViewById(R.id.bottomNavigation)!!
+                        requireContext().showSnackBar(searchLayout,bottomNavView,
                             getString(R.string.bookmark_saved_successfully))
                     }).also {
                     it.setOnGroupClickListener(this@SearchFragment)

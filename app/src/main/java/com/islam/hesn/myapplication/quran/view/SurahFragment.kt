@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.home.changeToolbarTitle
 import com.islam.hesn.myapplication.home.createDialog
@@ -81,8 +82,9 @@ class SurahFragment : Fragment() {
                     Prefs.putAny(BOOKMARK_SURAH_NAME, surahName)
 
                     quranViewModel.surahId.value = quranViewModel.surahId.value
-
-                    requireContext().showSnackBar(surahRecyclerView,
+                    val bottomNavView: BottomNavigationView =
+                        activity?.findViewById(R.id.bottomNavigation)!!
+                    requireContext().showSnackBar(surahRecyclerView, bottomNavView,
                         getString(R.string.bookmark_saved_successfully))
 
                 }

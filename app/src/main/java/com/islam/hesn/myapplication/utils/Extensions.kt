@@ -8,6 +8,7 @@ import android.net.Uri
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.islam.hesn.myapplication.R
 
@@ -39,7 +40,7 @@ fun SharedPreferences.putAny(name: String, any: Any) {
     }
 }
 
-fun Context.showSnackBar(view: View, text: String) {
+fun Context.showSnackBar(view: View, navigation: BottomNavigationView, text: String) {
     Snackbar.make(view,
         text,
         Snackbar.LENGTH_LONG)
@@ -52,5 +53,6 @@ fun Context.showSnackBar(view: View, text: String) {
         .apply {
             setAction(getString(R.string.dismiss)) { dismiss() }.show()
 
+            anchorView = navigation
         }
 }

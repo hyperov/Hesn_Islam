@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.quran.viewmodel.QuranViewModel
 import com.islam.hesn.myapplication.utils.*
@@ -67,7 +68,11 @@ class MoreFragment : Fragment(), View.OnClickListener {
                     quranViewModel.surahId.value = quranViewModel.surahId.value
                     findNavController().navigate(R.id.surahFragment)
                 } else {
-                    requireContext().showSnackBar(moreLayout, getString(R.string.no_bookmarks))
+                    val bottomNavView: BottomNavigationView =
+                        activity?.findViewById(R.id.bottomNavigation)!!
+                    requireContext().showSnackBar(moreLayout,
+                        bottomNavView,
+                        getString(R.string.no_bookmarks))
 
                 }
             }
