@@ -9,6 +9,7 @@ import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.bible.model.response.bible.Verse
 import com.islam.hesn.myapplication.quran.model.response.arabic.AyaItem
 import com.islam.hesn.myapplication.utils.BOOKMARK_AYA_NUMBER
+import com.islam.hesn.myapplication.utils.BOOKMARK_SURAH_NUMBER
 import com.islam.hesn.myapplication.utils.Prefs
 import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder
 
@@ -46,7 +47,9 @@ class ItemViewHolder<T>(itemView: View) : ChildViewHolder(itemView) {
 
             }
 
-            if (Prefs.getInt(BOOKMARK_AYA_NUMBER, 1) == verseItem.aya_id)
+            if (Prefs.getInt(BOOKMARK_AYA_NUMBER, 1) == verseItem.aya_id && Prefs.getInt(
+                    BOOKMARK_SURAH_NUMBER, 1) == verseItem.sura_id
+            )
                 ivLastRead.setImageDrawable(ResourcesCompat.getDrawable(itemView.context.resources,
                     R.drawable.ic_starred,
                     null))

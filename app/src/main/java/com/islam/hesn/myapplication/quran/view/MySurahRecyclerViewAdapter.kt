@@ -12,6 +12,7 @@ import com.islam.hesn.myapplication.quran.model.response.arabic.AdapterStateQura
 import com.islam.hesn.myapplication.quran.model.response.arabic.AdapterStateQuranEnum.QURAN_SURAH_LIST
 import com.islam.hesn.myapplication.quran.model.response.arabic.AyaItem
 import com.islam.hesn.myapplication.utils.BOOKMARK_AYA_NUMBER
+import com.islam.hesn.myapplication.utils.BOOKMARK_SURAH_NUMBER
 import com.islam.hesn.myapplication.utils.Prefs
 import kotlinx.android.synthetic.main.item_layout_surah.view.*
 
@@ -55,7 +56,7 @@ class MySurahRecyclerViewAdapter(
                         ivLastRead.isVisible = true
                         ivLastRead.setOnClickListener {
 
-                            notifyItemChanged(Prefs.getInt(BOOKMARK_AYA_NUMBER, 1)-1)
+                            notifyItemChanged(Prefs.getInt(BOOKMARK_AYA_NUMBER, 1) - 1)
                             onLastReadClick?.invoke(sura_id, aya_id)
                             ivLastRead.setImageDrawable(ResourcesCompat.getDrawable(resources,
                                 R.drawable.ic_starred,
@@ -63,7 +64,9 @@ class MySurahRecyclerViewAdapter(
 
                         }
 
-                        if (Prefs.getInt(BOOKMARK_AYA_NUMBER, 1) == aya_id)
+                        if (Prefs.getInt(BOOKMARK_AYA_NUMBER, 1) == aya_id && Prefs.getInt(
+                                BOOKMARK_SURAH_NUMBER, 1) == sura_id
+                        )
                             ivLastRead.setImageDrawable(ResourcesCompat.getDrawable(resources,
                                 R.drawable.ic_starred,
                                 null))
