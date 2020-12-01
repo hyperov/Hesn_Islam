@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layoutDirection="rtl"
+    android:background="@color/colorAccent"
     android:padding="@dimen/vertical_margin_16">
 
     <TextView
@@ -106,10 +107,10 @@
         android:id="@+id/message"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         app:boxBackgroundMode="outline"
         app:hintEnabled="false"
-        app:layout_constraintEnd_toEndOf="@+id/email"
+        app:layout_constraintEnd_toEndOf="@+id/subject"
         app:layout_constraintStart_toStartOf="@+id/tvMessage"
         app:layout_constraintTop_toBottomOf="@id/tvMessage">
 
@@ -148,12 +149,11 @@
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
-
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/cairo_regular"
-        android:text="@string/contact_us"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="@dimen/text_size_24"
+        android:textSize="@dimen/text_size_32"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/janna_bold"
+        android:text="@string/contact_us"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
