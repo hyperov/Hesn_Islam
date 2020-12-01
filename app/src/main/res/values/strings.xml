@@ -40,6 +40,13 @@
     <string name="no_bookmarks">عذراً..لا يوجد حفظ لأخر تلاوة حتى الآن</string>
     <string name="dismiss">إلغاء</string>
     <string name="bookmark_saved_successfully">تم حفظ أخر تلاوة بنجاح</string>
+    <string name="email_title">عنوان الايميل</string>
+    <string name="from">من</string>
+    <string name="write_your_mail_here">اكتب إيميلك هنا</string>
+    <string name="your_message">رسالتك</string>
+    <string name="write_your_message_here">اكتب رسالتك هنا</string>
+    <string name="send">إرسال</string>
+    <string name="title">العنوان</string>
 
     /////////////////////////////////////
     <string-array name="bible_books">

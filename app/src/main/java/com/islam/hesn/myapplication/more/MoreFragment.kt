@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.islam.hesn.myapplication.R
+import com.islam.hesn.myapplication.contactus.ContactUsBottomSheetFragment
 import com.islam.hesn.myapplication.quran.viewmodel.QuranViewModel
 import com.islam.hesn.myapplication.utils.*
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubePlayerViewModel
@@ -22,11 +23,13 @@ class MoreFragment : Fragment(), View.OnClickListener {
     private val quranViewModel: QuranViewModel by activityViewModels()
     private val youtubePlayerViewModel: YoutubePlayerViewModel by activityViewModels()
 
+    private lateinit var bottomSheet: ContactUsBottomSheetFragment
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_more, container, false)
     }
 
@@ -57,6 +60,9 @@ class MoreFragment : Fragment(), View.OnClickListener {
                 findNavController().navigate(R.id.youtubePlayerFragment)
             }
             cvContactUs -> {
+                bottomSheet = ContactUsBottomSheetFragment.newInstance().apply {
+                    showNow(this@MoreFragment.parentFragmentManager, "translation")
+                }
             }
             cvLastRead -> {
 
