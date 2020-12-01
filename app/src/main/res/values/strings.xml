@@ -50,6 +50,7 @@
     <string name="email_title_error">يجب إدخال عنوان الإيميل</string>
     <string name="from_mail_error">تأكد من إدخال إيميلك</string>
     <string name="message_empty_error">تأكد أن رسالتك ليست فارغة</string>
+    <string name="valid_email_error">من فضلك قم بإدخال إيميل صحيح</string>
 
     /////////////////////////////////////
     <string-array name="bible_books">
