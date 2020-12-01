@@ -29,7 +29,28 @@ class ContactUsBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     private fun setupViews() {
-        sendButton.setOnClickListener { dismissAllowingStateLoss() }
+        sendButton.setOnClickListener { checkForErrors() }
+    }
+
+    private fun checkForErrors() {
+        if (etMessage.text?.isEmpty()!!) message.error = getString(R.string.message_empty_error)
+
+        if (etEmail.text?.isEmpty()!!) email.error = getString(R.string.from_mail_error)
+
+        if (etSubject.text?.isEmpty()!!) subject.error = getString(R.string.email_title_error)
+
+        val isValid =
+            etMessage.text?.isNotEmpty()!! && etEmail.text?.isNotEmpty()!! && etSubject.text?.isNotEmpty()!!
+
+        if (isValid) {
+            sendEmail()
+            dismissAllowingStateLoss()
+        }
+
+    }
+
+    private fun sendEmail() {
+
     }
 
     companion object {

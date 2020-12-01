@@ -21,19 +21,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/subject" />
 
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/subject"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/bg_text_outline"
         android:hint="@string/title"
-        android:inputType="text"
-        android:padding="@dimen/vertical_margin_16"
+        app:boxBackgroundMode="outline"
+        app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tvSubject"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etSubject"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_text_outline"
+            android:hint="@string/title"
+            android:inputType="text"
+            android:padding="@dimen/vertical_margin_16" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/tvFrom"
@@ -51,18 +60,31 @@
         app:layout_constraintStart_toStartOf="@id/tvSubject"
         app:layout_constraintTop_toTopOf="@+id/email" />
 
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:background="@drawable/bg_text_outline"
-        android:hint="@string/write_your_mail_here"
-        android:inputType="textEmailAddress"
-        android:padding="@dimen/vertical_margin_16"
+        app:boxBackgroundMode="outline"
+        app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="@+id/subject"
         app:layout_constraintStart_toStartOf="@+id/subject"
-        app:layout_constraintTop_toBottomOf="@+id/subject" />
+        app:layout_constraintTop_toBottomOf="@+id/subject">
+
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_text_outline"
+            android:hint="@string/write_your_mail_here"
+            android:inputType="textEmailAddress"
+            android:padding="@dimen/vertical_margin_16"
+            app:layout_constraintEnd_toEndOf="@+id/subject"
+            app:layout_constraintStart_toStartOf="@+id/subject"
+            app:layout_constraintTop_toBottomOf="@+id/subject" />
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <TextView
         android:id="@+id/tvMessage"
@@ -79,27 +101,41 @@
         app:layout_constraintStart_toStartOf="@id/tvFrom"
         app:layout_constraintTop_toBottomOf="@id/tvFrom" />
 
-    <EditText
-        android:id="@+id/etMessage"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/message"
         android:layout_width="0dp"
         android:layout_height="150dp"
         android:layout_marginTop="24dp"
-        android:background="@drawable/bg_text_outline"
-        android:fontFamily="@font/cairo_regular"
-        android:gravity="top"
-        android:hint="@string/write_your_message_here"
-        android:inputType="textMultiLine"
-        android:padding="@dimen/vertical_margin_16"
+        app:boxBackgroundMode="outline"
+        app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="@+id/email"
         app:layout_constraintStart_toStartOf="@+id/tvMessage"
-        app:layout_constraintTop_toBottomOf="@id/tvMessage" />
+        app:layout_constraintTop_toBottomOf="@id/tvMessage">
+
+        <EditText
+            android:id="@+id/etMessage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_text_outline"
+            android:fontFamily="@font/cairo_regular"
+            android:gravity="top"
+            android:hint="@string/write_your_message_here"
+            android:inputType="textMultiLine"
+            android:padding="@dimen/vertical_margin_16"
+            app:layout_constraintEnd_toEndOf="@+id/email"
+            app:layout_constraintStart_toStartOf="@+id/tvMessage"
+            app:layout_constraintTop_toBottomOf="@id/tvMessage" />
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/sendButton"
         style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="@dimen/vertical_margin_64"
+        android:layout_marginTop="@dimen/vertical_margin_16"
+        android:layout_marginEnd="@dimen/vertical_margin_64"
         android:background="@color/colorPrimary"
         android:fontFamily="@font/cairo_regular"
         android:text="@string/send"
@@ -107,7 +143,7 @@
         app:elevation="@dimen/cardview_default_elevation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etMessage" />
+        app:layout_constraintTop_toBottomOf="@id/message" />
 
     <TextView
         android:id="@+id/textView2"
