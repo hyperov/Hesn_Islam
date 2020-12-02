@@ -92,7 +92,7 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
                         bibleViewModel.selectedBook.value = book
                         bibleViewModel.selectedTitle.value = title
                         findNavController().navigate(R.id.bookFragment)
-                    })
+                    },isVerse = false)
             setupFastForwardSpinnerAdapter(it)
         })
 

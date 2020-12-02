@@ -38,7 +38,7 @@ class BookFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        changeToolbarTitle("سفر  ${ bibleViewModel.selectedTitle.value!!}" )
+        changeToolbarTitle("سفر  ${bibleViewModel.selectedTitle.value!!}")
         setListDivider()
         observeData()
         getChapters()
@@ -69,6 +69,7 @@ class BookFragment : Fragment() {
                 BibleMainRecyclerViewAdapter(
                     chapters = it,
                     state = AdapterStateBibleEnum.CHAPTERS,
+                    isVerse = false,
                     onChapterItemClick = { chapterNum ->
                         bibleViewModel.selectedChapter.value = chapterNum
                         findNavController().navigate(R.id.chapterFragment)

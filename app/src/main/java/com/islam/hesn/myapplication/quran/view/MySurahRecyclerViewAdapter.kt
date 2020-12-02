@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.islam.hesn.myapplication.R
@@ -15,6 +16,8 @@ import com.islam.hesn.myapplication.utils.BOOKMARK_AYA_NUMBER
 import com.islam.hesn.myapplication.utils.BOOKMARK_SURAH_NUMBER
 import com.islam.hesn.myapplication.utils.Prefs
 import kotlinx.android.synthetic.main.item_layout_surah.view.*
+import kotlinx.android.synthetic.main.item_layout_surah.view.content
+import kotlinx.android.synthetic.main.item_layout_surah.view.item_num
 
 
 class MySurahRecyclerViewAdapter(
@@ -45,6 +48,7 @@ class MySurahRecyclerViewAdapter(
             with(ayaItem) {
                 when (state) {
                     QURAN_SURAH_LIST -> {
+                        tvTranslateQuran.isGone = true
                         ivLastRead.isVisible = false
                         item_num.text = sura_id.toString()
                         content.text = sura_name
@@ -53,6 +57,7 @@ class MySurahRecyclerViewAdapter(
                         }
                     }
                     QURAN_SURAH -> {
+                        tvTranslateQuran.isGone = false
                         ivLastRead.isVisible = true
                         ivLastRead.setOnClickListener {
 

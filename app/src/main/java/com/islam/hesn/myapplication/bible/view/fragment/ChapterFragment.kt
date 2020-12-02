@@ -74,6 +74,7 @@ class ChapterFragment : Fragment() {
                 BibleMainRecyclerViewAdapter(
                     verses = it,
                     state = AdapterStateBibleEnum.VERSES,
+                    isVerse = true,
                     onVerseItemClick = { verse ->
                         translationViewModel.apply {
 

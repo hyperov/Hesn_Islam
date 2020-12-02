@@ -3,13 +3,16 @@ package com.islam.hesn.myapplication.bible.view
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.bible.model.response.bible.Book
 import com.islam.hesn.myapplication.bible.model.response.bible.Chapter
 import com.islam.hesn.myapplication.bible.model.response.bible.Verse
 import com.islam.hesn.myapplication.bible.view.AdapterStateBibleEnum.*
-import kotlinx.android.synthetic.main.item_layout_surah.view.*
+import kotlinx.android.synthetic.main.item_layout_chapter.view.*
+import kotlinx.android.synthetic.main.item_layout_surah.view.content
+import kotlinx.android.synthetic.main.item_layout_surah.view.item_num
 
 
 class BibleMainRecyclerViewAdapter(
@@ -17,6 +20,7 @@ class BibleMainRecyclerViewAdapter(
     private val chapters: List<Chapter>? = null,
     private val verses: List<Verse>? = null,
     private val state: AdapterStateBibleEnum,
+    private val isVerse: Boolean,
     private val onBookItemClick: ((book: Book, title: String) -> Unit)? = null,
     private val onChapterItemClick: ((chapterNum: Int) -> Unit)? = null,
     private val onVerseItemClick: ((verse: Verse) -> Unit)? = null,
@@ -32,8 +36,8 @@ class BibleMainRecyclerViewAdapter(
 
         when (state) {
             BOOKS -> holder.bind(books!![position], position)
-            CHAPTERS -> holder.bind(chapters!![position], position)
-            VERSES -> holder.bind(verses!![position], position)
+            CHAPTERS -> holder.bind(chapters!![position])
+            VERSES -> holder.bind(verses!![position])
         }
     }
 
@@ -47,6 +51,9 @@ class BibleMainRecyclerViewAdapter(
 
         fun bind(book: Book, position: Int) = with(itemView) {
 
+            if (!isVerse)
+                tvTranslateBible.isGone = true
+
             with(book) {
                 item_num.text = bookNum.toString()
                 val arabicTitles = resources.getStringArray(R.array.bible_books)
@@ -57,7 +64,10 @@ class BibleMainRecyclerViewAdapter(
             }
         }
 
-        fun bind(chapter: Chapter, position: Int) = with(itemView) {
+        fun bind(chapter: Chapter) = with(itemView) {
+
+            if (!isVerse)
+                tvTranslateBible.isGone = true
 
             with(chapter) {
                 item_num.text = chapterNum.toString()
@@ -68,7 +78,10 @@ class BibleMainRecyclerViewAdapter(
             }
         }
 
-        fun bind(verse: Verse, position: Int) = with(itemView) {
+        fun bind(verse: Verse) = with(itemView) {
+
+            if (isVerse)
+                tvTranslateBible.isGone = false
 
             with(verse) {
                 item_num.text = verseNum.toString()

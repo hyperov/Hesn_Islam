@@ -54,5 +54,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_unstarred" />
 
+    <TextView
+        android:id="@+id/tvTranslateQuran"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/janna_bold"
+        android:textSize="12sp"
+        android:text="@string/click_for_translation"
+        app:layout_constraintStart_toStartOf="@+id/content"
+        app:layout_constraintTop_toBottomOf="@+id/content" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

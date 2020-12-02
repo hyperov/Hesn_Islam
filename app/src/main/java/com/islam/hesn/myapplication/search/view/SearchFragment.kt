@@ -37,7 +37,6 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClick
     private val searchViewModel: SearchViewModel by activityViewModels()
     private val ayaViewModel: AyaTranslationViewModel by activityViewModels()
     private val bibleTranslationViewModel: BibleTranslationViewModel by activityViewModels()
-    private val bibleViewModel: BibleViewModel by activityViewModels()
     private lateinit var bottomSheetQuran: TranslationQuranBottomSheetFragment
     private lateinit var bottomSheetBible: TranslationBibleBottomSheetFragment
 
