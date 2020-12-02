@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -15,7 +16,9 @@ import com.islam.hesn.myapplication.home.changeToolbarTitle
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubePlayerViewModel
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubeSearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_youtube_first_channel.*
+import kotlinx.android.synthetic.main.fragment_youtube_first_channel.progressYoutube
+import kotlinx.android.synthetic.main.fragment_youtube_first_channel.videosList
+import kotlinx.android.synthetic.main.youtube_search_fragment.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -43,7 +46,8 @@ class YoutubeSearchFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        changeToolbarTitle(youtubeSearchViewModel.searchQuery.value + "فى :" + when (youtubeSearchViewModel.selectedTabPosition.value) {
+        tvSearchKeyWord.text = youtubeSearchViewModel.searchQuery.value
+        changeToolbarTitle(when (youtubeSearchViewModel.selectedTabPosition.value) {
             0 -> getString(R.string.main_channel)
             1 -> getString(R.string.education_channel)
             else -> ""
@@ -59,7 +63,6 @@ class YoutubeSearchFragment : Fragment() {
     }
 
 
-
     private fun getPagingMovies() {
         viewLifecycleOwner.lifecycleScope.launch {
 
@@ -69,13 +72,20 @@ class YoutubeSearchFragment : Fragment() {
                 videosList.isVisible = loadStates.refresh is LoadState.NotLoading
 //                retry.isVisible = loadStates.refresh !is LoadState.Loading
                 videosList.isVisible = loadStates.refresh !is LoadState.Error
-//                if (loadStates.refresh is LoadState.Error) openYoutubeChannelIntent()
 //                errorMsg.isVisible = loadStates.refresh is LoadState.Error
+                if (pagingAdapter.itemCount <= 0 && !loadStates.source.refresh.endOfPaginationReached && videosList.isVisible && progressYoutube.isVisible.not()) {
+                    tvSearch.text = getString(R.string.no_results)
+                    noResultsYoutube.isVisible = true
+                } else {
+                    tvSearch.text = getString(R.string.search_results_for)
+                    noResultsYoutube.isGone = true
+                }
             }
 
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
+
             youtubeSearchViewModel.flow.collectLatest { pagingData ->
                 pagingAdapter.submitData(pagingData)
             }

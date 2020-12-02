@@ -29,6 +29,12 @@ class YoutubeRecyclerViewSearchPagingAdapter(
         holder.bind(item!!)
     }
 
+    override fun getItemViewType(position: Int): Int {
+        return if (itemCount == 0) R.layout.item_layout_youtube_first_channel
+        else super.getItemViewType(position)
+    }
+
+
     inner class YoutubeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         fun bind(video: SearchVideo) = with(itemView) {

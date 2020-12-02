@@ -5,19 +5,48 @@
     android:name="com.islam.hesn.myapplication.youtube.view.YoutubeFirstChannelFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@color/colorPrimaryDark"
     tools:context=".youtube.view.YoutubeFirstChannelFragment">
+
+    <TextView
+        android:id="@+id/tvSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/cairo_regular"
+        android:layoutDirection="rtl"
+        android:text="@string/search_results_for"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/text_size_18"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvSearchKeyWord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/vertical_margin_16"
+        android:fontFamily="@font/cairo_regular"
+        android:layoutDirection="rtl"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_18"
+        app:layout_constraintBottom_toBottomOf="@+id/tvSearch"
+        app:layout_constraintStart_toEndOf="@+id/tvSearch"
+        app:layout_constraintTop_toTopOf="@+id/tvSearch"
+        tools:text="العلمانية" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/videosList"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         android:background="@android:color/white"
         app:layoutManager="LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSearch"
         tools:itemCount="5"
         tools:listitem="@layout/item_layout_youtube_first_channel" />
 
@@ -28,7 +57,7 @@
         android:background="@color/colorPrimaryDark"
         android:padding="@dimen/vertical_margin_16"
         android:scaleType="center"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,6 +67,23 @@
         app:lottie_fileName="video.json"
         app:lottie_loop="true"
         app:lottie_speed="1.5" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/noResultsYoutube"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/colorPrimaryDark"
+        android:padding="@dimen/vertical_margin_16"
+        android:scaleType="center"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSearch"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="no_results.json"
+        app:lottie_loop="true"
+        app:lottie_speed="1" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
