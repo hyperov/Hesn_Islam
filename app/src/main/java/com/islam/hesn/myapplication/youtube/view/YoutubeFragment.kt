@@ -34,6 +34,7 @@ class YoutubeFragment : Fragment(), TextView.OnEditorActionListener {
 
         pagerAdapter = ViewPagerAdapter(this)
         pager.adapter = pagerAdapter
+
         tabLayout.setSelectedTabIndicatorColor(
             ContextCompat.getColor(
                 requireContext(),
