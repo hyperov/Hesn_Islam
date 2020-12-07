@@ -9,7 +9,6 @@ import com.islam.hesn.myapplication.home.MainActivity
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         startActivity(Intent(this@SplashActivity, MainActivity::class.java))
         finish()
     }
