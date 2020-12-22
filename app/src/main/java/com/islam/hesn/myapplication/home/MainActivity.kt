@@ -2,7 +2,6 @@ package com.islam.hesn.myapplication.home
 
 import android.os.Bundle
 import android.view.View
-import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration

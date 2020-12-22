@@ -13,9 +13,9 @@ import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup
 
 class SearchExpandableAdapter<T : Parcelable>(
     groups: List<ExpandableGroup<T>>,
-    val isFromQuran: Boolean,
-    val searchVerseItemClick: ((verse: Verse) -> Unit)? = null,
-    val searchAyaItemClick: ((verse: AyaItem) -> Unit)? = null,
+    private val isFromQuran: Boolean,
+    private val searchVerseItemClick: ((verse: Verse) -> Unit)? = null,
+    private val searchAyaItemClick: ((verse: AyaItem) -> Unit)? = null,
     val onLastReadClick: ((surahId: Int, ayaId: Int,surahName:String) -> Unit)? = null,
 ) :
     ExpandableRecyclerViewAdapter<GroupViewHolder, ItemViewHolder<T>>(groups) {

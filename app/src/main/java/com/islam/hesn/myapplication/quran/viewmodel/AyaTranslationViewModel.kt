@@ -6,9 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.islam.hesn.myapplication.quran.model.repo.translation.TranslationRepo
 import com.islam.hesn.myapplication.quran.model.response.translation.Aya
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
 class AyaTranslationViewModel @ViewModelInject constructor(private val repo: TranslationRepo) :
@@ -29,10 +26,7 @@ class AyaTranslationViewModel @ViewModelInject constructor(private val repo: Tra
         }
 
 
-
     }
-
-
 
 
 }

@@ -1,6 +1,5 @@
 package com.islam.hesn.myapplication.bible.model.di
 
-import com.google.gson.GsonBuilder
 import com.islam.hesn.myapplication.bible.model.repo.BibleApis
 import dagger.Module
 import dagger.Provides

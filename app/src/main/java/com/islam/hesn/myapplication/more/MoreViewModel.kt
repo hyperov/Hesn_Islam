@@ -6,6 +6,4 @@ import com.islam.hesn.myapplication.quran.model.repo.arabic.QuranRepo
 
 class MoreViewModel @ViewModelInject constructor(
     private val quranRepo: QuranRepo,
-) : ViewModel() {
-
-}
+) : ViewModel()

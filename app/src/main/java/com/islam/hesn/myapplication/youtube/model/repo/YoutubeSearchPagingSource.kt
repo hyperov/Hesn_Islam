@@ -6,8 +6,8 @@ import retrofit2.HttpException
 import java.io.IOException
 
 class YoutubeSearchPagingSource(
-    val api: YoutubeRepo,
-    val playlistId: String,
+    private val api: YoutubeRepo,
+    private val playlistId: String,
     var searchQuery: String = "",
 ) : PagingSource<String, SearchVideo>() {
 

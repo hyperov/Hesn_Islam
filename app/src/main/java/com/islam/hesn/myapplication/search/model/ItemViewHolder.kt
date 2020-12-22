@@ -14,7 +14,7 @@ import com.islam.hesn.myapplication.utils.Prefs
 import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder
 
 
-class ItemViewHolder<T>(var parentView: View) : ChildViewHolder(parentView) {
+class ItemViewHolder<T>(private var parentView: View) : ChildViewHolder(parentView) {
 
     private val itemName: TextView = parentView.findViewById(R.id.content)
     private val itemNum: TextView = parentView.findViewById(R.id.item_num)

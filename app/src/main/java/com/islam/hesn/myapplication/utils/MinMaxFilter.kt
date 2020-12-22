@@ -13,11 +13,6 @@ class MinMaxFilter : InputFilter {
         mIntMax = maxValue
     }
 
-    constructor(minValue: String, maxValue: String) {
-        mIntMin = minValue.toInt()
-        mIntMax = maxValue.toInt()
-    }
-
     override fun filter(
         source: CharSequence,
         start: Int,

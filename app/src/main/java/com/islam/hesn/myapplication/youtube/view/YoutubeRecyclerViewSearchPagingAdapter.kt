@@ -60,7 +60,7 @@ class YoutubeRecyclerViewSearchPagingAdapter(
                 }
                 video.apply {
 
-                    setOnClickListener { onVideoClick((video as SearchVideo).id.videoId, title) }
+                    setOnClickListener { onVideoClick(video.id.videoId, title) }
                 }
 
 

@@ -14,7 +14,7 @@ import java.nio.charset.Charset
 const val arabicFile = "arabic_quran.json"
 
 fun AssetManager.readJsonStringFromAssets(fileName: String): String? {
-    var json: String?
+    val json: String?
     val charset: Charset = Charsets.UTF_8
     try {
         val `is` = open(fileName)
@@ -28,13 +28,6 @@ fun AssetManager.readJsonStringFromAssets(fileName: String): String? {
         return null
     }
     return json
-}
-
-fun View.showSnackBar(message: String) {
-    Snackbar.make(this, message, Snackbar.LENGTH_INDEFINITE)
-        .setAction("dismiss") { (it as Snackbar).dismiss() }
-        .setActionTextColor(ContextCompat.getColor(context, R.color.design_default_color_error))
-        .show()
 }
 
 fun Fragment.changeToolbarTitle(text: String) {

@@ -14,7 +14,6 @@ import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.bible.model.response.bible.Verse
 import com.islam.hesn.myapplication.bible.view.fragment.TranslationBibleBottomSheetFragment
 import com.islam.hesn.myapplication.bible.viewmodel.BibleTranslationViewModel
-import com.islam.hesn.myapplication.bible.viewmodel.BibleViewModel
 import com.islam.hesn.myapplication.home.createDialog
 import com.islam.hesn.myapplication.quran.model.response.arabic.AyaItem
 import com.islam.hesn.myapplication.quran.view.TranslationQuranBottomSheetFragment
@@ -114,8 +113,9 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClick
                         Prefs.putAny(BOOKMARK_SURAH_NUMBER, surahId)
                         Prefs.putAny(BOOKMARK_AYA_NUMBER, ayaId)
                         Prefs.putAny(BOOKMARK_SURAH_NAME, surahName)
-                        val bottomNavView: BottomNavigationView =  activity?.findViewById(R.id.bottomNavigation)!!
-                        requireContext().showSnackBar(searchLayout,bottomNavView,
+                        val bottomNavView: BottomNavigationView =
+                            activity?.findViewById(R.id.bottomNavigation)!!
+                        requireContext().showSnackBar(searchLayout, bottomNavView,
                             getString(R.string.bookmark_saved_successfully))
                     }).also {
                     it.setOnGroupClickListener(this@SearchFragment)

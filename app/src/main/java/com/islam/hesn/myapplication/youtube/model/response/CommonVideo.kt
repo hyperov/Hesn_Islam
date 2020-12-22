@@ -1,11 +1,12 @@
 package com.islam.hesn.myapplication.youtube.model.response
 
-open class CommonVideo(
-) {
+open class CommonVideo {
     lateinit var snippet: Snippet
     override fun equals(other: Any?): Boolean {
         return this === other
     }
+
+
 }
 
 //"id": {

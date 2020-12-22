@@ -28,9 +28,9 @@ class TutorialActivity : AhoyOnboarderActivity() {
             dpToPixels(16, this).toInt())
 
         val pages = ArrayList<AhoyOnboarderCard>()
-        pages.add(card1);
-        pages.add(card1);
-        pages.add(card1);
+        pages.add(card1)
+        pages.add(card1)
+        pages.add(card1)
 
         setGradientBackground()
         setOnboardPages(pages)
