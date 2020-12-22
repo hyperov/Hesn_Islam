@@ -6,8 +6,5 @@
         android:drawable="@drawable/ic_logo"
         android:gravity="center">
 
-        <!--        <bitmap-->
-        <!--            android:gravity="center"-->
-        <!--            android:src="@drawable/ic_book" />-->
     </item>
 </layer-list>
