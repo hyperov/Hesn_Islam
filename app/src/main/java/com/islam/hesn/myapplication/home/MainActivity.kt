@@ -17,8 +17,6 @@ import kotlinx.android.synthetic.main.tool_bar.*
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var queryListener: SearchView.OnQueryTextListener
-    private lateinit var searchView: SearchView
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +27,6 @@ class MainActivity : AppCompatActivity() {
             window.decorView.layoutDirection = View.LAYOUT_DIRECTION_RTL
         }
     }
-
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
