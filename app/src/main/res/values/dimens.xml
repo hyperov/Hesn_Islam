@@ -10,8 +10,6 @@
     <dimen name="card_corner_radius_16">16dp</dimen>
     <dimen name="card_corner_radius_8">8dp</dimen>
     <dimen name="card_corner_radius_4">4dp</dimen>
-    <dimen name="bottom_sheet_corner_radius">100dp</dimen>
-    <dimen name="bottom_sheet_top_padding">@dimen/vertical_margin_16</dimen>
     <dimen name="text_size_24">24sp</dimen>
     <dimen name="text_size_32">32sp</dimen>
     <dimen name="text_size_18">18sp</dimen>

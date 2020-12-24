@@ -94,26 +94,45 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
                         bibleViewModel.selectedBook.value = book
                         bibleViewModel.selectedTitle.value = title
                         findNavController().navigate(R.id.bookFragment)
-                    },isVerse = false)
+                    }, isVerse = false)
             setupFastForwardSpinnerAdapter(it)
         })
 
         bibleViewModel.loading.observe(viewLifecycleOwner, { isVisible ->
 
             if (isVisible) {
-                fabJump.hide()
-                searchList.visibility = View.GONE
                 progressBible.visibility = View.VISIBLE
                 progressBible.playAnimation()
-                etSearch.isEnabled = false
             } else {
-                fabJump.show()
-                searchList.visibility = View.VISIBLE
                 progressBible.visibility = View.GONE
                 progressBible.cancelAnimation()
-                etSearch.isEnabled = true
             }
 
+        })
+
+        bibleViewModel.error.observe(viewLifecycleOwner, { isError ->
+
+            if (isError) {
+                fabJump.hide()
+                etSearch.isEnabled = false
+                searchList.visibility = View.GONE
+                progressBible.visibility = View.GONE
+                errorBible.visibility = View.VISIBLE
+                errorTextBible.visibility = View.VISIBLE
+            }
+        })
+
+        bibleViewModel.success.observe(viewLifecycleOwner, { isSuccess ->
+
+            if (isSuccess) {
+                fabJump.show()
+                searchList.visibility = View.VISIBLE
+                etSearch.isEnabled = true
+            } else {
+                fabJump.hide()
+                searchList.visibility = View.GONE
+                etSearch.isEnabled = false
+            }
         })
     }
 

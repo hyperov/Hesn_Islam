@@ -25,14 +25,26 @@ class BibleViewModel @ViewModelInject constructor(
     val selectedTitle = MutableLiveData<String>()
 
     val loading = MutableLiveData<Boolean>()
+    val error = MutableLiveData(false)
+    val success = MutableLiveData(false)
 
     fun getBible(translation: String) {
         loading.value = true
+        error.value = false
+        success.value = false
         viewModelScope.launch {
+            try {
+                val bookValues = bibleRepo.getBible(translation).booksMap.values.toList()
+                bookModels.value = bookValues
+                success.value = true
+            } catch (e: Exception) {
+                error.value = true
+                success.value = false
+            } finally {
+                loading.value = false
 
-            val bookValues = bibleRepo.getBible(translation).booksMap.values.toList()
-            bookModels.value = bookValues
-            loading.value = false
+            }
+
         }
 
     }

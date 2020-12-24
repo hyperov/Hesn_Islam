@@ -23,7 +23,6 @@
     <string name="education_channel_id" translatable="false">UCmZUO5XuEQdRxmNTbuY9yEA</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="more">المزيد</string>
     <string name="search_title">بحث</string>
     <string name="instant_navigation">انتقال سريع</string>
@@ -48,9 +47,7 @@
     <string name="send">إرسال</string>
     <string name="title">العنوان</string>
     <string name="email_title_error">يجب إدخال عنوان الإيميل</string>
-    <string name="from_mail_error">تأكد من إدخال إيميلك</string>
     <string name="message_empty_error">تأكد أن رسالتك ليست فارغة</string>
-    <string name="valid_email_error">من فضلك قم بإدخال إيميل صحيح</string>
     <string name="search_results_for">نتائج البحث عن :</string>
     <string name="no_results">عذرآ..لا يوجد نتائج بحث عن : </string>
     <string name="click_for_translation">اضغط للترجمة</string>
