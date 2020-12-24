@@ -9,6 +9,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.bible.model.response.translation.TranslationsBibleOptionsEnum.*
 import com.islam.hesn.myapplication.bible.viewmodel.BibleTranslationViewModel
@@ -40,6 +41,7 @@ class TranslationBibleBottomSheetFragment : BottomSheetDialogFragment(), View.On
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", this::class.simpleName!!);
         setupViews()
     }
 

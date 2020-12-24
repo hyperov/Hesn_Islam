@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.quran.model.response.arabic.AdapterStateQuranEnum.QURAN_SURAH_LIST
 import com.islam.hesn.myapplication.quran.viewmodel.QuranViewModel
@@ -41,6 +42,7 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", this::class.simpleName!!);
         setListDivider()
         resetFastForward()
         observeData()

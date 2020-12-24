@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.home.changeToolbarTitle
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubePlayerViewModel
@@ -29,6 +30,7 @@ class YoutubePlayerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", this::class.simpleName!!)
         changeToolbarTitle(youtubePlayerViewModel.videoTitle.value!!)
         lifecycle.addObserver(youTubePlayerView)
         addListeners()

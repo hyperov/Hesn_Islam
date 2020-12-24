@@ -11,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.home.changeToolbarTitle
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubePlayerViewModel
@@ -45,6 +46,7 @@ class YoutubeSearchFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", this::class.simpleName!!);
         tvSearchKeyWord.text = youtubeSearchViewModel.searchQuery.value
         changeToolbarTitle(when (youtubeSearchViewModel.selectedTabPosition.value) {
             0 -> getString(R.string.main_channel)

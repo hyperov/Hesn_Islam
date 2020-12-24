@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.bible.model.response.bible.Chapter
 import com.islam.hesn.myapplication.bible.model.response.bible.Verse
@@ -38,6 +39,7 @@ class BookFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", this::class.simpleName!!);
         changeToolbarTitle("سفر  ${bibleViewModel.selectedTitle.value!!}")
         setListDivider()
         observeData()

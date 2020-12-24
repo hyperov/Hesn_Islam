@@ -11,6 +11,7 @@ import android.webkit.WebViewClient
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.islam.hesn.myapplication.R
 import kotlinx.android.synthetic.main.fragment_misconceptions.*
 
@@ -28,7 +29,7 @@ class MisconceptionsFragment : Fragment() {
     @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", this::class.simpleName!!);
         val webSettings = webView.settings
         webSettings.javaScriptEnabled = true
         webView.apply {

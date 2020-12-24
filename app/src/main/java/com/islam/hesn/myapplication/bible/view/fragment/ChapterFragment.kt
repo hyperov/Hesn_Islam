@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.bible.view.AdapterStateBibleEnum
 import com.islam.hesn.myapplication.bible.view.BibleMainRecyclerViewAdapter
@@ -41,6 +42,7 @@ class ChapterFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", this::class.simpleName!!);
         changeToolbarTitle(bibleViewModel.selectedChapter.value.toString())
         fab.setOnClickListener { searchList.smoothScrollToPosition(0) }
         setListDivider()
