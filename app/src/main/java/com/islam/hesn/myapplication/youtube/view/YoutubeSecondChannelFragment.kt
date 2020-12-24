@@ -11,8 +11,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.islam.hesn.myapplication.R
+import com.islam.hesn.myapplication.home.IS_CONNECTED
+import com.islam.hesn.myapplication.utils.Prefs
 import com.islam.hesn.myapplication.utils.openYoutubeChannelIntent
+import com.islam.hesn.myapplication.utils.showSnackBar
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubePlayerViewModel
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,12 +47,26 @@ class YoutubeSecondChannelFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        videosList.adapter = pagingAdapter
+        videoList.adapter = pagingAdapter
         setRefreshListener()
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         getVideos()
     }
 
     private fun getVideos() {
+        if (Prefs.getBoolean(IS_CONNECTED, true).not()) {
+
+            val bottomNavView: BottomNavigationView =
+                activity?.findViewById(R.id.bottomNavigation)!!
+
+            requireContext().showSnackBar(videoList,
+                bottomNavView,
+                getString(R.string.error_no_connection),
+                android.R.color.holo_red_light)
+        }
         youtubeViewModel.getYoutubeChannelVideos(getString(R.string.education_channel_playlist_id))
         getPagingMovies()
     }
@@ -75,8 +93,8 @@ class YoutubeSecondChannelFragment : Fragment() {
             pagingAdapter.loadStateFlow.collectLatest { loadStates ->
 
                 progressYoutube.isVisible = loadStates.refresh is LoadState.Loading
-                videosList.isVisible = loadStates.refresh is LoadState.NotLoading
-                videosList.isVisible = loadStates.refresh !is LoadState.Error
+                videoList.isVisible = loadStates.refresh is LoadState.NotLoading
+                videoList.isVisible = loadStates.refresh !is LoadState.Error
                 error.isVisible = loadStates.refresh is LoadState.Error
                 errorText.isVisible = loadStates.refresh is LoadState.Error
                 if (loadStates.refresh is LoadState.Error) {

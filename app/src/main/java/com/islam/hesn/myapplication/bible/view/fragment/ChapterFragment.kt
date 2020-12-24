@@ -13,8 +13,10 @@ import com.islam.hesn.myapplication.bible.view.AdapterStateBibleEnum
 import com.islam.hesn.myapplication.bible.view.BibleMainRecyclerViewAdapter
 import com.islam.hesn.myapplication.bible.viewmodel.BibleTranslationViewModel
 import com.islam.hesn.myapplication.bible.viewmodel.BibleViewModel
+import com.islam.hesn.myapplication.home.IS_CONNECTED
 import com.islam.hesn.myapplication.home.changeToolbarTitle
 import com.islam.hesn.myapplication.home.createDialog
+import com.islam.hesn.myapplication.utils.Prefs
 import com.islam.hesn.myapplication.utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_chapter.*
@@ -89,6 +91,20 @@ class ChapterFragment : Fragment() {
                     state = AdapterStateBibleEnum.VERSES,
                     isVerse = true,
                     onVerseItemClick = { verse ->
+
+                        if (Prefs.getBoolean(IS_CONNECTED, true).not()) {
+
+                            val bottomNavView: BottomNavigationView =
+                                activity?.findViewById(R.id.bottomNavigation)!!
+
+                            requireContext().showSnackBar(chapterTranslation,
+                                bottomNavView,
+                                getString(R.string.error_no_connection),
+                                android.R.color.holo_red_light)
+
+                            return@BibleMainRecyclerViewAdapter
+                        }
+
                         translationViewModel.apply {
 
                             bookName.value =

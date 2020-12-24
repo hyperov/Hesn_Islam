@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.bible.model.response.bible.Book
 import com.islam.hesn.myapplication.bible.model.response.bible.Chapter
@@ -24,9 +25,14 @@ import com.islam.hesn.myapplication.bible.view.AdapterStateBibleEnum.BOOKS
 import com.islam.hesn.myapplication.bible.view.BibleLangEnum
 import com.islam.hesn.myapplication.bible.view.BibleMainRecyclerViewAdapter
 import com.islam.hesn.myapplication.bible.viewmodel.BibleViewModel
+import com.islam.hesn.myapplication.home.IS_CONNECTED
 import com.islam.hesn.myapplication.search.viewmodel.SearchViewModel
+import com.islam.hesn.myapplication.utils.Prefs
+import com.islam.hesn.myapplication.utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_bible_list.*
+import kotlinx.android.synthetic.main.fragment_bible_list.searchList
+import kotlinx.android.synthetic.main.fragment_chapter.*
 import kotlinx.android.synthetic.main.fragment_quran_list.etSearch
 import kotlinx.android.synthetic.main.fragment_quran_list.fabJump
 import kotlinx.android.synthetic.main.fragment_youtube_first_channel.*
@@ -86,6 +92,17 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
     }
 
     private fun getBooks() {
+        if (Prefs.getBoolean(IS_CONNECTED, true).not()) {
+
+            val bottomNavView: BottomNavigationView =
+                activity?.findViewById(R.id.bottomNavigation)!!
+
+            requireContext().showSnackBar(searchList,
+                bottomNavView,
+                getString(R.string.error_no_connection),
+                android.R.color.holo_red_light)
+
+        }
         bibleViewModel.getBible(BibleLangEnum.VAN_DYKE.lang)
     }
 
@@ -123,7 +140,7 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
             if (isError) {
                 errorBible.visibility = View.VISIBLE
                 errorTextBible.visibility = View.VISIBLE
-            }else{
+            } else {
                 errorBible.visibility = View.GONE
                 errorTextBible.visibility = View.GONE
             }
@@ -153,8 +170,21 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
             if (event.action == MotionEvent.ACTION_UP) {
                 etSearch.compoundDrawables[DRAWABLE_RIGHT]?.let {
                     if (event.rawX >= etSearch.right - etSearch.compoundDrawables[DRAWABLE_RIGHT].bounds.width()) {
-                        if (etSearch.text!!.isNotEmpty())
-                            gotoSearchScreen(etSearch.text.toString())
+                        if (etSearch.text!!.isNotEmpty()) {
+                            if (Prefs.getBoolean(IS_CONNECTED, true).not()) {
+
+                                val bottomNavView: BottomNavigationView =
+                                    activity?.findViewById(R.id.bottomNavigation)!!
+
+                                requireContext().showSnackBar(searchList,
+                                    bottomNavView,
+                                    getString(R.string.error_no_connection),
+                                    android.R.color.holo_red_light)
+
+                                return@let
+                            } else
+                                gotoSearchScreen(etSearch.text.toString())
+                        }
                         return@setOnTouchListener true
                     }
                 }
@@ -171,8 +201,21 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
 
     override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-            if (etSearch.text!!.isNotEmpty())
-                gotoSearchScreen(etSearch.text.toString())
+            if (etSearch.text!!.isNotEmpty()) {
+                if (Prefs.getBoolean(IS_CONNECTED, true).not()) {
+
+                    val bottomNavView: BottomNavigationView =
+                        activity?.findViewById(R.id.bottomNavigation)!!
+
+                    requireContext().showSnackBar(searchList,
+                        bottomNavView,
+                        getString(R.string.error_no_connection),
+                        android.R.color.holo_red_light)
+
+                    return false
+                } else
+                    gotoSearchScreen(etSearch.text.toString())
+            }
         }
         return true
     }

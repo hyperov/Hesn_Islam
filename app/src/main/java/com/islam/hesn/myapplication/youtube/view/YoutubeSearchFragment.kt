@@ -17,7 +17,6 @@ import com.islam.hesn.myapplication.youtube.viewmodel.YoutubePlayerViewModel
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubeSearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_youtube_first_channel.progressYoutube
-import kotlinx.android.synthetic.main.fragment_youtube_first_channel.videosList
 import kotlinx.android.synthetic.main.youtube_search_fragment.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

@@ -49,6 +49,7 @@
     <string name="email_title_error">يجب إدخال عنوان الإيميل</string>
     <string name="message_empty_error">تأكد أن رسالتك ليست فارغة</string>
     <string name="error_bible_quran_translation_api">عذراً..حدث خطأ يرجى المحاولة مرة أخرى</string>
+    <string name="error_no_connection">لا يوجد اتصال بالانترنت..من فضلك تأكد من اتصالك بالانترنت ثو عاود المحاولة مرة أخرى</string>
     <string name="search_results_for">نتائج البحث عن :</string>
     <string name="no_results">عذرآ..لا يوجد نتائج بحث عن : </string>
     <string name="click_for_translation">اضغط للترجمة</string>

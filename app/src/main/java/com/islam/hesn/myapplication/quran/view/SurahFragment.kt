@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.islam.hesn.myapplication.R
+import com.islam.hesn.myapplication.home.IS_CONNECTED
 import com.islam.hesn.myapplication.home.changeToolbarTitle
 import com.islam.hesn.myapplication.home.createDialog
 import com.islam.hesn.myapplication.quran.model.response.arabic.AdapterStateQuranEnum.QURAN_SURAH
@@ -67,6 +68,19 @@ class SurahFragment : Fragment() {
             surahRecyclerView.adapter = MySurahRecyclerViewAdapter(
                 surah as ArrayList<AyaItem>,
                 QURAN_SURAH, onAyaItemClick = { surahId, ayaId ->
+
+                    if (Prefs.getBoolean(IS_CONNECTED, true).not()) {
+
+                        val bottomNavView: BottomNavigationView =
+                            activity?.findViewById(R.id.bottomNavigation)!!
+
+                        requireContext().showSnackBar(surahRecyclerView,
+                            bottomNavView,
+                            getString(R.string.error_no_connection),
+                            android.R.color.holo_red_light)
+
+                        return@MySurahRecyclerViewAdapter
+                    }
 
                     ayaViewModel.ayaNum.value = ayaId
                     ayaViewModel.suraNum.value = surahId

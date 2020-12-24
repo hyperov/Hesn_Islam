@@ -1,17 +1,23 @@
 package com.islam.hesn.myapplication.home
 
+import android.app.Application
+import android.content.Context
 import android.content.res.AssetManager
-import android.view.View
-import androidx.core.content.ContextCompat
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkInfo
+import android.net.NetworkRequest
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import com.islam.hesn.myapplication.R
+import com.islam.hesn.myapplication.utils.Prefs
+import com.islam.hesn.myapplication.utils.putAny
 import java.io.IOException
 import java.nio.charset.Charset
 
 const val arabicFile = "arabic_quran.json"
+const val IS_CONNECTED = "IS_CONNECTED"
 
 fun AssetManager.readJsonStringFromAssets(fileName: String): String? {
     val json: String?
@@ -41,6 +47,24 @@ fun Fragment.createDialog(title: String, message: String) {
         .setTitle(title)
         .setMessage(message)
         .setPositiveButton("ok") { dialog, _ -> dialog.dismiss() }
-//        .setPositiveButtonIcon(ContextCompat.getDrawable(this.requireContext(),R.drawable.ic_book))
         .show()
+}
+
+fun registerNetworkConnectionEvents(context: Application) {
+    val cm: ConnectivityManager =
+        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val builder: NetworkRequest.Builder = NetworkRequest.Builder()
+
+    cm.registerNetworkCallback(
+        builder.build(),
+        object : ConnectivityManager.NetworkCallback() {
+
+            override fun onAvailable(network: Network) {
+                Prefs.putAny(IS_CONNECTED, true)
+            }
+
+            override fun onLost(network: Network) {
+                Prefs.putAny(IS_CONNECTED, false)
+            }
+        })
 }

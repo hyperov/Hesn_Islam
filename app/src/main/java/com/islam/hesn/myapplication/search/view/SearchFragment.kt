@@ -14,6 +14,7 @@ import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.bible.model.response.bible.Verse
 import com.islam.hesn.myapplication.bible.view.fragment.TranslationBibleBottomSheetFragment
 import com.islam.hesn.myapplication.bible.viewmodel.BibleTranslationViewModel
+import com.islam.hesn.myapplication.home.IS_CONNECTED
 import com.islam.hesn.myapplication.home.createDialog
 import com.islam.hesn.myapplication.quran.model.response.arabic.AyaItem
 import com.islam.hesn.myapplication.quran.view.TranslationQuranBottomSheetFragment
@@ -119,6 +120,20 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClick
                 searchList.adapter = SearchExpandableAdapter(sections,
                     true,
                     searchAyaItemClick = { verse: AyaItem ->
+
+                        if (Prefs.getBoolean(IS_CONNECTED, true).not()) {
+
+                            val bottomNavView: BottomNavigationView =
+                                activity?.findViewById(R.id.bottomNavigation)!!
+
+                            requireContext().showSnackBar(searchLayout,
+                                bottomNavView,
+                                getString(R.string.error_no_connection),
+                                android.R.color.holo_red_light)
+
+                            return@SearchExpandableAdapter
+                        }
+
                         ayaViewModel.ayaNum.value = verse.aya_id
                         ayaViewModel.suraNum.value = verse.sura_id
                         bottomSheetQuran = TranslationQuranBottomSheetFragment.newInstance().apply {
@@ -144,6 +159,20 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClick
         searchViewModel.searchedVersesSections.observe(viewLifecycleOwner, { sections ->
             if (!searchViewModel.isFromQuranScreen.value!!) {
                 searchList.adapter = SearchExpandableAdapter(sections, false, { verse: Verse ->
+
+                    if (Prefs.getBoolean(IS_CONNECTED, true).not()) {
+
+                        val bottomNavView: BottomNavigationView =
+                            activity?.findViewById(R.id.bottomNavigation)!!
+
+                        requireContext().showSnackBar(searchLayout,
+                            bottomNavView,
+                            getString(R.string.error_no_connection),
+                            android.R.color.holo_red_light)
+
+                        return@SearchExpandableAdapter
+                    }
+
                     bibleTranslationViewModel.apply {
 
                         val searchedVerse = searchViewModel.searchedVersesLiveData.value?.first {
