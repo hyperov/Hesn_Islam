@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.view.View
+import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -47,6 +48,23 @@ fun Context.showSnackBar(view: View, navigation: BottomNavigationView, text: Str
         .setTextColor(ContextCompat.getColor(
             this,
             R.color.colorAccent))
+        .setActionTextColor(ContextCompat.getColor(
+            this,
+            R.color.colorAccent))
+        .apply {
+            setAction(getString(R.string.dismiss)) { dismiss() }.show()
+
+            anchorView = navigation
+        }
+}
+
+fun Context.showSnackBar(view: View, navigation: BottomNavigationView, text: String,@ColorRes textColor:Int) {
+    Snackbar.make(view,
+        text,
+        Snackbar.LENGTH_LONG)
+        .setTextColor(ContextCompat.getColor(
+            this,
+            textColor))
         .setActionTextColor(ContextCompat.getColor(
             this,
             R.color.colorAccent))

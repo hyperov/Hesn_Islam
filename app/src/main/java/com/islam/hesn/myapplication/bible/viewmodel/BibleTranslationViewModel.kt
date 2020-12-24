@@ -13,7 +13,8 @@ class BibleTranslationViewModel @ViewModelInject constructor(
 ) : ViewModel() {
 
     val verse = MutableLiveData<Verse>()
-    val loading = MutableLiveData<Boolean>()
+    val loading = MutableLiveData(false)
+    val error = MutableLiveData(false)
 
     val bookName = MutableLiveData<String>()
     val chapterNum = MutableLiveData<Int>()
@@ -21,14 +22,20 @@ class BibleTranslationViewModel @ViewModelInject constructor(
 
     fun getVerseTranslation(translation: String) {
         loading.value = true
+        error.value = false
         viewModelScope.launch {
+            try {
+                verse.value =
+                    bibleRepo.getTranslatedVerse(
+                        translation,
+                        "${bookName.value}${chapterNum.value}:${verseNum.value}"
+                    ).book.first().verseMap.getValue(verseNum.value!!.toString())
+            } catch (e: Exception) {
+                error.value = true
+            } finally {
+                loading.value = false
+            }
 
-            verse.value =
-                bibleRepo.getTranslatedVerse(
-                    translation,
-                    "${bookName.value}${chapterNum.value}:${verseNum.value}"
-                ).book.first().verseMap.getValue(verseNum.value!!.toString())
-            loading.value = false
         }
 
     }

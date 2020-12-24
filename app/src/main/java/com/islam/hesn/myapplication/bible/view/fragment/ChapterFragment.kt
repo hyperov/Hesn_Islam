@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.bible.view.AdapterStateBibleEnum
 import com.islam.hesn.myapplication.bible.view.BibleMainRecyclerViewAdapter
@@ -14,8 +15,11 @@ import com.islam.hesn.myapplication.bible.viewmodel.BibleTranslationViewModel
 import com.islam.hesn.myapplication.bible.viewmodel.BibleViewModel
 import com.islam.hesn.myapplication.home.changeToolbarTitle
 import com.islam.hesn.myapplication.home.createDialog
+import com.islam.hesn.myapplication.utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_chapter.*
+import kotlinx.android.synthetic.main.fragment_chapter.fab
+import kotlinx.android.synthetic.main.fragment_surah.*
 
 @AndroidEntryPoint
 class ChapterFragment : Fragment() {
@@ -51,6 +55,15 @@ class ChapterFragment : Fragment() {
     private fun observeTranslationData() {
         translationViewModel.loading.observe(viewLifecycleOwner, { isVisible ->
             progressChapter.visibility = if (isVisible) View.VISIBLE else View.GONE
+        })
+
+        translationViewModel.error.observe(viewLifecycleOwner, { isError ->
+            if (isError) {
+                val bottomNavView: BottomNavigationView =
+                    activity?.findViewById(R.id.bottomNavigation)!!
+                requireContext().showSnackBar(chapterTranslation, bottomNavView,
+                    getString(R.string.error_bible_translation_api),android.R.color.holo_red_light)
+            }
         })
 
         translationViewModel.verse.observe(viewLifecycleOwner, { verse ->
