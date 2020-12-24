@@ -14,108 +14,113 @@
         app:layout_behavior="com.google.android.material.transformation.FabTransformationSheetBehavior" />
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshBible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
-        android:elevation="@dimen/card_corner_radius_4"
-        tools:context=".bible.view.fragment.BibleFragment">
+        android:elevation="@dimen/card_corner_radius_4">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cvSearch"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/vertical_margin_16"
-            app:cardBackgroundColor="@android:color/white"
-            app:cardCornerRadius="@dimen/card_corner_radius_8"
-            app:cardElevation="@dimen/card_corner_radius_4"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/etSearch"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:drawableStart="@drawable/ic_search"
-                android:drawablePadding="@dimen/vertical_margin_16"
-                android:hint="@string/search_title"
-                android:imeOptions="actionSearch"
-                android:inputType="text"
-                android:lines="1"
-                android:maxLength="30"
-                android:paddingStart="@dimen/vertical_margin_16"
-                android:paddingEnd="@dimen/vertical_margin_16"
-                android:textColor="@color/colorPrimary"
-                app:backgroundTint="@android:color/white" />
-        </com.google.android.material.card.MaterialCardView>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/searchList"
-            android:name="com.islam.hesn.myapplication.bible.view.BibleFragment"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/vertical_margin_16"
-            android:background="@android:color/white"
-            app:layoutManager="LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cvSearch"
-            tools:listitem="@layout/item_layout_surah" />
-
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/progressBible"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_gravity="center"
-            android:background="@color/colorPrimaryDark"
-            android:scaleType="center"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:lottie_autoPlay="true"
-            app:lottie_colorFilter="@color/colorAccent"
-            app:lottie_fileName="loading_book.json"
-            app:lottie_loop="true" />
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/errorBible"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimaryDark"
-            android:padding="@dimen/vertical_margin_16"
-            android:scaleType="center"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:lottie_autoPlay="true"
-            app:lottie_fileName="error_animation.json"
-            app:lottie_loop="true"
-            app:lottie_speed="1" />
+            android:background="@color/colorPrimary"
+            tools:context=".bible.view.fragment.BibleFragment">
 
-        <TextView
-            android:id="@+id/errorTextBible"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="64dp"
-            android:fontFamily="@font/janna_bold"
-            android:gravity="center"
-            android:visibility="gone"
-            android:text="@string/swipe_to_refresh"
-            android:textColor="@color/colorAccent"
-            android:textSize="@dimen/text_size_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvSearch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/vertical_margin_16"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardCornerRadius="@dimen/card_corner_radius_8"
+                app:cardElevation="@dimen/card_corner_radius_4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawableStart="@drawable/ic_search"
+                    android:drawablePadding="@dimen/vertical_margin_16"
+                    android:hint="@string/search_title"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:maxLength="30"
+                    android:paddingStart="@dimen/vertical_margin_16"
+                    android:paddingEnd="@dimen/vertical_margin_16"
+                    android:textColor="@color/colorPrimary"
+                    app:backgroundTint="@android:color/white" />
+            </com.google.android.material.card.MaterialCardView>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/searchList"
+                android:name="com.islam.hesn.myapplication.bible.view.BibleFragment"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/vertical_margin_16"
+                android:background="@android:color/white"
+                app:layoutManager="LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cvSearch"
+                tools:listitem="@layout/item_layout_surah" />
+
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/progressBible"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:background="@color/colorPrimaryDark"
+                android:scaleType="center"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_autoPlay="true"
+                app:lottie_colorFilter="@color/colorAccent"
+                app:lottie_fileName="loading_book.json"
+                app:lottie_loop="true" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/errorBible"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimaryDark"
+                android:padding="@dimen/vertical_margin_16"
+                android:scaleType="center"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_autoPlay="true"
+                app:lottie_fileName="error_animation.json"
+                app:lottie_loop="true"
+                app:lottie_speed="1" />
+
+            <TextView
+                android:id="@+id/errorTextBible"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="64dp"
+                android:fontFamily="@font/janna_bold"
+                android:gravity="center"
+                android:text="@string/swipe_to_refresh"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_size_24"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabJump"

@@ -29,6 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_bible_list.*
 import kotlinx.android.synthetic.main.fragment_quran_list.etSearch
 import kotlinx.android.synthetic.main.fragment_quran_list.fabJump
+import kotlinx.android.synthetic.main.fragment_youtube_first_channel.*
 import kotlinx.android.synthetic.main.layout_dialog_bible_fast_navigation.*
 import kotlinx.android.synthetic.main.layout_dialog_surah_fast_navigation.btFastForwardDone
 
@@ -57,7 +58,7 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
         etSearch.setOnEditorActionListener(this)
         setSearchIconClick()
         setSearchTypingListener()
-
+        setRefreshListener()
         fabJump.setOnClickListener {
             fabJump.isExpanded = !fabJump.isExpanded
         }
@@ -76,6 +77,12 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
     private fun setListDivider() {
         searchList.addItemDecoration(DividerItemDecoration(context,
             DividerItemDecoration.VERTICAL))
+    }
+
+    private fun setRefreshListener() {
+        refreshBible.setOnRefreshListener {
+            getBooks()
+        }
     }
 
     private fun getBooks() {
@@ -106,6 +113,7 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
             } else {
                 progressBible.visibility = View.GONE
                 progressBible.cancelAnimation()
+                refreshBible.isRefreshing = false
             }
 
         })
@@ -113,12 +121,11 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
         bibleViewModel.error.observe(viewLifecycleOwner, { isError ->
 
             if (isError) {
-                fabJump.hide()
-                etSearch.isEnabled = false
-                searchList.visibility = View.GONE
-                progressBible.visibility = View.GONE
                 errorBible.visibility = View.VISIBLE
                 errorTextBible.visibility = View.VISIBLE
+            }else{
+                errorBible.visibility = View.GONE
+                errorTextBible.visibility = View.GONE
             }
         })
 
