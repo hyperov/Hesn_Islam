@@ -17,7 +17,9 @@ import com.islam.hesn.myapplication.quran.viewmodel.AyaTranslationViewModel
 import com.islam.hesn.myapplication.quran.viewmodel.QuranViewModel
 import com.islam.hesn.myapplication.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_chapter.*
 import kotlinx.android.synthetic.main.fragment_surah.*
+import kotlinx.android.synthetic.main.fragment_surah.fab
 
 
 @AndroidEntryPoint
@@ -108,6 +110,15 @@ class SurahFragment : Fragment() {
 
         ayaViewModel.loading.observe(viewLifecycleOwner, { isVisible ->
             progress.visibility = if (isVisible) View.VISIBLE else View.GONE
+        })
+
+        ayaViewModel.error.observe(viewLifecycleOwner, { isError ->
+            if (isError) {
+                val bottomNavView: BottomNavigationView =
+                    activity?.findViewById(R.id.bottomNavigation)!!
+                requireContext().showSnackBar(surahRecyclerView, bottomNavView,
+                    getString(R.string.error_bible_quran_translation_api), android.R.color.holo_red_light)
+            }
         })
     }
 

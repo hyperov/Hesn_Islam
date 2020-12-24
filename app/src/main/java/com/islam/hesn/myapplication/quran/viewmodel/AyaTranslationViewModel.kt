@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.islam.hesn.myapplication.quran.model.repo.translation.TranslationRepo
 import com.islam.hesn.myapplication.quran.model.response.translation.Aya
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 class AyaTranslationViewModel @ViewModelInject constructor(private val repo: TranslationRepo) :
     ViewModel() {
@@ -17,12 +18,22 @@ class AyaTranslationViewModel @ViewModelInject constructor(private val repo: Tra
     val aya = MutableLiveData<Aya>()
 
     val loading = MutableLiveData<Boolean>()
+    val error = MutableLiveData(false)
 
     suspend fun getAyah(translationKey: String, suraNum: Int, ayaNum: Int) {
         loading.value = true
+        error.value = false
         viewModelScope.launch {
-            aya.postValue(repo.getAya(translationKey, suraNum, ayaNum).aya)
-            loading.postValue(false)
+            try {
+                aya.postValue(repo.getAya(translationKey, suraNum, ayaNum).aya)
+
+            }catch (e:Exception){
+                error.value = true
+            }finally {
+                loading.postValue(false)
+                error.value = false
+            }
+
         }
 
 

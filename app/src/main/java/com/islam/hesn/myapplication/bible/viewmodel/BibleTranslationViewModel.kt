@@ -34,6 +34,7 @@ class BibleTranslationViewModel @ViewModelInject constructor(
                 error.value = true
             } finally {
                 loading.value = false
+                error.value = false
             }
 
         }

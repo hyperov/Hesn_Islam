@@ -69,8 +69,26 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClick
             progressSearch.visibility = if (isVisible) View.VISIBLE else View.GONE
         })
 
+        ayaViewModel.error.observe(viewLifecycleOwner, { isError ->
+            if (isError) {
+                val bottomNavView: BottomNavigationView =
+                    activity?.findViewById(R.id.bottomNavigation)!!
+                requireContext().showSnackBar(searchLayout, bottomNavView,
+                    getString(R.string.error_bible_quran_translation_api), android.R.color.holo_red_light)
+            }
+        })
+
         bibleTranslationViewModel.loading.observe(viewLifecycleOwner, { isVisible ->
             progressSearch.visibility = if (isVisible) View.VISIBLE else View.GONE
+        })
+
+        bibleTranslationViewModel.error.observe(viewLifecycleOwner, { isError ->
+            if (isError) {
+                val bottomNavView: BottomNavigationView =
+                    activity?.findViewById(R.id.bottomNavigation)!!
+                requireContext().showSnackBar(searchLayout, bottomNavView,
+                    getString(R.string.error_bible_quran_translation_api), android.R.color.holo_red_light)
+            }
         })
 
         bibleTranslationViewModel.verse.observe(viewLifecycleOwner, { verse ->
