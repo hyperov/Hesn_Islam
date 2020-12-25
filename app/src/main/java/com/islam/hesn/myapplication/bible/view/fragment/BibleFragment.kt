@@ -26,10 +26,8 @@ import com.islam.hesn.myapplication.bible.view.AdapterStateBibleEnum.BOOKS
 import com.islam.hesn.myapplication.bible.view.BibleLangEnum
 import com.islam.hesn.myapplication.bible.view.BibleMainRecyclerViewAdapter
 import com.islam.hesn.myapplication.bible.viewmodel.BibleViewModel
-import com.islam.hesn.myapplication.home.IS_CONNECTED
 import com.islam.hesn.myapplication.search.viewmodel.SearchViewModel
-import com.islam.hesn.myapplication.utils.Prefs
-import com.islam.hesn.myapplication.utils.showSnackBar
+import com.islam.hesn.myapplication.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_bible_list.*
 import kotlinx.android.synthetic.main.fragment_bible_list.searchList
@@ -77,6 +75,7 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
             bibleViewModel.selectedBook.value = selectedBook
             bibleViewModel.selectedChapter.value = selectedChapter.chapterNum
             findNavController().navigate(R.id.chapterFragment)
+            Prefs.putAny(COUNTER_FOR_REVIEW, Prefs.getInt(COUNTER_FOR_REVIEW, 0) + 1)
         }
 
         btCancel.setOnClickListener { fabJump.isExpanded = !fabJump.isExpanded }
@@ -165,7 +164,7 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setSearchIconClick() {
-        etSearch.setOnTouchListener { v, event ->
+        etSearch.setOnTouchListener { _, event ->
 
             val DRAWABLE_LEFT = 0
             val DRAWABLE_RIGHT = 2

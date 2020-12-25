@@ -14,11 +14,7 @@ import com.islam.hesn.myapplication.bible.view.AdapterStateBibleEnum
 import com.islam.hesn.myapplication.bible.view.BibleMainRecyclerViewAdapter
 import com.islam.hesn.myapplication.bible.viewmodel.BibleTranslationViewModel
 import com.islam.hesn.myapplication.bible.viewmodel.BibleViewModel
-import com.islam.hesn.myapplication.home.IS_CONNECTED
-import com.islam.hesn.myapplication.home.changeToolbarTitle
-import com.islam.hesn.myapplication.home.createDialog
-import com.islam.hesn.myapplication.utils.Prefs
-import com.islam.hesn.myapplication.utils.showSnackBar
+import com.islam.hesn.myapplication.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_chapter.*
 import kotlinx.android.synthetic.main.fragment_chapter.fab
@@ -65,8 +61,10 @@ class ChapterFragment : Fragment() {
             if (isError) {
                 val bottomNavView: BottomNavigationView =
                     activity?.findViewById(R.id.bottomNavigation)!!
-                requireContext().showSnackBar(chapterTranslation, bottomNavView,
-                    getString(R.string.error_bible_quran_translation_api),android.R.color.holo_red_light)
+                requireContext().showSnackBar(chapterTranslation,
+                    bottomNavView,
+                    getString(R.string.error_bible_quran_translation_api),
+                    android.R.color.holo_red_light)
             }
         })
 
@@ -75,6 +73,7 @@ class ChapterFragment : Fragment() {
 
                 createDialog(verse.verseNum.toString(), verse.verseContent)
                 translationViewModel.verse.value = null
+                Prefs.putAny(COUNTER_FOR_REVIEW, Prefs.getInt(COUNTER_FOR_REVIEW, 0) + 1)
             }
         })
     }

@@ -15,8 +15,6 @@ import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.bible.model.response.bible.Verse
 import com.islam.hesn.myapplication.bible.view.fragment.TranslationBibleBottomSheetFragment
 import com.islam.hesn.myapplication.bible.viewmodel.BibleTranslationViewModel
-import com.islam.hesn.myapplication.home.IS_CONNECTED
-import com.islam.hesn.myapplication.home.createDialog
 import com.islam.hesn.myapplication.quran.model.response.arabic.AyaItem
 import com.islam.hesn.myapplication.quran.view.TranslationQuranBottomSheetFragment
 import com.islam.hesn.myapplication.quran.viewmodel.AyaTranslationViewModel
@@ -50,7 +48,8 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClick
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", this::class.simpleName!!);
+        FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", this::class.simpleName!!)
+        Prefs.putAny(COUNTER_FOR_REVIEW, Prefs.getInt(COUNTER_FOR_REVIEW, 0) + 1)
         observeData()
         observeTranslationData()
         getQuranOrBibleSearchValues()
@@ -64,6 +63,7 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClick
             aya?.let {
                 createDialog(aya.aya, aya.translation)
                 ayaViewModel.aya.value = null
+                Prefs.putAny(COUNTER_FOR_REVIEW, Prefs.getInt(COUNTER_FOR_REVIEW, 0) + 1)
             }
 
         })
@@ -76,8 +76,10 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClick
             if (isError) {
                 val bottomNavView: BottomNavigationView =
                     activity?.findViewById(R.id.bottomNavigation)!!
-                requireContext().showSnackBar(searchLayout, bottomNavView,
-                    getString(R.string.error_bible_quran_translation_api), android.R.color.holo_red_light)
+                requireContext().showSnackBar(searchLayout,
+                    bottomNavView,
+                    getString(R.string.error_bible_quran_translation_api),
+                    android.R.color.holo_red_light)
             }
         })
 
@@ -89,8 +91,10 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClick
             if (isError) {
                 val bottomNavView: BottomNavigationView =
                     activity?.findViewById(R.id.bottomNavigation)!!
-                requireContext().showSnackBar(searchLayout, bottomNavView,
-                    getString(R.string.error_bible_quran_translation_api), android.R.color.holo_red_light)
+                requireContext().showSnackBar(searchLayout,
+                    bottomNavView,
+                    getString(R.string.error_bible_quran_translation_api),
+                    android.R.color.holo_red_light)
             }
         })
 
@@ -99,6 +103,7 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClick
 
                 createDialog(verse.verseNum.toString(), verse.verseContent)
                 bibleTranslationViewModel.verse.value = null
+                Prefs.putAny(COUNTER_FOR_REVIEW, Prefs.getInt(COUNTER_FOR_REVIEW, 0) + 1)
             }
         })
     }
@@ -154,6 +159,7 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClick
                             activity?.findViewById(R.id.bottomNavigation)!!
                         requireContext().showSnackBar(searchLayout, bottomNavView,
                             getString(R.string.bookmark_saved_successfully))
+                        Prefs.putAny(COUNTER_FOR_REVIEW, Prefs.getInt(COUNTER_FOR_REVIEW, 0) + 1)
                     }).also {
                     it.setOnGroupClickListener(this@SearchFragment)
                 }

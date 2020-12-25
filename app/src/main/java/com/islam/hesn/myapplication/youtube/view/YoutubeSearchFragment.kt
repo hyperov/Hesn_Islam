@@ -13,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.islam.hesn.myapplication.R
-import com.islam.hesn.myapplication.home.changeToolbarTitle
+import com.islam.hesn.myapplication.utils.changeToolbarTitle
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubePlayerViewModel
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubeSearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -62,7 +62,8 @@ class YoutubeSearchFragment : Fragment() {
 
         when (youtubeSearchViewModel.selectedTabPosition.value) {
             0 -> FirebaseCrashlytics.getInstance().setCustomKey("REQUEST", "HESN_ISLAM_SEARCH")
-            1 -> FirebaseCrashlytics.getInstance().setCustomKey("REQUEST", "HESN_ISLAM_TAWAYA_SEARCH")
+            1 -> FirebaseCrashlytics.getInstance()
+                .setCustomKey("REQUEST", "HESN_ISLAM_TAWAYA_SEARCH")
         }
 
         youtubeSearchViewModel.getSearchedYoutubeVideos(channelId)

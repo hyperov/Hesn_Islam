@@ -14,7 +14,7 @@ import androidx.paging.LoadState
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.islam.hesn.myapplication.R
-import com.islam.hesn.myapplication.home.IS_CONNECTED
+import com.islam.hesn.myapplication.utils.IS_CONNECTED
 import com.islam.hesn.myapplication.utils.Prefs
 import com.islam.hesn.myapplication.utils.openYoutubeChannelIntent
 import com.islam.hesn.myapplication.utils.showSnackBar

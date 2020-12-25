@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.islam.hesn.myapplication.R
-import com.islam.hesn.myapplication.home.changeToolbarTitle
+import com.islam.hesn.myapplication.utils.changeToolbarTitle
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubePlayerViewModel
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener

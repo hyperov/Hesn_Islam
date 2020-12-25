@@ -18,7 +18,7 @@ import com.islam.hesn.myapplication.bible.model.response.bible.Verse
 import com.islam.hesn.myapplication.bible.view.AdapterStateBibleEnum
 import com.islam.hesn.myapplication.bible.view.BibleMainRecyclerViewAdapter
 import com.islam.hesn.myapplication.bible.viewmodel.BibleViewModel
-import com.islam.hesn.myapplication.home.changeToolbarTitle
+import com.islam.hesn.myapplication.utils.changeToolbarTitle
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_bible_list.*
 import kotlinx.android.synthetic.main.fragment_quran_list.fabJump

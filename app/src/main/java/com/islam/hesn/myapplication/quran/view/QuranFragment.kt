@@ -20,7 +20,10 @@ import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.quran.model.response.arabic.AdapterStateQuranEnum.QURAN_SURAH_LIST
 import com.islam.hesn.myapplication.quran.viewmodel.QuranViewModel
 import com.islam.hesn.myapplication.search.viewmodel.SearchViewModel
+import com.islam.hesn.myapplication.utils.COUNTER_FOR_REVIEW
 import com.islam.hesn.myapplication.utils.MinMaxFilter
+import com.islam.hesn.myapplication.utils.Prefs
+import com.islam.hesn.myapplication.utils.putAny
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_quran_list.*
 import kotlinx.android.synthetic.main.layout_dialog_surah_fast_navigation.*
@@ -71,6 +74,7 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
                     quranViewModel.isBookMark.value = false
                     quranViewModel.surahId.value = spinnerSurah.selectedItemPosition + 1
                     findNavController().navigate(R.id.surahFragment)
+                    Prefs.putAny(COUNTER_FOR_REVIEW, Prefs.getInt(COUNTER_FOR_REVIEW, 0) + 1)
                 }
             }
         }
@@ -114,7 +118,7 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setSearchIconClick() {
-        etSearch.setOnTouchListener(OnTouchListener { v, event ->
+        etSearch.setOnTouchListener(OnTouchListener { _, event ->
 
             val DRAWABLE_LEFT = 0
             val DRAWABLE_RIGHT = 2

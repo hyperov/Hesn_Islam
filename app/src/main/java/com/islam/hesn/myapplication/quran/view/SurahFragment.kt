@@ -10,9 +10,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.islam.hesn.myapplication.R
-import com.islam.hesn.myapplication.home.IS_CONNECTED
-import com.islam.hesn.myapplication.home.changeToolbarTitle
-import com.islam.hesn.myapplication.home.createDialog
 import com.islam.hesn.myapplication.quran.model.response.arabic.AdapterStateQuranEnum.QURAN_SURAH
 import com.islam.hesn.myapplication.quran.model.response.arabic.AyaItem
 import com.islam.hesn.myapplication.quran.viewmodel.AyaTranslationViewModel
@@ -120,6 +117,7 @@ class SurahFragment : Fragment() {
             aya?.let {
                 this@SurahFragment.createDialog(aya.aya, aya.translation)
                 ayaViewModel.aya.value = null
+                Prefs.putAny(COUNTER_FOR_REVIEW, Prefs.getInt(COUNTER_FOR_REVIEW, 0) + 1)
             }
 
         })
@@ -132,8 +130,10 @@ class SurahFragment : Fragment() {
             if (isError) {
                 val bottomNavView: BottomNavigationView =
                     activity?.findViewById(R.id.bottomNavigation)!!
-                requireContext().showSnackBar(surahRecyclerView, bottomNavView,
-                    getString(R.string.error_bible_quran_translation_api), android.R.color.holo_red_light)
+                requireContext().showSnackBar(surahRecyclerView,
+                    bottomNavView,
+                    getString(R.string.error_bible_quran_translation_api),
+                    android.R.color.holo_red_light)
             }
         })
     }
