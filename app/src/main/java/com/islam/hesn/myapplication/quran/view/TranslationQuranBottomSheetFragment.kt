@@ -75,10 +75,10 @@ class TranslationQuranBottomSheetFragment : BottomSheetDialogFragment(), View.On
             }
             dismissAllowingStateLoss()
 
+            FirebaseCrashlytics.getInstance().setCustomKey("REQUEST", "QURAN_TRANSLATION")
             lifecycleScope.launch {
                 ayaViewModel.getAyah(lang, suraNum.value!!, ayaNum.value!!)
             }
-
         }
     }
 }

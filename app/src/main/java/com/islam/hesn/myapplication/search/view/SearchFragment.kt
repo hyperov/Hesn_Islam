@@ -107,10 +107,12 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClick
         when (searchViewModel.isFromQuranScreen.value) {
             true -> {
                 searchViewModel.getQuranValues()
+                FirebaseCrashlytics.getInstance().setCustomKey("REQUEST", "QURAN_SEARCH")
             }
             false -> {
                 searchViewModel.getBibleValues(resources.getStringArray(R.array.bible_books)
                     .toList())
+                FirebaseCrashlytics.getInstance().setCustomKey("REQUEST", "BIBLE_SEARCH")
             }
         }
 

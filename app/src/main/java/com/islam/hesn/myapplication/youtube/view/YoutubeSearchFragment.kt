@@ -59,6 +59,12 @@ class YoutubeSearchFragment : Fragment() {
             1 -> getString(R.string.education_channel_id)
             else -> ""
         }
+
+        when (youtubeSearchViewModel.selectedTabPosition.value) {
+            0 -> FirebaseCrashlytics.getInstance().setCustomKey("REQUEST", "HESN_ISLAM_SEARCH")
+            1 -> FirebaseCrashlytics.getInstance().setCustomKey("REQUEST", "HESN_ISLAM_TAWAYA_SEARCH")
+        }
+
         youtubeSearchViewModel.getSearchedYoutubeVideos(channelId)
         getPagingMovies()
     }

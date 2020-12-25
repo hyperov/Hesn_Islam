@@ -82,10 +82,10 @@ class TranslationBibleBottomSheetFragment : BottomSheetDialogFragment(), View.On
             }
             dismissAllowingStateLoss()
 
+            FirebaseCrashlytics.getInstance().setCustomKey("REQUEST", "BIBLE_TRANSLATION")
             lifecycleScope.launch {
                 translationViewModel.getVerseTranslation(lang)
             }
-
         }
     }
 }

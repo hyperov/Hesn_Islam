@@ -69,6 +69,7 @@ class YoutubeSecondChannelFragment : Fragment() {
                 getString(R.string.error_no_connection),
                 android.R.color.holo_red_light)
         }
+        FirebaseCrashlytics.getInstance().setCustomKey("REQUEST", "SECOND_YOUTUBE_CHANNEL_HESN_ISLAM_TAWAYA")
         youtubeViewModel.getYoutubeChannelVideos(getString(R.string.education_channel_playlist_id))
         getPagingMovies()
     }

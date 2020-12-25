@@ -140,6 +140,7 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
 
     private fun getSurahs() {
         quranViewModel.getAllArabicSurah()
+        FirebaseCrashlytics.getInstance().setCustomKey("REQUEST", "QURAN")
     }
 
     private fun observeData() {

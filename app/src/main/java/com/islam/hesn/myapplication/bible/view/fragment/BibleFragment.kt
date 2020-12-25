@@ -106,6 +106,7 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
 
         }
         bibleViewModel.getBible(BibleLangEnum.VAN_DYKE.lang)
+        FirebaseCrashlytics.getInstance().setCustomKey("REQUEST", "BIBLE")
     }
 
     private fun observeData() {

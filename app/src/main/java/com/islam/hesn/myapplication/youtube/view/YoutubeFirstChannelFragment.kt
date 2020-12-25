@@ -70,6 +70,7 @@ class YoutubeFirstChannelFragment : Fragment() {
                 getString(R.string.error_no_connection),
                 android.R.color.holo_red_light)
         }
+        FirebaseCrashlytics.getInstance().setCustomKey("REQUEST", "MAIN_YOUTUBE_CHANNEL_HESN_ISLAM")
         youtubeViewModel.getYoutubeChannelVideos(getString(R.string.main_channel_playlist_id))
         getPagingMovies()
     }
