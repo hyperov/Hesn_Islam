@@ -48,7 +48,7 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClick
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", this::class.simpleName!!)
+        FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", "SearchFragment")
         Prefs.putAny(COUNTER_FOR_REVIEW, Prefs.getInt(COUNTER_FOR_REVIEW, 0) + 1)
         observeData()
         observeTranslationData()

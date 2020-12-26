@@ -12,6 +12,16 @@ def apiKeyProperties = new Properties()
 apiKeyProperties.load(new FileInputStream(apiKeyPropertiesFile))
 
 android {
+    signingConfigs {
+
+        release {
+            storeFile file("hesn_islam_key_store.jks")
+            storePassword '0109904219'
+            keyAlias 'key_hesn_islam'
+            keyPassword '0109904219'
+        }
+
+    }
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
@@ -41,7 +51,10 @@ android {
             ext.enableCrashlytics = false
         }
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
+            debuggable true
+            signingConfig signingConfigs.release
             manifestPlaceholders = [crashlyticsCollectionEnabled: "true"]
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }

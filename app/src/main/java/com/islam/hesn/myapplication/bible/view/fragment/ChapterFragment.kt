@@ -38,7 +38,7 @@ class ChapterFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", this::class.simpleName!!);
+        FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", "ChapterFragment")
         changeToolbarTitle(bibleViewModel.selectedChapter.value.toString())
         fab.setOnClickListener { searchList.smoothScrollToPosition(0) }
         setListDivider()

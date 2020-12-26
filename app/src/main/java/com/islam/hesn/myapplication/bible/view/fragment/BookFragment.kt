@@ -39,7 +39,7 @@ class BookFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", this::class.simpleName!!);
+        FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", "BookFragment")
         changeToolbarTitle("سفر  ${bibleViewModel.selectedTitle.value!!}")
         setListDivider()
         observeData()

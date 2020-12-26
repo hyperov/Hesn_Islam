@@ -48,7 +48,7 @@ class YoutubeSecondChannelFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", this::class.simpleName!!);
+        FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", "YoutubeSecondChannelFragment")
         videoList.adapter = pagingAdapter
         setRefreshListener()
     }

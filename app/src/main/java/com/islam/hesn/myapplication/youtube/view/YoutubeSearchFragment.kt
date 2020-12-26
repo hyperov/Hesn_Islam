@@ -46,7 +46,7 @@ class YoutubeSearchFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", this::class.simpleName!!);
+        FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", "YoutubeSearchFragment")
         tvSearchKeyWord.text = youtubeSearchViewModel.searchQuery.value
         changeToolbarTitle(when (youtubeSearchViewModel.selectedTabPosition.value) {
             0 -> getString(R.string.main_channel)
