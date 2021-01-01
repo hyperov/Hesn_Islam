@@ -18,7 +18,7 @@ class YoutubeViewModel @ViewModelInject constructor(private val repo: YoutubeRep
         flow = Pager(
             // Configure how data is loaded by passing additional properties to
             // PagingConfig, such as prefetchDistance.
-            PagingConfig(pageSize = 10)
+            PagingConfig(pageSize = 10,3)
         ) {
             YoutubePagingSource(repo, channelPlayListId)
         }.flow
