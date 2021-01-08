@@ -11,9 +11,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.islam.hesn.myapplication.R
+import com.islam.hesn.myapplication.utils.IS_CONNECTED
+import com.islam.hesn.myapplication.utils.Prefs
 import com.islam.hesn.myapplication.utils.changeToolbarTitle
+import com.islam.hesn.myapplication.utils.showSnackBar
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubePlayerViewModel
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubeSearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,7 +38,17 @@ class YoutubeSearchFragment : Fragment() {
         YoutubeRecyclerViewSearchPagingAdapter(VideoSearchComparator) { videoId, videoTitle ->
             youtubePlayerViewModel.videoId.value = videoId
             youtubePlayerViewModel.videoTitle.value = videoTitle
-            findNavController().navigate(R.id.youtubePlayerFragment)
+            if (Prefs.getBoolean(IS_CONNECTED, true).not()) {
+
+                val bottomNavView: BottomNavigationView =
+                    activity?.findViewById(R.id.bottomNavigation)!!
+
+                requireContext().showSnackBar(requireActivity().findViewById(android.R.id.content),
+                    bottomNavView,
+                    getString(R.string.error_no_connection),
+                    android.R.color.holo_red_light)
+            } else
+                findNavController().navigate(R.id.youtubePlayerFragment)
         }
 
     override fun onCreateView(

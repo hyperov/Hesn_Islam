@@ -59,7 +59,17 @@ class MoreFragment : Fragment(), View.OnClickListener {
             cvAboutUs -> {
                 youtubePlayerViewModel.videoId.value = getString(R.string.about_us_video_id)
                 youtubePlayerViewModel.videoTitle.value = getString(R.string.about_us_video_title)
-                findNavController().navigate(R.id.youtubePlayerFragment)
+                if (Prefs.getBoolean(IS_CONNECTED, true).not()) {
+
+                    val bottomNavView: BottomNavigationView =
+                        activity?.findViewById(R.id.bottomNavigation)!!
+
+                    requireContext().showSnackBar(requireActivity().findViewById(android.R.id.content),
+                        bottomNavView,
+                        getString(R.string.error_no_connection),
+                        android.R.color.holo_red_light)
+                } else
+                    findNavController().navigate(R.id.youtubePlayerFragment)
             }
             cvContactUs -> {
                 bottomSheet = ContactUsBottomSheetFragment.newInstance().apply {

@@ -31,7 +31,10 @@ class YoutubePlayerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", "YoutubePlayerFragment")
-        changeToolbarTitle(youtubePlayerViewModel.videoTitle.value!!)
+        youtubePlayerViewModel.videoTitle.value?.let {
+            changeToolbarTitle(youtubePlayerViewModel.videoTitle.value!!)
+        }
+
         lifecycle.addObserver(youTubePlayerView)
         addListeners()
     }

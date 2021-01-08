@@ -35,7 +35,17 @@ class YoutubeSecondChannelFragment : Fragment() {
         YoutubeRecyclerViewPagingAdapter(VideoComparator) { videoId, videoTitle ->
             youtubePlayerViewModel.videoId.value = videoId
             youtubePlayerViewModel.videoTitle.value = videoTitle
-            findNavController().navigate(R.id.youtubePlayerFragment)
+            if (Prefs.getBoolean(IS_CONNECTED, true).not()) {
+
+                val bottomNavView: BottomNavigationView =
+                    activity?.findViewById(R.id.bottomNavigation)!!
+
+                requireContext().showSnackBar(requireActivity().findViewById(android.R.id.content),
+                    bottomNavView,
+                    getString(R.string.error_no_connection),
+                    android.R.color.holo_red_light)
+            } else
+                findNavController().navigate(R.id.youtubePlayerFragment)
         }
 
     override fun onCreateView(
