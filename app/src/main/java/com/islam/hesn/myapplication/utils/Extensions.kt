@@ -1,6 +1,5 @@
 package com.islam.hesn.myapplication.utils
 
-import android.app.Activity
 import android.app.Application
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -19,11 +18,9 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.play.core.review.ReviewInfo
-import com.google.android.play.core.review.ReviewManager
-import com.google.android.play.core.review.ReviewManagerFactory
 import com.islam.hesn.myapplication.R
 import java.io.IOException
+import java.lang.StringBuilder
 import java.nio.charset.Charset
 
 lateinit var Prefs: SharedPreferences
@@ -148,4 +145,21 @@ fun registerNetworkConnectionEvents(context: Application) {
                 Prefs.putAny(IS_CONNECTED, false)
             }
         })
+}
+
+//faster and hope to fix out of memory for native replace in old devices
+fun String.replaceCustom(oldValue: String, newValue: String, ignoreCase: Boolean = false): String {
+    var i = indexOf(oldValue, ignoreCase = ignoreCase)
+    if (i == -1) return this
+
+    val buffer = StringBuilder(length)
+    var tail = 0 // remaining after last substitution
+    do {
+        buffer.append(this, tail, i)
+        buffer.append(newValue)
+        tail = i + oldValue.length
+        i = indexOf(oldValue, tail, ignoreCase)
+    } while (i >= 0)
+    buffer.append(this, tail, this.length)
+    return buffer.toString()
 }
