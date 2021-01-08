@@ -52,6 +52,7 @@
     <string name="error_no_connection">لا يوجد اتصال بالانترنت..من فضلك تأكد من اتصالك بالانترنت ثو عاود المحاولة مرة أخرى</string>
     <string name="search_results_for">نتائج البحث عن :</string>
     <string name="no_results">عذرآ..لا يوجد نتائج بحث عن : </string>
+    <string name="no_results_2">عذرآ..لا يوجد نتائج بحث</string>
     <string name="click_for_translation">اضغط للترجمة</string>
 
     /////////////////////////////////////

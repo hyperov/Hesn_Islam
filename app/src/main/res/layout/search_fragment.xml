@@ -8,7 +8,7 @@
     android:background="@color/colorPrimary">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cvSearch"
+        android:id="@+id/cvSearchFrag"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/vertical_margin_16"
@@ -47,7 +47,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cvSearch"
+        app:layout_constraintTop_toBottomOf="@+id/cvSearchFrag"
         tools:listitem="@layout/item_layout_surah" />
 
     <ProgressBar
@@ -61,5 +61,39 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/noResultsSearch"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/colorPrimaryDark"
+        android:padding="@dimen/vertical_margin_16"
+        android:scaleType="center"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        android:elevation="@dimen/vertical_margin_16"
+        app:lottie_fileName="no_results.json"
+        app:lottie_loop="true"
+        app:lottie_speed="1" />
+
+    <TextView
+        android:id="@+id/tvNoResults"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:elevation="@dimen/vertical_margin_16"
+        android:fontFamily="@font/cairo_regular"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="@string/no_results_2"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/text_size_24"
+        app:layout_constraintBottom_toBottomOf="@+id/searchList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 

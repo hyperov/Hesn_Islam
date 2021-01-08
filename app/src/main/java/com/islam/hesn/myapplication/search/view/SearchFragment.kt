@@ -7,8 +7,10 @@ import android.text.TextWatcher
 import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.islam.hesn.myapplication.R
@@ -124,6 +126,61 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClick
     }
 
     private fun observeData() {
+        observeSearchQuranData()
+        observeSearchBibleData()
+    }
+
+    private fun observeSearchBibleData() {
+        searchViewModel.searchedVersesSections.observe(viewLifecycleOwner, { sections ->
+            if (!searchViewModel.isFromQuranScreen.value!!) {
+                searchList.adapter = SearchExpandableAdapter(sections, false, { verse: Verse ->
+
+                    if (Prefs.getBoolean(IS_CONNECTED, true).not()) {
+
+                        val bottomNavView: BottomNavigationView =
+                            activity?.findViewById(R.id.bottomNavigation)!!
+
+                        requireContext().showSnackBar(searchLayout,
+                            bottomNavView,
+                            getString(R.string.error_no_connection),
+                            android.R.color.holo_red_light)
+
+                        return@SearchExpandableAdapter
+                    }
+
+                    bibleTranslationViewModel.apply {
+
+                        val searchedVerse = searchViewModel.searchedVersesLiveData.value?.first {
+                            it.verseList.contains(verse)
+                        }
+                        bookName.value =
+                            searchedVerse?.bookNameEn
+
+                        chapterNum.value =
+                            searchedVerse?.chapterName?.toInt()
+
+                        verseNum.value = verse.verseNum
+                    }
+
+                    bottomSheetBible = TranslationBibleBottomSheetFragment.newInstance().apply {
+                        showNow(this@SearchFragment.parentFragmentManager, "translation")
+                    }
+                })
+            }
+        })
+        searchViewModel.emptySearch.observe(viewLifecycleOwner,
+            { visible ->
+                run {
+                    noResultsSearch.isVisible = visible
+                    searchList.isVisible = !visible
+                    cvSearchFrag.isVisible = !visible
+                }
+            })
+        searchViewModel.emptySearchText.observe(viewLifecycleOwner,
+            Observer { visible -> tvNoResults.isVisible = visible })
+    }
+
+    private fun observeSearchQuranData() {
         searchViewModel.searchedAyatSections.observe(viewLifecycleOwner, { sections ->
             if (searchViewModel.isFromQuranScreen.value!!) {
                 searchList.adapter = SearchExpandableAdapter(sections,
@@ -165,45 +222,6 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClick
                 }
             }
         })
-
-        searchViewModel.searchedVersesSections.observe(viewLifecycleOwner, { sections ->
-            if (!searchViewModel.isFromQuranScreen.value!!) {
-                searchList.adapter = SearchExpandableAdapter(sections, false, { verse: Verse ->
-
-                    if (Prefs.getBoolean(IS_CONNECTED, true).not()) {
-
-                        val bottomNavView: BottomNavigationView =
-                            activity?.findViewById(R.id.bottomNavigation)!!
-
-                        requireContext().showSnackBar(searchLayout,
-                            bottomNavView,
-                            getString(R.string.error_no_connection),
-                            android.R.color.holo_red_light)
-
-                        return@SearchExpandableAdapter
-                    }
-
-                    bibleTranslationViewModel.apply {
-
-                        val searchedVerse = searchViewModel.searchedVersesLiveData.value?.first {
-                            it.verseList.contains(verse)
-                        }
-                        bookName.value =
-                            searchedVerse?.bookNameEn
-
-                        chapterNum.value =
-                            searchedVerse?.chapterName?.toInt()
-
-                        verseNum.value = verse.verseNum
-                    }
-
-                    bottomSheetBible = TranslationBibleBottomSheetFragment.newInstance().apply {
-                        showNow(this@SearchFragment.parentFragmentManager, "translation")
-                    }
-                })
-            }
-        })
-
     }
 
     override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {

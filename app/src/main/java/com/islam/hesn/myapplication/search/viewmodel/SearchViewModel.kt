@@ -26,8 +26,14 @@ class SearchViewModel : ViewModel() {
 
     val searchedVersesSections = MutableLiveData<ArrayList<Section<Verse>>>()
 
+    val emptySearch = MutableLiveData(false)
+    val emptySearchText = MutableLiveData(false)
+
 
     fun getQuranValues() {
+
+        emptySearch.value = true
+        emptySearchText.value = false
 
         val ayatContainingSearchQuery =
             ayat.value?.filter { it.standard.contains(searchQuery.value!!, true) }
@@ -36,12 +42,20 @@ class SearchViewModel : ViewModel() {
 
         sectionsQuranList.clear()
         ayatMap?.forEach { entry -> sectionsQuranList.add(Section(entry.key, entry.value)) }
-
-        searchedAyatSections.value = sectionsQuranList
+        if (sectionsQuranList.isNotEmpty()) {
+            emptySearch.value = false
+            searchedAyatSections.value = sectionsQuranList
+        } else
+            emptySearchText.value = true
     }
 
     fun getBibleValues(bookTitlesArabic: List<String>) {
+
         searchVerses.clear()
+        sectionsBibleList.clear()
+        emptySearch.value = true
+        emptySearchText.value = false
+
         booksBible.value?.forEachIndexed { index, book ->
             book.chaptersMap.values.forEach { chapter ->
                 val filteredVerses = chapter.verseMap.values.filter {
@@ -53,18 +67,22 @@ class SearchViewModel : ViewModel() {
 
                     searchVerses.add(SearchedVerse(bookTitlesArabic[index],
                         chapter.chapterNum.toString(),
-                        filteredVerses,book.bookName))
+                        filteredVerses, book.bookName))
                 }
             }
 
         }
-        searchedVersesLiveData.value = searchVerses
+        if (searchVerses.isNotEmpty()) {
+            emptySearch.value = false
+            searchedVersesLiveData.value = searchVerses
 
-        searchVerses.forEach {
-            sectionsBibleList.add(Section(" ${it.bookName}   ${it.chapterName}",
-                it.verseList))
-        }
-        searchedVersesSections.value = sectionsBibleList
+            searchVerses.forEach {
+                sectionsBibleList.add(Section(" ${it.bookName}   ${it.chapterName}",
+                    it.verseList))
+            }
+            searchedVersesSections.value = sectionsBibleList
+        } else
+            emptySearchText.value = true
     }
 
 }
