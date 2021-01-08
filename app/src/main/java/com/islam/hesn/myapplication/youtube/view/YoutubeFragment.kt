@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.tabs.TabLayoutMediator
+import com.google.android.material.tabs.TabLayout
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubeSearchViewModel
 import kotlinx.android.synthetic.main.fragment_youtube.*
@@ -19,8 +19,6 @@ import kotlinx.android.synthetic.main.fragment_youtube.*
 class YoutubeFragment : Fragment(), TextView.OnEditorActionListener {
 
     private val youtubeSearchViewModel: YoutubeSearchViewModel by activityViewModels()
-
-    private lateinit var pagerAdapter: ViewPagerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,9 +30,6 @@ class YoutubeFragment : Fragment(), TextView.OnEditorActionListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        pagerAdapter = ViewPagerAdapter(this)
-        pager.adapter = pagerAdapter
-
         tabLayout.setSelectedTabIndicatorColor(
             ContextCompat.getColor(
                 requireContext(),
@@ -42,17 +37,35 @@ class YoutubeFragment : Fragment(), TextView.OnEditorActionListener {
             )
         )
 
-        TabLayoutMediator(tabLayout, pager) { tab, position ->
-            when (position) {
-                0 -> tab.text = getString(R.string.main_channel)
-                1 -> tab.text = getString(R.string.education_channel)
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                when (tab!!.position) {
+                    0 -> childFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, YoutubeFirstChannelFragment()).commit()
+                    1 -> childFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, YoutubeSecondChannelFragment()).commit()
+                }
             }
 
-        }.attach()
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
 
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+
+            }
+        })
+
+        setDefaultScreen()
         etSearch.setOnEditorActionListener(this)
         setSearchIconClick()
         setSearchTypingListener()
+    }
+
+    private fun setDefaultScreen() {
+        childFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, YoutubeFirstChannelFragment()).commit()
     }
 
     override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
