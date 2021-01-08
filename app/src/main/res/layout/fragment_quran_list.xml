@@ -33,7 +33,7 @@
             app:rippleColor="@color/colorAccent">
 
             <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/etSearch"
+                android:id="@+id/etSearchQuran"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:drawableStart="@drawable/ic_search"

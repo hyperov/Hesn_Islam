@@ -50,7 +50,7 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
         resetFastForward()
         observeData()
         getSurahs()
-        etSearch.setOnEditorActionListener(this)
+        etSearchQuran.setOnEditorActionListener(this)
         setSearchIconClick()
         setSearchTypingListener()
         setFastForwardListener()
@@ -87,7 +87,7 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
     }
 
     private fun setSearchTypingListener() {
-        etSearch.addTextChangedListener(object : TextWatcher {
+        etSearchQuran.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -98,14 +98,14 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
 
             override fun afterTextChanged(s: Editable?) {
                 if (s?.toString().isNullOrBlank()) {
-                    etSearch.setCompoundDrawablesWithIntrinsicBounds(
+                    etSearchQuran.setCompoundDrawablesWithIntrinsicBounds(
                         0,
                         0,
                         R.drawable.ic_search,
                         0
                     )
                 } else if (s?.toString()?.isNotBlank()!! && s.toString().isNotEmpty()) {
-                    etSearch.setCompoundDrawablesWithIntrinsicBounds(
+                    etSearchQuran.setCompoundDrawablesWithIntrinsicBounds(
                         android.R.drawable.ic_menu_close_clear_cancel,
                         0,
                         R.drawable.ic_search,
@@ -118,22 +118,22 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setSearchIconClick() {
-        etSearch.setOnTouchListener(OnTouchListener { _, event ->
+        etSearchQuran.setOnTouchListener(OnTouchListener { _, event ->
 
             val DRAWABLE_LEFT = 0
             val DRAWABLE_RIGHT = 2
 
             if (event.action == MotionEvent.ACTION_UP) {
-                etSearch.compoundDrawables[DRAWABLE_RIGHT]?.let {
-                    if (event.rawX >= etSearch.right - it.bounds.width()) {
-                        if (etSearch.text!!.isNotEmpty())
-                            gotoSearchScreen(etSearch.text.toString())
+                etSearchQuran.compoundDrawables[DRAWABLE_RIGHT]?.let {
+                    if (event.rawX >= etSearchQuran.right - it.bounds.width()) {
+                        if (etSearchQuran.text!!.isNotEmpty())
+                            gotoSearchScreen(etSearchQuran.text.toString())
                         return@OnTouchListener true
                     }
                 }
-                etSearch.compoundDrawables[DRAWABLE_LEFT]?.let {
-                    if (event.rawX <= it.bounds.width() + 2 * etSearch.paddingLeft) {
-                        etSearch.editableText.clear()
+                etSearchQuran.compoundDrawables[DRAWABLE_LEFT]?.let {
+                    if (event.rawX <= it.bounds.width() + 2 * etSearchQuran.paddingLeft) {
+                        etSearchQuran.editableText.clear()
                         return@OnTouchListener true
                     }
                 }
@@ -181,8 +181,8 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
     override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
 
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-            if (etSearch.text!!.isNotEmpty())
-                gotoSearchScreen(etSearch.text.toString())
+            if (etSearchQuran.text!!.isNotEmpty())
+                gotoSearchScreen(etSearchQuran.text.toString())
         }
         return true
 

@@ -65,7 +65,7 @@ class YoutubeFirstChannelFragment : Fragment() {
             val bottomNavView: BottomNavigationView =
                 activity?.findViewById(R.id.bottomNavigation)!!
 
-            requireContext().showSnackBar(videoList,
+            requireContext().showSnackBar(requireActivity().findViewById(android.R.id.content),
                 bottomNavView,
                 getString(R.string.error_no_connection),
                 android.R.color.holo_red_light)

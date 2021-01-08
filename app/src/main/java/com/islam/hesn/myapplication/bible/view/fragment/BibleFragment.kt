@@ -32,7 +32,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_bible_list.*
 import kotlinx.android.synthetic.main.fragment_bible_list.searchList
 import kotlinx.android.synthetic.main.fragment_chapter.*
-import kotlinx.android.synthetic.main.fragment_quran_list.etSearch
 import kotlinx.android.synthetic.main.fragment_quran_list.fabJump
 import kotlinx.android.synthetic.main.fragment_youtube_first_channel.*
 import kotlinx.android.synthetic.main.layout_dialog_bible_fast_navigation.*
@@ -61,7 +60,7 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
         setListDivider()
         observeData()
         getBooks()
-        etSearch.setOnEditorActionListener(this)
+        etSearchBible.setOnEditorActionListener(this)
         setSearchIconClick()
         setSearchTypingListener()
         setRefreshListener()
@@ -153,26 +152,26 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
             if (isSuccess) {
                 fabJump.show()
                 searchList.visibility = View.VISIBLE
-                etSearch.isEnabled = true
+                etSearchBible.isEnabled = true
             } else {
                 fabJump.hide()
                 searchList.visibility = View.GONE
-                etSearch.isEnabled = false
+                etSearchBible.isEnabled = false
             }
         })
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setSearchIconClick() {
-        etSearch.setOnTouchListener { _, event ->
+        etSearchBible.setOnTouchListener { _, event ->
 
             val DRAWABLE_LEFT = 0
             val DRAWABLE_RIGHT = 2
 
             if (event.action == MotionEvent.ACTION_UP) {
-                etSearch.compoundDrawables[DRAWABLE_RIGHT]?.let {
-                    if (event.rawX >= etSearch.right - etSearch.compoundDrawables[DRAWABLE_RIGHT].bounds.width()) {
-                        if (etSearch.text!!.isNotEmpty()) {
+                etSearchBible.compoundDrawables[DRAWABLE_RIGHT]?.let {
+                    if (event.rawX >= etSearchBible.right - etSearchBible.compoundDrawables[DRAWABLE_RIGHT].bounds.width()) {
+                        if (etSearchBible.text!!.isNotEmpty()) {
                             if (Prefs.getBoolean(IS_CONNECTED, true).not()) {
 
                                 val bottomNavView: BottomNavigationView =
@@ -185,14 +184,14 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
 
                                 return@let
                             } else
-                                gotoSearchScreen(etSearch.text.toString())
+                                gotoSearchScreen(etSearchBible.text.toString())
                         }
                         return@setOnTouchListener true
                     }
                 }
-                etSearch.compoundDrawables[DRAWABLE_LEFT]?.let {
-                    if (event.rawX <= it.bounds.width() + 2 * etSearch.paddingLeft) {
-                        etSearch.editableText.clear()
+                etSearchBible.compoundDrawables[DRAWABLE_LEFT]?.let {
+                    if (event.rawX <= it.bounds.width() + 2 * etSearchBible.paddingLeft) {
+                        etSearchBible.editableText.clear()
                         return@setOnTouchListener true
                     }
                 }
@@ -203,7 +202,7 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
 
     override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-            if (etSearch.text!!.isNotEmpty()) {
+            if (etSearchBible.text!!.isNotEmpty()) {
                 if (Prefs.getBoolean(IS_CONNECTED, true).not()) {
 
                     val bottomNavView: BottomNavigationView =
@@ -216,7 +215,7 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
 
                     return false
                 } else
-                    gotoSearchScreen(etSearch.text.toString())
+                    gotoSearchScreen(etSearchBible.text.toString())
             }
         }
         return true
@@ -230,7 +229,7 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
     }
 
     private fun setSearchTypingListener() {
-        etSearch.addTextChangedListener(object : TextWatcher {
+        etSearchBible.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -241,14 +240,14 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
 
             override fun afterTextChanged(s: Editable?) {
                 if (s?.toString().isNullOrBlank()) {
-                    etSearch.setCompoundDrawablesWithIntrinsicBounds(
+                    etSearchBible.setCompoundDrawablesWithIntrinsicBounds(
                         0,
                         0,
                         R.drawable.ic_search,
                         0
                     )
                 } else if (s?.toString()?.isNotBlank()!! && s.toString().isNotEmpty()) {
-                    etSearch.setCompoundDrawablesWithIntrinsicBounds(
+                    etSearchBible.setCompoundDrawablesWithIntrinsicBounds(
                         android.R.drawable.ic_menu_close_clear_cancel,
                         0,
                         R.drawable.ic_search,
