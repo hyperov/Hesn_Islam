@@ -161,19 +161,14 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
         })
 
         quranViewModel.loading.observe(viewLifecycleOwner, { isVisible ->
-            progress.visibility = if (isVisible) View.VISIBLE else View.GONE
             list.visibility = if (isVisible) View.GONE else View.VISIBLE
 
             if (isVisible) {
                 fabJump.hide()
                 list.visibility = View.GONE
-                progress.visibility = View.VISIBLE
-                progress.playAnimation()
             } else {
                 fabJump.show()
                 list.visibility = View.VISIBLE
-                progress.visibility = View.GONE
-                progress.cancelAnimation()
             }
         })
     }
@@ -181,8 +176,10 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
     override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
 
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-            if (etSearchQuran.text!!.isNotEmpty())
-                gotoSearchScreen(etSearchQuran.text.toString())
+            etSearchQuran?.let {
+                if (etSearchQuran.text!!.isNotEmpty())
+                    gotoSearchScreen(etSearchQuran.text.toString())
+            }
         }
         return true
 

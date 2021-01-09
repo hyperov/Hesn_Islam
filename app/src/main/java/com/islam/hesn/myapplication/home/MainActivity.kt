@@ -50,9 +50,9 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.quranFragment,
-                R.id.bibleFragment,
                 R.id.misconceptionsFragment,
                 R.id.youtubeFragment,
+                R.id.bibleFragment,
                 R.id.moreFragment
             )
         )

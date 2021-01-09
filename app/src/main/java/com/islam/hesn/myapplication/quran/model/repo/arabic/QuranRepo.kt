@@ -5,6 +5,6 @@ import com.islam.hesn.myapplication.quran.model.response.arabic.QuranBaseRespons
 
 interface QuranRepo {
 
-    fun getAllArabicSurah(): QuranBaseResponse
+    suspend fun getAllArabicSurah(): QuranBaseResponse
 
 }

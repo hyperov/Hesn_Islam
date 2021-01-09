@@ -202,20 +202,22 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
 
     override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-            if (etSearchBible.text!!.isNotEmpty()) {
-                if (Prefs.getBoolean(IS_CONNECTED, true).not()) {
+            etSearchBible?.let {
+                if (etSearchBible.text!!.isNotEmpty()) {
+                    if (Prefs.getBoolean(IS_CONNECTED, true).not()) {
 
-                    val bottomNavView: BottomNavigationView =
-                        activity?.findViewById(R.id.bottomNavigation)!!
+                        val bottomNavView: BottomNavigationView =
+                            activity?.findViewById(R.id.bottomNavigation)!!
 
-                    requireContext().showSnackBar(searchList,
-                        bottomNavView,
-                        getString(R.string.error_no_connection),
-                        android.R.color.holo_red_light)
+                        requireContext().showSnackBar(searchList,
+                            bottomNavView,
+                            getString(R.string.error_no_connection),
+                            android.R.color.holo_red_light)
 
-                    return false
-                } else
-                    gotoSearchScreen(etSearchBible.text.toString())
+                        return false
+                    } else
+                        gotoSearchScreen(etSearchBible.text.toString())
+                }
             }
         }
         return true
@@ -239,20 +241,22 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (s?.toString().isNullOrBlank()) {
-                    etSearchBible.setCompoundDrawablesWithIntrinsicBounds(
-                        0,
-                        0,
-                        R.drawable.ic_search,
-                        0
-                    )
-                } else if (s?.toString()?.isNotBlank()!! && s.toString().isNotEmpty()) {
-                    etSearchBible.setCompoundDrawablesWithIntrinsicBounds(
-                        android.R.drawable.ic_menu_close_clear_cancel,
-                        0,
-                        R.drawable.ic_search,
-                        0
-                    )
+                etSearchBible?.let {
+                    if (s?.toString().isNullOrBlank()) {
+                        etSearchBible.setCompoundDrawablesWithIntrinsicBounds(
+                            0,
+                            0,
+                            R.drawable.ic_search,
+                            0
+                        )
+                    } else if (s?.toString()?.isNotBlank()!! && s.toString().isNotEmpty()) {
+                        etSearchBible.setCompoundDrawablesWithIntrinsicBounds(
+                            android.R.drawable.ic_menu_close_clear_cancel,
+                            0,
+                            R.drawable.ic_search,
+                            0
+                        )
+                    }
                 }
             }
         })
@@ -311,6 +315,11 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
             adapter.setDropDownViewResource(R.layout.layout_spinner_drop_down_resource)
             spinner.adapter = adapter
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        bibleViewModel.onCleared()
     }
 
 }

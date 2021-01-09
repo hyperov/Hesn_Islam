@@ -33,6 +33,8 @@ const val arabicFile = "arabic_quran.json"
 const val IS_CONNECTED = "IS_CONNECTED"
 const val COUNTER_FOR_REVIEW = "COUNTER_FOR_REVIEW"
 
+const val TEXT_QURAN = "TEXT_QURAN"
+
 const val MAX_COUNT_REVIEW_DIALOG_SHOW = 10
 
 fun Fragment.openYoutubeChannelIntent(channelId: String) {
