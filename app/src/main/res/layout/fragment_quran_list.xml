@@ -56,7 +56,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/vertical_margin_16"
-            android:visibility="gone"
+            android:visibility="visible"
             android:background="@android:color/white"
             app:layoutManager="LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"

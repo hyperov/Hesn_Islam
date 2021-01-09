@@ -165,10 +165,8 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
 
             if (isVisible) {
                 fabJump.hide()
-                list.visibility = View.GONE
             } else {
                 fabJump.show()
-                list.visibility = View.VISIBLE
             }
         })
     }
