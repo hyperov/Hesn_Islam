@@ -87,20 +87,22 @@ class YoutubeFragment : Fragment(), TextView.OnEditorActionListener {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (s?.toString().isNullOrBlank()) {
-                    etSearch.setCompoundDrawablesWithIntrinsicBounds(
-                        0,
-                        0,
-                        R.drawable.ic_search,
-                        0
-                    )
-                } else if (s?.toString()?.isNotBlank()!! && s.toString().isNotEmpty()) {
-                    etSearch.setCompoundDrawablesWithIntrinsicBounds(
-                        android.R.drawable.ic_menu_close_clear_cancel,
-                        0,
-                        R.drawable.ic_search,
-                        0
-                    )
+                etSearch?.let {
+                    if (s?.toString().isNullOrBlank()) {
+                        etSearch.setCompoundDrawablesWithIntrinsicBounds(
+                            0,
+                            0,
+                            R.drawable.ic_search,
+                            0
+                        )
+                    } else if (s?.toString()?.isNotBlank()!! && s.toString().isNotEmpty()) {
+                        etSearch.setCompoundDrawablesWithIntrinsicBounds(
+                            android.R.drawable.ic_menu_close_clear_cancel,
+                            0,
+                            R.drawable.ic_search,
+                            0
+                        )
+                    }
                 }
             }
         })
