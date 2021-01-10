@@ -11,11 +11,9 @@ class QuranRepoImpl @Inject constructor(private val assets: AssetManager) : Qura
     override suspend fun getAllArabicSurah(): QuranBaseResponse {
 
         val jsonString =
-            if (Prefs.contains(TEXT_QURAN).not()) {
-                assets.readJsonStringFromAssets(arabicFile)?.also {
-                    Prefs.putAny(TEXT_QURAN, it)
-                }
-            } else Prefs.getString(TEXT_QURAN, "")
+            assets.readJsonStringFromAssets(arabicFile)?.also {
+                Prefs.putAny(TEXT_QURAN, it)
+            }
 
         return Gson().fromJson(jsonString, QuranBaseResponse::class.java)
     }

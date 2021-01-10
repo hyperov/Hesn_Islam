@@ -1,6 +1,7 @@
 package com.islam.hesn.myapplication.bible.model.di
 
 import android.content.Context
+import com.islam.hesn.myapplication.BuildConfig
 import com.islam.hesn.myapplication.bible.model.repo.BibleApis
 import com.islam.hesn.myapplication.utils.IS_CONNECTED
 import com.islam.hesn.myapplication.utils.Prefs
@@ -31,13 +32,18 @@ object BibleNetworkModule {
         val cacheSize = (5 * 1024 * 1024).toLong()
         val myCache = Cache(context.cacheDir, cacheSize)
 
-        val interceptor = HttpLoggingInterceptor()
-        interceptor.level = HttpLoggingInterceptor.Level.BODY
+        var client = OkHttpClient.Builder()
 
-        val client =
-            OkHttpClient.Builder()
+        if (BuildConfig.DEBUG) {
+            val interceptor = HttpLoggingInterceptor()
+            interceptor.level = HttpLoggingInterceptor.Level.BODY
+            client.addInterceptor(interceptor)
+        }
+
+        client =
+            client
                 .cache(myCache)
-                .addInterceptor(interceptor).addNetworkInterceptor { chain ->
+                .addNetworkInterceptor { chain ->
 
                     val originalRequest: Request = chain.request()
                     val cacheHeaderValue =
@@ -54,11 +60,10 @@ object BibleNetworkModule {
                 }
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)
-                .build()
 
         val retrofit = Retrofit.Builder()
             .baseUrl(BibleApis.BASE_URL)
-            .client(client)
+            .client(client.build())
             .addConverterFactory(ScalarsConverterFactory.create())
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .build()
