@@ -103,7 +103,8 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
                 android.R.color.holo_red_light)
 
         }
-        bibleViewModel.getBible(BibleLangEnum.VAN_DYKE.lang)
+        if (bibleViewModel.bookModels.value.isNullOrEmpty())
+            bibleViewModel.getBible(BibleLangEnum.VAN_DYKE.lang)
         FirebaseCrashlytics.getInstance().setCustomKey("REQUEST", "BIBLE")
     }
 

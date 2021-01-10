@@ -143,7 +143,8 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
     }
 
     private fun getSurahs() {
-        quranViewModel.getAllArabicSurah()
+        if (quranViewModel.ayat.value.isNullOrEmpty())
+            quranViewModel.getAllArabicSurah()
         FirebaseCrashlytics.getInstance().setCustomKey("REQUEST", "QURAN")
     }
 

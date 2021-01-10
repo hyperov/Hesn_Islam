@@ -37,19 +37,7 @@ class BibleViewModel @ViewModelInject constructor(
         loading.value = true
         error.value = false
         success.value = false
-//        viewModelScope.launch {
-//            try {
-//                bookModels.value = bibleRepo.getBible(translation).booksMap.values.toList()
-//                success.value = true
-//            } catch (e: Exception) {
-//                error.value = true
-//                success.value = false
-//            } finally {
-//                loading.value = false
-//
-//            }
-//
-//        }
+
         val disposable = bibleRepo.getBible(translation).subscribeOn(Schedulers.io()).cache()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
