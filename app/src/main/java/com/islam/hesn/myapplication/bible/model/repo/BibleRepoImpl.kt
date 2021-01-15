@@ -12,9 +12,6 @@ class BibleRepoImpl @Inject constructor(private val apis: BibleApis) : BibleRepo
 
     override fun getBible(translation: String): Flowable<BibleResponse> {
 
-//        val cleanText: String = apis.getBible(translation)
-//            .drop(1).dropLast(2)
-
 //        val cleanText =
 //            StringBuilder(apis.getBible(translation)).removeSurrounding("(", ");").toString()
 //

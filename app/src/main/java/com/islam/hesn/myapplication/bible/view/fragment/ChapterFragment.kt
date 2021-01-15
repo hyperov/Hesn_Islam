@@ -61,7 +61,7 @@ class ChapterFragment : Fragment() {
             if (isError) {
                 val bottomNavView: BottomNavigationView =
                     activity?.findViewById(R.id.bottomNavigation)!!
-                requireContext().showSnackBar(chapterTranslation,
+                requireContext().showSnackBar(requireActivity().findViewById(android.R.id.content),
                     bottomNavView,
                     getString(R.string.error_bible_quran_translation_api),
                     android.R.color.holo_red_light)

@@ -1,5 +1,3 @@
-@file:Suppress("LocalVariableName", "LocalVariableName", "LocalVariableName", "LocalVariableName")
-
 package com.islam.hesn.myapplication.bible.view.fragment
 
 import android.annotation.SuppressLint

@@ -41,7 +41,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/item_num"
         app:layout_constraintTop_toTopOf="@+id/item_num"
-        tools:text="الفاتحة" />
+        tools:text="موسى" />
 
     <TextView
         android:id="@+id/tvTranslateBible"
