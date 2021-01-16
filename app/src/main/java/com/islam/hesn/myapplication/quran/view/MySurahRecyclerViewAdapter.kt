@@ -1,8 +1,12 @@
 package com.islam.hesn.myapplication.quran.view
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context.CLIPBOARD_SERVICE
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -16,8 +20,6 @@ import com.islam.hesn.myapplication.utils.BOOKMARK_AYA_NUMBER
 import com.islam.hesn.myapplication.utils.BOOKMARK_SURAH_NUMBER
 import com.islam.hesn.myapplication.utils.Prefs
 import kotlinx.android.synthetic.main.item_layout_surah.view.*
-import kotlinx.android.synthetic.main.item_layout_surah.view.content
-import kotlinx.android.synthetic.main.item_layout_surah.view.item_num
 
 
 class MySurahRecyclerViewAdapter(
@@ -84,6 +86,16 @@ class MySurahRecyclerViewAdapter(
                         content.text = standard_full
                         setOnClickListener {
                             onAyaItemClick?.invoke(sura_id, aya_id)
+                        }
+                        setOnLongClickListener {
+                            val clipboard =
+                                context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+
+                            val clip = ClipData.newPlainText("الأية", standard_full)
+                            clipboard.setPrimaryClip(clip)
+                            Toast.makeText(context, "تم نسخ الأية بنجاح", Toast.LENGTH_SHORT)
+                                .show()
+                            true
                         }
                     }
                 }

@@ -1,8 +1,12 @@
 package com.islam.hesn.myapplication.bible.view
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
 import com.islam.hesn.myapplication.R
@@ -88,6 +92,16 @@ class BibleMainRecyclerViewAdapter(
                 content.text = verseContent.trim()
                 setOnClickListener {
                     onVerseItemClick?.invoke(verse)
+                }
+                setOnLongClickListener {
+                    val clipboard =
+                        context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+
+                    val clip = ClipData.newPlainText("العدد", verseContent.trim())
+                    clipboard.setPrimaryClip(clip)
+                    Toast.makeText(context, "تم نسخ العدد بنجاح", Toast.LENGTH_SHORT)
+                        .show()
+                    true
                 }
             }
         }
