@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">حصن الإسلام</string>
-    <string name="misconceptions">الرد على الشبهات</string>
+    <string name="misconceptions">ردود الشبهات</string>
     <string name="contact_us">تواصل معنا</string>
     <string name="about_us">من نحن</string>
     <string name="youtube_channel">قناة اليوتيوب</string>
@@ -54,6 +54,8 @@
     <string name="no_results">عذرآ..لا يوجد نتائج بحث عن : </string>
     <string name="no_results_2">عذرآ..لا يوجد نتائج بحث</string>
     <string name="click_for_translation">اضغط للترجمة</string>
+    <string name="comperative_relegions">مقارنة أديان</string>
+    <string name="misconceptions_main_title">شبهات وردود</string>
 
     /////////////////////////////////////
     <string-array name="bible_books">

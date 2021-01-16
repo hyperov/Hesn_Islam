@@ -64,6 +64,7 @@
         android:name="com.islam.hesn.myapplication.misconceptions.MisconceptionsFragment"
         android:label="@string/misconceptions"
         tools:layout="@layout/fragment_misconceptions" />
+
     <fragment
         android:id="@+id/moreFragment"
         android:name="com.islam.hesn.myapplication.more.MoreFragment"
@@ -77,11 +78,28 @@
     <fragment
         android:id="@+id/youtubePlayerFragment"
         android:name="com.islam.hesn.myapplication.youtube.view.YoutubePlayerFragment"
-        android:label="YoutubePlayerFragment"
+        android:label="@string/youtube_channel"
         tools:layout="@layout/fragment_youtube_player" />
     <fragment
         android:id="@+id/youtubeSearchFragment"
         android:name="com.islam.hesn.myapplication.youtube.view.YoutubeSearchFragment"
-        android:label="youtube_search_fragment"
+        android:label="@string/search_title"
         tools:layout="@layout/youtube_search_fragment" />
+    <fragment
+        android:id="@+id/misconceptionsMainFragment"
+        android:name="com.islam.hesn.myapplication.misconceptions.MisconceptionsMainFragment"
+        android:label="@string/misconceptions_main_title"
+        tools:layout="@layout/fragment_misconceptions_main">
+        <action
+            android:id="@+id/action_misconceptionsMainFragment_to_misconceptionsFragment"
+            app:destination="@id/misconceptionsFragment" />
+        <action
+            android:id="@+id/action_misconceptionsMainFragment_to_misconceptionsSitesFragment"
+            app:destination="@id/misconceptionsSitesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/misconceptionsSitesFragment"
+        android:name="com.islam.hesn.myapplication.misconceptions.MisconceptionsSitesFragment"
+        android:label="@string/comperative_relegions"
+        tools:layout="@layout/fragment_misconceptions" />
 </navigation>

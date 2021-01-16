@@ -16,9 +16,10 @@
         android:title="@string/youtube_channel" />
 
     <item
-        android:id="@+id/misconceptionsFragment"
+        android:id="@+id/misconceptionsMainFragment"
         android:icon="@drawable/ic_misconceptions"
         android:title="@string/misconceptions" />
+
 
     <item
         android:id="@+id/moreFragment"
