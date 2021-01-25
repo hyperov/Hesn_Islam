@@ -183,7 +183,7 @@ class MainActivity : AppCompatActivity() {
             when(resultCode) {
                 Activity.RESULT_CANCELED -> {
                     FirebaseCrashlytics.getInstance().setCustomKey("UPDATE_API_DOWNLOAD_CANCELED", "UPDATE_API_DIALOG_CANCELED")
-                    checkForUpdates()
+                    initUpdates()
                 }
                 Activity.RESULT_OK -> {
                     Log.d(this::class.simpleName,"Update Success! Result code: $resultCode")
@@ -195,7 +195,7 @@ class MainActivity : AppCompatActivity() {
                     // If the update is cancelled or fails,
                     // you can request to start the update again.
                     // Request the update.
-                    checkForUpdates()
+                    initUpdates()
                 }
             }
         }
