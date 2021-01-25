@@ -97,20 +97,24 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (s?.toString().isNullOrBlank()) {
-                    etSearchQuran.setCompoundDrawablesWithIntrinsicBounds(
-                        0,
-                        0,
-                        R.drawable.ic_search,
-                        0
-                    )
-                } else if (s?.toString()?.isNotBlank()!! && s.toString().isNotEmpty()) {
-                    etSearchQuran.setCompoundDrawablesWithIntrinsicBounds(
-                        android.R.drawable.ic_menu_close_clear_cancel,
-                        0,
-                        R.drawable.ic_search,
-                        0
-                    )
+                etSearchQuran?.let {
+                    if (s?.toString().isNullOrBlank()) {
+                        etSearchQuran.setCompoundDrawablesWithIntrinsicBounds(
+                            0,
+                            0,
+                            R.drawable.ic_search,
+                            0
+                        )
+
+                    } else if (s?.toString()?.isNotBlank()!! && s.toString().isNotEmpty()) {
+                        etSearchQuran.setCompoundDrawablesWithIntrinsicBounds(
+                            android.R.drawable.ic_menu_close_clear_cancel,
+                            0,
+                            R.drawable.ic_search,
+                            0
+                        )
+
+                    }
                 }
             }
         })
