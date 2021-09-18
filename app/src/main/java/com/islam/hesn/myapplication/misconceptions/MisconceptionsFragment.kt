@@ -34,7 +34,7 @@ class MisconceptionsFragment : Fragment() {
         webSettings.javaScriptEnabled = true
         webView.apply {
             webViewClient = MyWebViewClient(progressMisconceptions)
-            loadUrl("http://rodood.win/")
+            loadUrl("https://hosenalislam.com/")
         }
     }
 

@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -57,8 +58,12 @@ class BookFragment : Fragment() {
     }
 
     private fun setListDivider() {
-        searchList.addItemDecoration(DividerItemDecoration(context,
-            DividerItemDecoration.VERTICAL))
+        searchList.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
     }
 
     private fun getChapters() {
@@ -66,7 +71,7 @@ class BookFragment : Fragment() {
     }
 
     private fun observeData() {
-        bibleViewModel.chapterModels.observe(viewLifecycleOwner, {
+        bibleViewModel.chapterModels.observe(viewLifecycleOwner) {
             searchList.adapter =
                 BibleMainRecyclerViewAdapter(
                     chapters = it,
@@ -77,7 +82,7 @@ class BookFragment : Fragment() {
                         findNavController().navigate(R.id.chapterFragment)
                     })
             setupFastForwardSpinnerAdapter(it!!)
-        })
+        }
     }
 
     private fun setupFastForwardSpinnerAdapter(chapters: List<Chapter>) {
