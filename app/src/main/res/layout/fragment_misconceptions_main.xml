@@ -63,6 +63,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="32dp"
         app:cardBackgroundColor="@color/colorAccent"
+        android:visibility="gone"
         app:cardCornerRadius="@dimen/card_corner_radius_16"
         app:cardElevation="@dimen/cardview_default_elevation"
         app:layout_constraintBottom_toBottomOf="parent"
