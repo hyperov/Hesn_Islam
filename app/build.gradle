@@ -22,13 +22,13 @@ android {
         }
 
     }
-    compileSdkVersion 29
+    compileSdkVersion 30
     buildToolsVersion "29.0.3"
 
     defaultConfig {
         applicationId "com.islam.hesn.myapplication"
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 9
         versionName "1.4.5"
 
