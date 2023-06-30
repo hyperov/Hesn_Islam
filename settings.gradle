@@ -1,2 +1,20 @@
-include ':app'
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+        maven { url "https://mvnrepository.com/artifact" }
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        jcenter()
+        maven { url "https://mvnrepository.com/artifact" }
+
+    }
+}
 rootProject.name = "Hesn Islam"
+include ':app'
