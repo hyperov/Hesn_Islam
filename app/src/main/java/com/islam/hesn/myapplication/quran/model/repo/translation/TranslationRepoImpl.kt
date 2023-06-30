@@ -14,5 +14,6 @@ class TranslationRepoImpl @Inject constructor(private val apis: QuranTranslation
         ayaNum: Int
     ): AyaTranslationItem = withContext(Dispatchers.IO) {
         apis.getAyat(translationKey, suraNum, ayaNum)
+
     }
 }
