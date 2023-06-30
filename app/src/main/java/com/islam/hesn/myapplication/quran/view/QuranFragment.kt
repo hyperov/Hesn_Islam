@@ -17,6 +17,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.islam.hesn.myapplication.R
+import com.islam.hesn.myapplication.databinding.FragmentQuranListBinding
+import com.islam.hesn.myapplication.databinding.LayoutDialogSurahFastNavigationBinding
 import com.islam.hesn.myapplication.quran.model.response.arabic.AdapterStateQuranEnum.QURAN_SURAH_LIST
 import com.islam.hesn.myapplication.quran.viewmodel.QuranViewModel
 import com.islam.hesn.myapplication.search.viewmodel.SearchViewModel
@@ -25,12 +27,16 @@ import com.islam.hesn.myapplication.utils.MinMaxFilter
 import com.islam.hesn.myapplication.utils.Prefs
 import com.islam.hesn.myapplication.utils.putAny
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_quran_list.*
-import kotlinx.android.synthetic.main.layout_dialog_surah_fast_navigation.*
 
 
 @AndroidEntryPoint
 class QuranFragment : Fragment(), TextView.OnEditorActionListener {
+
+    private var _binding: FragmentQuranListBinding? = null
+    private val binding get() = _binding!!
+
+    private lateinit var dialogBinding: LayoutDialogSurahFastNavigationBinding
+
 
     private val quranViewModel: QuranViewModel by activityViewModels()
     private val searchViewModel: SearchViewModel by activityViewModels()
@@ -38,9 +44,12 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
 
-        return inflater.inflate(R.layout.fragment_quran_list, container, false)
+        _binding = FragmentQuranListBinding.inflate(inflater, container, false)
+        dialogBinding = binding.layoutDialogSurahFastNavigation2
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,44 +59,53 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
         resetFastForward()
         observeData()
         getSurahs()
-        etSearchQuran.setOnEditorActionListener(this)
+        binding.etSearchQuran.setOnEditorActionListener(this)
         setSearchIconClick()
         setSearchTypingListener()
         setFastForwardListener()
     }
 
     private fun setListDivider() {
-        list.addItemDecoration(DividerItemDecoration(context,
-            DividerItemDecoration.VERTICAL))
+        binding.list.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
     }
 
     private fun setFastForwardListener() {
+
+        val fabJump = binding.fabJump
         fabJump.setOnClickListener {
             fabJump.isExpanded = !fabJump.isExpanded
         }
-        btFastForwardDone.setOnClickListener {
 
-            fabJump.isExpanded = !fabJump.isExpanded
-            etAya.text.toString().apply {
-                if (isNotBlank()) {
-                    quranViewModel.ayaFastForwardId.value = this.toInt()
-                    quranViewModel.isBookMark.value = false
-                    quranViewModel.surahId.value = spinnerSurah.selectedItemPosition + 1
-                    findNavController().navigate(R.id.surahFragment)
-                    Prefs.putAny(COUNTER_FOR_REVIEW, Prefs.getInt(COUNTER_FOR_REVIEW, 0) + 1)
+        dialogBinding.apply {
+            btFastForwardDone.setOnClickListener {
+
+                fabJump.isExpanded = !fabJump.isExpanded
+                etAya.text.toString().apply {
+                    if (isNotBlank()) {
+                        quranViewModel.ayaFastForwardId.value = this.toInt()
+                        quranViewModel.isBookMark.value = false
+                        quranViewModel.surahId.value = spinnerSurah.selectedItemPosition + 1
+                        findNavController().navigate(R.id.surahFragment)
+                        Prefs.putAny(COUNTER_FOR_REVIEW, Prefs.getInt(COUNTER_FOR_REVIEW, 0) + 1)
+                    }
                 }
             }
+            btCancel.setOnClickListener { fabJump.isExpanded = !fabJump.isExpanded }
         }
-        btCancel.setOnClickListener { fabJump.isExpanded = !fabJump.isExpanded }
     }
 
     private fun resetFastForward() {
         quranViewModel.ayaFastForwardId.value = 0
-        setupAyaMinMax(spinnerSurah.selectedItemPosition)
+        setupAyaMinMax(dialogBinding.spinnerSurah.selectedItemPosition)
     }
 
     private fun setSearchTypingListener() {
-        etSearchQuran.addTextChangedListener(object : TextWatcher {
+        binding.etSearchQuran.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -97,9 +115,9 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                etSearchQuran?.let {
+                binding.etSearchQuran.let {
                     if (s?.toString().isNullOrBlank()) {
-                        etSearchQuran.setCompoundDrawablesWithIntrinsicBounds(
+                        binding.etSearchQuran.setCompoundDrawablesWithIntrinsicBounds(
                             0,
                             0,
                             R.drawable.ic_search,
@@ -107,7 +125,7 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
                         )
 
                     } else if (s?.toString()?.isNotBlank()!! && s.toString().isNotEmpty()) {
-                        etSearchQuran.setCompoundDrawablesWithIntrinsicBounds(
+                        binding.etSearchQuran.setCompoundDrawablesWithIntrinsicBounds(
                             android.R.drawable.ic_menu_close_clear_cancel,
                             0,
                             R.drawable.ic_search,
@@ -122,28 +140,30 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setSearchIconClick() {
-        etSearchQuran.setOnTouchListener(OnTouchListener { _, event ->
+        binding.apply {
+            etSearchQuran.setOnTouchListener(OnTouchListener { _, event ->
 
-            val DRAWABLE_LEFT = 0
-            val DRAWABLE_RIGHT = 2
+                val DRAWABLE_LEFT = 0
+                val DRAWABLE_RIGHT = 2
 
-            if (event.action == MotionEvent.ACTION_UP) {
-                etSearchQuran.compoundDrawables[DRAWABLE_RIGHT]?.let {
-                    if (event.rawX >= etSearchQuran.right - it.bounds.width()) {
-                        if (etSearchQuran.text!!.isNotEmpty())
-                            gotoSearchScreen(etSearchQuran.text.toString())
-                        return@OnTouchListener true
+                if (event.action == MotionEvent.ACTION_UP) {
+                    etSearchQuran.compoundDrawables[DRAWABLE_RIGHT]?.let {
+                        if (event.rawX >= etSearchQuran.right - it.bounds.width()) {
+                            if (etSearchQuran.text!!.isNotEmpty())
+                                gotoSearchScreen(etSearchQuran.text.toString())
+                            return@OnTouchListener true
+                        }
+                    }
+                    etSearchQuran.compoundDrawables[DRAWABLE_LEFT]?.let {
+                        if (event.rawX <= it.bounds.width() + 2 * etSearchQuran.paddingLeft) {
+                            etSearchQuran.editableText.clear()
+                            return@OnTouchListener true
+                        }
                     }
                 }
-                etSearchQuran.compoundDrawables[DRAWABLE_LEFT]?.let {
-                    if (event.rawX <= it.bounds.width() + 2 * etSearchQuran.paddingLeft) {
-                        etSearchQuran.editableText.clear()
-                        return@OnTouchListener true
-                    }
-                }
-            }
-            false
-        })
+                false
+            })
+        }
     }
 
     private fun getSurahs() {
@@ -153,8 +173,8 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
     }
 
     private fun observeData() {
-        quranViewModel.surahs.observe(viewLifecycleOwner, {
-            list.adapter =
+        quranViewModel.surahs.observe(viewLifecycleOwner) {
+            binding.list.adapter =
                 MySurahRecyclerViewAdapter(it, QURAN_SURAH_LIST, { surahId ->
 
                     if (quranViewModel.surahId.value != surahId)
@@ -163,29 +183,30 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
                     findNavController().navigate(R.id.surahFragment)
                 })
             setupFastForwardSpinnerAdapter()
-        })
+        }
 
-        quranViewModel.loading.observe(viewLifecycleOwner, { isVisible ->
-            list.visibility = if (isVisible) View.GONE else View.VISIBLE
-
+        quranViewModel.loading.observe(viewLifecycleOwner) { isVisible ->
+            binding.list.visibility = if (isVisible) View.GONE else View.VISIBLE
+            val fabJump = binding.fabJump
             if (isVisible) {
                 fabJump.hide()
             } else {
                 fabJump.show()
             }
-        })
+        }
     }
 
     override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
-
-        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-            etSearchQuran?.let {
-                if (etSearchQuran.text!!.isNotEmpty())
-                    gotoSearchScreen(etSearchQuran.text.toString())
+        binding.apply {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                etSearchQuran.let {
+                    if (etSearchQuran.text!!.isNotEmpty())
+                        gotoSearchScreen(etSearchQuran.text.toString())
+                }
             }
-        }
-        return true
+            return true
 
+        }
     }
 
     private fun gotoSearchScreen(searchText: String) {
@@ -207,36 +228,44 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
 
         ).also { adapter ->
             adapter.setDropDownViewResource(R.layout.layout_spinner_drop_down_resource)
-            spinnerSurah.adapter = adapter
+            dialogBinding.spinnerSurah.adapter = adapter
         }
 
-        spinnerSurah.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long,
-            ) {
+        dialogBinding.spinnerSurah.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long,
+                ) {
 
-                setupAyaMinMax(position)
+                    setupAyaMinMax(position)
+                }
+
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                }
             }
-
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-        }
     }
 
     private fun setupAyaMinMax(position: Int) {
         val ayaCount = quranViewModel.ayat.value?.count { it.sura_id == position + 1 }
-        ayaCount?.let {
-            etAya.filters = arrayOf<InputFilter>(MinMaxFilter(1, ayaCount))
-            etAya.hint = "1 الى $ayaCount"
-            tvEnterAyaNumberFromTo.text = "ادخل رقم الأية من 1 الى $ayaCount"
+        dialogBinding.apply {
+            ayaCount?.let {
+                etAya.filters = arrayOf<InputFilter>(MinMaxFilter(1, ayaCount))
+                etAya.hint = "1 الى $ayaCount"
+                tvEnterAyaNumberFromTo.text = "ادخل رقم الأية من 1 الى $ayaCount"
+            }
         }
 
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

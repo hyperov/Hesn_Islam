@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
     <include
+        android:id="@+id/layout_dialog_bible_fast_navigation"
         layout="@layout/layout_dialog_bible_fast_navigation"
         android:layout_width="300dp"
         android:layout_height="wrap_content"

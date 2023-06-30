@@ -13,12 +13,15 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.bible.model.response.translation.TranslationsBibleOptionsEnum.*
 import com.islam.hesn.myapplication.bible.viewmodel.BibleTranslationViewModel
+import com.islam.hesn.myapplication.databinding.LayoutBibleTranslationOptionsBottomSheetBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.layout_bible_translation_options_bottom_sheet.*
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class TranslationBibleBottomSheetFragment : BottomSheetDialogFragment(), View.OnClickListener {
+
+    private var _binding: LayoutBibleTranslationOptionsBottomSheetBinding? = null
+    private val binding get() = _binding!!
 
     private val translationViewModel: BibleTranslationViewModel by activityViewModels()
 
@@ -31,22 +34,22 @@ class TranslationBibleBottomSheetFragment : BottomSheetDialogFragment(), View.On
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(
-            R.layout.layout_bible_translation_options_bottom_sheet,
-            container,
-            false
-        )
+    ): View {
+
+        _binding =
+            LayoutBibleTranslationOptionsBottomSheetBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", "TranslationBibleBottomSheetFragment")
+        FirebaseCrashlytics.getInstance()
+            .setCustomKey("SCREEN", "TranslationBibleBottomSheetFragment")
         setupViews()
     }
 
     private fun setupViews() {
-        bottomsheet.children.forEach { it.setOnClickListener(this) }
+        binding.bottomsheet.children.forEach { it.setOnClickListener(this) }
     }
 
     companion object {
@@ -59,25 +62,27 @@ class TranslationBibleBottomSheetFragment : BottomSheetDialogFragment(), View.On
     override fun onClick(v: View?) {
 
         var lang = ""
-        translationViewModel.apply {
-            when (v) {
-                english -> {
-                    lang = ENGLISH.lang
-                }
-                french -> {
-                    lang = FRENCH.lang
-                }
-                german -> {
-                    lang = GERMAN.lang
-                }
-                spanish -> {
-                    lang = SPANISH.lang
-                }
-                chinese -> {
-                    lang = CHINESE.lang
-                }
-                russian -> {
-                    lang = RUSSIAN.lang
+        binding.apply {
+            translationViewModel.apply {
+                when (v) {
+                    english -> {
+                        lang = ENGLISH.lang
+                    }
+                    french -> {
+                        lang = FRENCH.lang
+                    }
+                    german -> {
+                        lang = GERMAN.lang
+                    }
+                    spanish -> {
+                        lang = SPANISH.lang
+                    }
+                    chinese -> {
+                        lang = CHINESE.lang
+                    }
+                    russian -> {
+                        lang = RUSSIAN.lang
+                    }
                 }
             }
             dismissAllowingStateLoss()
@@ -87,5 +92,10 @@ class TranslationBibleBottomSheetFragment : BottomSheetDialogFragment(), View.On
                 translationViewModel.getVerseTranslation(lang)
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

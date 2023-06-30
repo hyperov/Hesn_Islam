@@ -14,6 +14,7 @@ import androidx.paging.LoadState
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.islam.hesn.myapplication.R
+import com.islam.hesn.myapplication.databinding.YoutubeSearchFragmentBinding
 import com.islam.hesn.myapplication.utils.IS_CONNECTED
 import com.islam.hesn.myapplication.utils.Prefs
 import com.islam.hesn.myapplication.utils.changeToolbarTitle
@@ -21,14 +22,19 @@ import com.islam.hesn.myapplication.utils.showSnackBar
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubePlayerViewModel
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubeSearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_youtube_first_channel.progressYoutube
-import kotlinx.android.synthetic.main.youtube_search_fragment.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
 class YoutubeSearchFragment : Fragment() {
+
+    //R.layout.fragment_youtube_search
+    private var _binding: YoutubeSearchFragmentBinding? = null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
     private var channelId: String = ""
     private val youtubeSearchViewModel: YoutubeSearchViewModel by activityViewModels()
@@ -43,10 +49,12 @@ class YoutubeSearchFragment : Fragment() {
                 val bottomNavView: BottomNavigationView =
                     activity?.findViewById(R.id.bottomNavigation)!!
 
-                requireContext().showSnackBar(requireActivity().findViewById(android.R.id.content),
+                requireContext().showSnackBar(
+                    requireActivity().findViewById(android.R.id.content),
                     bottomNavView,
                     getString(R.string.error_no_connection),
-                    android.R.color.holo_red_light)
+                    android.R.color.holo_red_light
+                )
             } else
                 findNavController().navigate(R.id.youtubePlayerFragment)
         }
@@ -54,20 +62,24 @@ class YoutubeSearchFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(R.layout.youtube_search_fragment, container, false)
+    ): View {
+        _binding = YoutubeSearchFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", "YoutubeSearchFragment")
-        tvSearchKeyWord.text = youtubeSearchViewModel.searchQuery.value
-        changeToolbarTitle(when (youtubeSearchViewModel.selectedTabPosition.value) {
-            0 -> getString(R.string.main_channel)
-            1 -> getString(R.string.education_channel)
-            else -> ""
-        })
-        videosList.adapter = pagingAdapter
+        binding.tvSearchKeyWord.text = youtubeSearchViewModel.searchQuery.value
+        changeToolbarTitle(
+            when (youtubeSearchViewModel.selectedTabPosition.value) {
+                0 -> getString(R.string.main_channel)
+                1 -> getString(R.string.education_channel)
+                else -> ""
+            }
+        )
+        binding.videosList.adapter = pagingAdapter
         channelId = when (youtubeSearchViewModel.selectedTabPosition.value) {
             0 -> getString(R.string.main_channel_id)
             1 -> getString(R.string.education_channel_id)
@@ -89,18 +101,19 @@ class YoutubeSearchFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
 
             pagingAdapter.loadStateFlow.collectLatest { loadStates ->
-
-                progressYoutube.isVisible = loadStates.refresh is LoadState.Loading
-                videosList.isVisible = loadStates.refresh is LoadState.NotLoading
+                binding.apply {
+                    progressYoutube.isVisible = loadStates.refresh is LoadState.Loading
+                    videosList.isVisible = loadStates.refresh is LoadState.NotLoading
 //                retry.isVisible = loadStates.refresh !is LoadState.Loading
-                videosList.isVisible = loadStates.refresh !is LoadState.Error
+                    videosList.isVisible = loadStates.refresh !is LoadState.Error
 //                errorMsg.isVisible = loadStates.refresh is LoadState.Error
-                if (pagingAdapter.itemCount <= 0 && !loadStates.source.refresh.endOfPaginationReached && videosList.isVisible && progressYoutube.isVisible.not()) {
-                    tvSearch.text = getString(R.string.no_results)
-                    noResultsYoutube.isVisible = true
-                } else {
-                    tvSearch.text = getString(R.string.search_results_for)
-                    noResultsYoutube.isGone = true
+                    if (pagingAdapter.itemCount <= 0 && !loadStates.source.refresh.endOfPaginationReached && videosList.isVisible && progressYoutube.isVisible.not()) {
+                        tvSearch.text = getString(R.string.no_results)
+                        noResultsYoutube.isVisible = true
+                    } else {
+                        tvSearch.text = getString(R.string.search_results_for)
+                        noResultsYoutube.isGone = true
+                    }
                 }
             }
 
@@ -113,6 +126,11 @@ class YoutubeSearchFragment : Fragment() {
             }
         }
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

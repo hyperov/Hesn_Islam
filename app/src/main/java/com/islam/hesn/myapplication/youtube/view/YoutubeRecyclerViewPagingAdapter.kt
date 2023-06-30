@@ -6,12 +6,11 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.islam.hesn.myapplication.R
+import com.islam.hesn.myapplication.databinding.ItemLayoutYoutubeFirstChannelBinding
 import com.islam.hesn.myapplication.youtube.model.response.CommonVideo
 import com.islam.hesn.myapplication.youtube.model.response.Video
 import com.islam.hesn.myapplication.youtube.view.YoutubeRecyclerViewPagingAdapter.YoutubeViewHolder
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.item_layout_youtube_first_channel.view.*
 
 class YoutubeRecyclerViewPagingAdapter(
     diffCallback: DiffUtil.ItemCallback<Video>,
@@ -19,10 +18,17 @@ class YoutubeRecyclerViewPagingAdapter(
 ) :
     PagingDataAdapter<Video, YoutubeViewHolder>(diffCallback) {
 
+    private var _binding: ItemLayoutYoutubeFirstChannelBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): YoutubeViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_layout_youtube_first_channel, parent, false)
-        return YoutubeViewHolder(view)
+
+        _binding = ItemLayoutYoutubeFirstChannelBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return YoutubeViewHolder(binding.root)
     }
 
     override fun onBindViewHolder(holder: YoutubeViewHolder, position: Int) {
@@ -34,7 +40,10 @@ class YoutubeRecyclerViewPagingAdapter(
 
         fun bind(video: CommonVideo) = with(itemView) {
             with(video.snippet) {
-                tvName.text = title
+
+                binding.tvName.text = title
+                val ivThumbnail = binding.ivThumbnail
+
                 with(thumbnails) {
                     standard?.let {
                         Picasso.get().load(standard.url).into(ivThumbnail)
@@ -61,5 +70,10 @@ class YoutubeRecyclerViewPagingAdapter(
             }
         }
 
+    }
+
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView)
+        _binding = null
     }
 }

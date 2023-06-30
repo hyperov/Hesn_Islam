@@ -24,19 +24,20 @@ import com.google.android.play.core.review.ReviewManagerFactory
 import com.google.android.play.core.tasks.Task
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.islam.hesn.myapplication.R
+import com.islam.hesn.myapplication.databinding.ActivityMainBinding
 import com.islam.hesn.myapplication.utils.COUNTER_FOR_REVIEW
 import com.islam.hesn.myapplication.utils.MAX_COUNT_REVIEW_DIALOG_SHOW
 import com.islam.hesn.myapplication.utils.Prefs
 import com.islam.hesn.myapplication.utils.putAny
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.tool_bar.*
 
 const val MY_REQUEST_CODE: Int = 111
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    //R.layout.activity_main
+    private lateinit var binding: ActivityMainBinding
 
     private lateinit var appUpdateInfoTask: Task<AppUpdateInfo>
     private lateinit var appUpdateManager: AppUpdateManager
@@ -48,10 +49,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         initReviews()
         initUpdates()
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.include2.toolbar)
         if (window.decorView.layoutDirection == View.LAYOUT_DIRECTION_LTR) {
             window.decorView.layoutDirection = View.LAYOUT_DIRECTION_RTL
         }
@@ -84,20 +87,22 @@ class MainActivity : AppCompatActivity() {
                     // The current activity making the update request.
                     this,
                     // Include a request code to later monitor this update request.
-                    MY_REQUEST_CODE)
+                    MY_REQUEST_CODE
+                )
             }
         }
     }
 
-    private fun resumeUpdate(){
+    private fun resumeUpdate() {
 
-            appUpdateInfoTask
+        appUpdateInfoTask
             .addOnSuccessListener { appUpdateInfo ->
 
                 if (appUpdateInfo.updateAvailability()
                     == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS
                 ) {
-                    FirebaseCrashlytics.getInstance().setCustomKey("UPDATE_API_RESUME_DOWNLOAD", true)
+                    FirebaseCrashlytics.getInstance()
+                        .setCustomKey("UPDATE_API_RESUME_DOWNLOAD", true)
                     // If an in-app update is already running, resume the update.
                     appUpdateManager.startUpdateFlowForResult(
                         appUpdateInfo,
@@ -129,7 +134,7 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(this, navController, appBarConfiguration)
         // Setting Navigation Controller with the BottomNavigationView
-        bottomNavigation.setupWithNavController(navController)
+        binding.bottomNavigation.setupWithNavController(navController)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -180,18 +185,21 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == MY_REQUEST_CODE) {
-            when(resultCode) {
+            when (resultCode) {
                 Activity.RESULT_CANCELED -> {
-                    FirebaseCrashlytics.getInstance().setCustomKey("UPDATE_API_DOWNLOAD_CANCELED", "UPDATE_API_DIALOG_CANCELED")
+                    FirebaseCrashlytics.getInstance()
+                        .setCustomKey("UPDATE_API_DOWNLOAD_CANCELED", "UPDATE_API_DIALOG_CANCELED")
                     initUpdates()
                 }
                 Activity.RESULT_OK -> {
-                    Log.d(this::class.simpleName,"Update Success! Result code: $resultCode")
-                    FirebaseCrashlytics.getInstance().setCustomKey("UPDATE_API_DOWNLOAD_SUCCESS", "UPDATE_API_DOWNLOAD_SUCCESS")
+                    Log.d(this::class.simpleName, "Update Success! Result code: $resultCode")
+                    FirebaseCrashlytics.getInstance()
+                        .setCustomKey("UPDATE_API_DOWNLOAD_SUCCESS", "UPDATE_API_DOWNLOAD_SUCCESS")
                 }
-                ActivityResult.RESULT_IN_APP_UPDATE_FAILED->{
-                    Log.d(this::class.simpleName,"Update flow failed! Result code: $resultCode")
-                    FirebaseCrashlytics.getInstance().setCustomKey("UPDATE_API_DOWNLOAD_FAILED", "UPDATE_API_DOWNLOAD_FAILED")
+                ActivityResult.RESULT_IN_APP_UPDATE_FAILED -> {
+                    Log.d(this::class.simpleName, "Update flow failed! Result code: $resultCode")
+                    FirebaseCrashlytics.getInstance()
+                        .setCustomKey("UPDATE_API_DOWNLOAD_FAILED", "UPDATE_API_DOWNLOAD_FAILED")
                     // If the update is cancelled or fails,
                     // you can request to start the update again.
                     // Request the update.

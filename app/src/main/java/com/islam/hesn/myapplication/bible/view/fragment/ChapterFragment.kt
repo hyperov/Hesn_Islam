@@ -14,14 +14,15 @@ import com.islam.hesn.myapplication.bible.view.AdapterStateBibleEnum
 import com.islam.hesn.myapplication.bible.view.BibleMainRecyclerViewAdapter
 import com.islam.hesn.myapplication.bible.viewmodel.BibleTranslationViewModel
 import com.islam.hesn.myapplication.bible.viewmodel.BibleViewModel
+import com.islam.hesn.myapplication.databinding.FragmentChapterBinding
 import com.islam.hesn.myapplication.utils.*
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_chapter.*
-import kotlinx.android.synthetic.main.fragment_chapter.fab
-import kotlinx.android.synthetic.main.fragment_surah.*
 
 @AndroidEntryPoint
 class ChapterFragment : Fragment() {
+
+    private var _binding: FragmentChapterBinding? = null
+    private val binding get() = _binding!!
 
     private val bibleViewModel: BibleViewModel by activityViewModels()
     private val translationViewModel: BibleTranslationViewModel by activityViewModels()
@@ -33,14 +34,16 @@ class ChapterFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
 
-        return inflater.inflate(R.layout.fragment_chapter, container, false)
+        _binding = FragmentChapterBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", "ChapterFragment")
         changeToolbarTitle(bibleViewModel.selectedChapter.value.toString())
-        fab.setOnClickListener { searchList.smoothScrollToPosition(0) }
+        binding.fab.setOnClickListener { binding.searchList.smoothScrollToPosition(0) }
         setListDivider()
         observeData()
         observeTranslationData()
@@ -48,34 +51,37 @@ class ChapterFragment : Fragment() {
     }
 
     private fun setListDivider() {
-        searchList.addItemDecoration(DividerItemDecoration(context,
+        binding.searchList.addItemDecoration(DividerItemDecoration(context,
             DividerItemDecoration.VERTICAL))
     }
 
     private fun observeTranslationData() {
-        translationViewModel.loading.observe(viewLifecycleOwner, { isVisible ->
-            progressChapter.visibility = if (isVisible) View.VISIBLE else View.GONE
-        })
+        translationViewModel.loading.observe(viewLifecycleOwner) { isVisible ->
+            binding.progressChapter.visibility = if (isVisible) View.VISIBLE else View.GONE
+        }
 
-        translationViewModel.error.observe(viewLifecycleOwner, { isError ->
+        translationViewModel.error.observe(viewLifecycleOwner) { isError ->
             if (isError) {
                 val bottomNavView: BottomNavigationView =
                     activity?.findViewById(R.id.bottomNavigation)!!
-                requireContext().showSnackBar(requireActivity().findViewById(android.R.id.content),
+                requireContext().showSnackBar(
+                    requireActivity().findViewById(android.R.id.content),
                     bottomNavView,
                     getString(R.string.error_bible_quran_translation_api),
-                    android.R.color.holo_red_light)
+                    android.R.color.holo_red_light
+                )
             }
-        })
+        }
 
-        translationViewModel.verse.observe(viewLifecycleOwner, { verse ->
+        translationViewModel.verse.observe(viewLifecycleOwner) { verse ->
             verse?.let {
 
-                createDialog(verse.verseNum.toString(), verse.verseContent)
+//                createDialog(verse.verseNum.toString(), verse.verseContent)
+                createBottomSheet(verse.verseNum.toString(), verse.verseContent)
                 translationViewModel.verse.value = null
                 Prefs.putAny(COUNTER_FOR_REVIEW, Prefs.getInt(COUNTER_FOR_REVIEW, 0) + 1)
             }
-        })
+        }
     }
 
     private fun getVerses() {
@@ -85,8 +91,8 @@ class ChapterFragment : Fragment() {
     }
 
     private fun observeData() {
-        bibleViewModel.verseModels.observe(viewLifecycleOwner, {
-            searchList.adapter =
+        bibleViewModel.verseModels.observe(viewLifecycleOwner) {
+            binding.searchList.adapter =
                 BibleMainRecyclerViewAdapter(
                     verses = it,
                     state = AdapterStateBibleEnum.VERSES,
@@ -98,10 +104,12 @@ class ChapterFragment : Fragment() {
                             val bottomNavView: BottomNavigationView =
                                 activity?.findViewById(R.id.bottomNavigation)!!
 
-                            requireContext().showSnackBar(chapterTranslation,
+                            requireContext().showSnackBar(
+                                binding.chapterTranslation,
                                 bottomNavView,
                                 getString(R.string.error_no_connection),
-                                android.R.color.holo_red_light)
+                                android.R.color.holo_red_light
+                            )
 
                             return@BibleMainRecyclerViewAdapter
                         }
@@ -121,7 +129,12 @@ class ChapterFragment : Fragment() {
                             showNow(this@ChapterFragment.parentFragmentManager, "translation")
                         }
                     })
-        })
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

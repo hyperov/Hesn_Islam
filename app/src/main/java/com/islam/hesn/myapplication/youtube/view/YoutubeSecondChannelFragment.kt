@@ -14,6 +14,7 @@ import androidx.paging.LoadState
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.islam.hesn.myapplication.R
+import com.islam.hesn.myapplication.databinding.FragmentYoutubeFirstChannelBinding
 import com.islam.hesn.myapplication.utils.IS_CONNECTED
 import com.islam.hesn.myapplication.utils.Prefs
 import com.islam.hesn.myapplication.utils.openYoutubeChannelIntent
@@ -21,12 +22,18 @@ import com.islam.hesn.myapplication.utils.showSnackBar
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubePlayerViewModel
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubeViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_youtube_first_channel.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class YoutubeSecondChannelFragment : Fragment() {
+
+    //R.layout.fragment_youtube_first_channel
+    private var _binding: FragmentYoutubeFirstChannelBinding? = null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
     private val youtubeViewModel: YoutubeViewModel by viewModels()
     private val youtubePlayerViewModel: YoutubePlayerViewModel by activityViewModels()
@@ -40,10 +47,12 @@ class YoutubeSecondChannelFragment : Fragment() {
                 val bottomNavView: BottomNavigationView =
                     activity?.findViewById(R.id.bottomNavigation)!!
 
-                requireContext().showSnackBar(requireActivity().findViewById(android.R.id.content),
+                requireContext().showSnackBar(
+                    requireActivity().findViewById(android.R.id.content),
                     bottomNavView,
                     getString(R.string.error_no_connection),
-                    android.R.color.holo_red_light)
+                    android.R.color.holo_red_light
+                )
             } else
                 findNavController().navigate(R.id.youtubePlayerFragment)
         }
@@ -51,20 +60,17 @@ class YoutubeSecondChannelFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
 
-        return inflater.inflate(R.layout.fragment_youtube_first_channel, container, false)
+        _binding = FragmentYoutubeFirstChannelBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", "YoutubeSecondChannelFragment")
-        videoList.adapter = pagingAdapter
+        binding.videoList.adapter = pagingAdapter
         setRefreshListener()
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         getVideos()
     }
 
@@ -74,10 +80,12 @@ class YoutubeSecondChannelFragment : Fragment() {
             val bottomNavView: BottomNavigationView =
                 activity?.findViewById(R.id.bottomNavigation)!!
 
-            requireContext().showSnackBar(requireActivity().findViewById(android.R.id.content),
+            requireContext().showSnackBar(
+                requireActivity().findViewById(android.R.id.content),
                 bottomNavView,
                 getString(R.string.error_no_connection),
-                android.R.color.holo_red_light)
+                android.R.color.holo_red_light
+            )
         }
         FirebaseCrashlytics.getInstance()
             .setCustomKey("REQUEST", "SECOND_YOUTUBE_CHANNEL_HESN_ISLAM_TAWAYA")
@@ -86,9 +94,9 @@ class YoutubeSecondChannelFragment : Fragment() {
     }
 
     private fun setRefreshListener() {
-        refresh.setOnRefreshListener {
+        binding.refresh.setOnRefreshListener {
             pagingAdapter.refresh()
-            refresh.isRefreshing = false
+            binding.refresh.isRefreshing = false
         }
     }
 
@@ -105,22 +113,28 @@ class YoutubeSecondChannelFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
 
             pagingAdapter.loadStateFlow.collectLatest { loadStates ->
-
-                progressYoutube.isVisible = loadStates.refresh is LoadState.Loading
-                videoList.isVisible = loadStates.refresh is LoadState.NotLoading
-                videoList.isVisible = loadStates.refresh !is LoadState.Error
-                error.isVisible = loadStates.refresh is LoadState.Error
-                errorText.isVisible = loadStates.refresh is LoadState.Error
-                if (loadStates.refresh is LoadState.Error) {
-                    val error = (loadStates.refresh as LoadState.Error).error
-                    if (error.message!!.contains("quotaExceeded")) {
-                        openYoutubeChannelIntent(getString(R.string.education_channel_playlist_id))
+                binding.apply {
+                    progressYoutube.isVisible = loadStates.refresh is LoadState.Loading
+                    videoList.isVisible = loadStates.refresh is LoadState.NotLoading
+                    videoList.isVisible = loadStates.refresh !is LoadState.Error
+                    error.isVisible = loadStates.refresh is LoadState.Error
+                    errorText.isVisible = loadStates.refresh is LoadState.Error
+                    if (loadStates.refresh is LoadState.Error) {
+                        val error = (loadStates.refresh as LoadState.Error).error
+                        if (error.message!!.contains("quotaExceeded")) {
+                            openYoutubeChannelIntent(getString(R.string.education_channel_playlist_id))
+                        }
                     }
                 }
-            }
 
+            }
         }
+
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
 }

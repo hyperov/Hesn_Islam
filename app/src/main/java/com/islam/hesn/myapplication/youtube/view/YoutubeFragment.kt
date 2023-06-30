@@ -13,23 +13,33 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayout
 import com.islam.hesn.myapplication.R
+import com.islam.hesn.myapplication.databinding.FragmentYoutubeBinding
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubeSearchViewModel
-import kotlinx.android.synthetic.main.fragment_youtube.*
 
 class YoutubeFragment : Fragment(), TextView.OnEditorActionListener {
+
+    //R.layout.fragment_youtube
+    private var _binding: FragmentYoutubeBinding? = null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
     private val youtubeSearchViewModel: YoutubeSearchViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(R.layout.fragment_youtube, container, false)
+    ): View {
+
+        _binding = FragmentYoutubeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val tabLayout = binding.tabLayout
         tabLayout.setSelectedTabIndicatorColor(
             ContextCompat.getColor(
                 requireContext(),
@@ -58,7 +68,7 @@ class YoutubeFragment : Fragment(), TextView.OnEditorActionListener {
         })
 
         setDefaultScreen()
-        etSearch.setOnEditorActionListener(this)
+        binding.etSearch.setOnEditorActionListener(this)
         setSearchIconClick()
         setSearchTypingListener()
     }
@@ -69,6 +79,7 @@ class YoutubeFragment : Fragment(), TextView.OnEditorActionListener {
     }
 
     override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+        val etSearch = binding.etSearch
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
             if (etSearch.text!!.isNotEmpty())
                 gotoSearchScreen(etSearch.text.toString())
@@ -77,6 +88,7 @@ class YoutubeFragment : Fragment(), TextView.OnEditorActionListener {
     }
 
     private fun setSearchTypingListener() {
+        val etSearch = binding.etSearch
         etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
@@ -87,7 +99,7 @@ class YoutubeFragment : Fragment(), TextView.OnEditorActionListener {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                etSearch?.let {
+                etSearch.let {
                     if (s?.toString().isNullOrBlank()) {
                         etSearch.setCompoundDrawablesWithIntrinsicBounds(
                             0,
@@ -110,7 +122,8 @@ class YoutubeFragment : Fragment(), TextView.OnEditorActionListener {
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setSearchIconClick() {
-        etSearch.setOnTouchListener(View.OnTouchListener { v, event ->
+        val etSearch = binding.etSearch
+        etSearch.setOnTouchListener(View.OnTouchListener { _, event ->
 
             val DRAWABLE_LEFT = 0
             val DRAWABLE_RIGHT = 2
@@ -135,13 +148,18 @@ class YoutubeFragment : Fragment(), TextView.OnEditorActionListener {
     }
 
     private fun gotoSearchScreen(searchText: String) {
-        if (etSearch.text!!.isNotEmpty()) {
+        if (binding.etSearch.text!!.isNotEmpty()) {
             youtubeSearchViewModel.apply {
                 searchQuery.value = searchText
-                selectedTabPosition.value = tabLayout.selectedTabPosition
+                selectedTabPosition.value = binding.tabLayout.selectedTabPosition
             }
             findNavController().navigate(R.id.youtubeSearchFragment)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

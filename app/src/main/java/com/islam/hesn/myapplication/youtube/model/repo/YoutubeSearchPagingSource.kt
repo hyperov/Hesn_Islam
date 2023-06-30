@@ -1,6 +1,7 @@
 package com.islam.hesn.myapplication.youtube.model.repo
 
 import androidx.paging.PagingSource
+import androidx.paging.PagingState
 import com.islam.hesn.myapplication.youtube.model.response.SearchVideo
 import retrofit2.HttpException
 import java.io.IOException
@@ -35,5 +36,9 @@ class YoutubeSearchPagingSource(
     }
 
     override val keyReuseSupported = true
+
+    override fun getRefreshKey(state: PagingState<String, SearchVideo>): String? {
+        return state.anchorPosition.toString()
+    }
 
 }

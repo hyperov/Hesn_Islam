@@ -12,28 +12,33 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import com.islam.hesn.myapplication.R
-import kotlinx.android.synthetic.main.fragment_misconceptions.*
+import com.islam.hesn.myapplication.databinding.FragmentMisconceptionsBinding
 
 
 class MisconceptionsSitesFragment : Fragment() {
 
+    private var _binding: FragmentMisconceptionsBinding? = null
+    private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
 
-        return inflater.inflate(R.layout.fragment_misconceptions, container, false)
+        _binding = FragmentMisconceptionsBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", "MisconceptionsSitesFragment")
+
+        val webView = binding.webView
         val webSettings = webView.settings
+
         webSettings.javaScriptEnabled = true
         webView.apply {
-            webViewClient = MyWebViewClient(progressMisconceptions)
+            webViewClient = MyWebViewClient(binding.progressMisconceptions)
             loadUrl("http://v-islam.com/")
         }
     }
@@ -52,6 +57,11 @@ class MisconceptionsSitesFragment : Fragment() {
             super.onPageFinished(view, url)
             progress.isVisible = false
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

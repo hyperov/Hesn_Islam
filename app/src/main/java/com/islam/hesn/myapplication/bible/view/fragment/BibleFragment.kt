@@ -24,21 +24,24 @@ import com.islam.hesn.myapplication.bible.view.AdapterStateBibleEnum.BOOKS
 import com.islam.hesn.myapplication.bible.view.BibleLangEnum
 import com.islam.hesn.myapplication.bible.view.BibleMainRecyclerViewAdapter
 import com.islam.hesn.myapplication.bible.viewmodel.BibleViewModel
+import com.islam.hesn.myapplication.databinding.FragmentBibleListBinding
+import com.islam.hesn.myapplication.databinding.LayoutDialogBibleFastNavigationBinding
 import com.islam.hesn.myapplication.search.viewmodel.SearchViewModel
 import com.islam.hesn.myapplication.utils.*
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_bible_list.*
-import kotlinx.android.synthetic.main.fragment_bible_list.searchList
-import kotlinx.android.synthetic.main.fragment_chapter.*
-import kotlinx.android.synthetic.main.fragment_quran_list.fabJump
-import kotlinx.android.synthetic.main.fragment_youtube_first_channel.*
-import kotlinx.android.synthetic.main.layout_dialog_bible_fast_navigation.*
-import kotlinx.android.synthetic.main.layout_dialog_surah_fast_navigation.btFastForwardDone
 
 @AndroidEntryPoint
 class BibleFragment : Fragment(), TextView.OnEditorActionListener {
 
+
+    //R.layout.fragment_bible_list
+    private var _binding: FragmentBibleListBinding? = null
+    private val binding get() = _binding!!
+
+    private lateinit var dialogBinding: LayoutDialogBibleFastNavigationBinding
+
     private val bibleViewModel: BibleViewModel by activityViewModels()
+
     private val searchViewModel: SearchViewModel by activityViewModels()
 
     lateinit var selectedBook: Book
@@ -47,9 +50,12 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
 
-        return inflater.inflate(R.layout.fragment_bible_list, container, false)
+        _binding = FragmentBibleListBinding.inflate(inflater, container, false)
+        dialogBinding = binding.layoutDialogBibleFastNavigation
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,15 +64,17 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
         setListDivider()
         observeData()
         getBooks()
-        etSearchBible.setOnEditorActionListener(this)
+        binding.etSearchBible.setOnEditorActionListener(this)
         setSearchIconClick()
         setSearchTypingListener()
         setRefreshListener()
+
+        val fabJump = binding.fabJump
         fabJump.setOnClickListener {
             fabJump.isExpanded = !fabJump.isExpanded
         }
 
-        btFastForwardDone.setOnClickListener {
+        dialogBinding.btFastForwardDone.setOnClickListener {
 
             fabJump.isExpanded = !fabJump.isExpanded
             bibleViewModel.selectedBook.value = selectedBook
@@ -75,16 +83,20 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
             Prefs.putAny(COUNTER_FOR_REVIEW, Prefs.getInt(COUNTER_FOR_REVIEW, 0) + 1)
         }
 
-        btCancel.setOnClickListener { fabJump.isExpanded = !fabJump.isExpanded }
+        dialogBinding.btCancel.setOnClickListener { fabJump.isExpanded = !fabJump.isExpanded }
     }
 
     private fun setListDivider() {
-        searchList.addItemDecoration(DividerItemDecoration(context,
-            DividerItemDecoration.VERTICAL))
+        binding.searchList.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
     }
 
     private fun setRefreshListener() {
-        refreshBible.setOnRefreshListener {
+        binding.refreshBible.setOnRefreshListener {
             getBooks()
         }
     }
@@ -95,10 +107,12 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
             val bottomNavView: BottomNavigationView =
                 activity?.findViewById(R.id.bottomNavigation)!!
 
-            requireContext().showSnackBar(searchList,
+            requireContext().showSnackBar(
+                binding.searchList,
                 bottomNavView,
                 getString(R.string.error_no_connection),
-                android.R.color.holo_red_light)
+                android.R.color.holo_red_light
+            )
 
         }
         if (bibleViewModel.bookModels.value.isNullOrEmpty())
@@ -107,9 +121,10 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
     }
 
     private fun observeData() {
-        bibleViewModel.bookModels.observe(viewLifecycleOwner, {
 
-            searchList.adapter =
+        bibleViewModel.bookModels.observe(viewLifecycleOwner) {
+
+            binding.searchList.adapter =
                 BibleMainRecyclerViewAdapter(
                     books = it!!,
                     state = BOOKS,
@@ -118,25 +133,29 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
                         bibleViewModel.selectedBook.value = book
                         bibleViewModel.selectedTitle.value = title
                         findNavController().navigate(R.id.bookFragment)
-                    }, isVerse = false)
+                    }, isVerse = false
+                )
             setupFastForwardSpinnerAdapter(it)
-        })
+        }
 
-        bibleViewModel.loading.observe(viewLifecycleOwner, { isVisible ->
+        bibleViewModel.loading.observe(viewLifecycleOwner) { isVisible ->
 
+            val progressBible = binding.progressBible
             if (isVisible) {
                 progressBible.visibility = View.VISIBLE
                 progressBible.playAnimation()
             } else {
                 progressBible.visibility = View.GONE
                 progressBible.cancelAnimation()
-                refreshBible.isRefreshing = false
+                binding.refreshBible.isRefreshing = false
             }
 
-        })
+        }
 
-        bibleViewModel.error.observe(viewLifecycleOwner, { isError ->
+        bibleViewModel.error.observe(viewLifecycleOwner) { isError ->
 
+            val errorBible = binding.errorBible
+            val errorTextBible = binding.errorTextBible
             if (isError) {
                 errorBible.visibility = View.VISIBLE
                 errorTextBible.visibility = View.VISIBLE
@@ -144,78 +163,89 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
                 errorBible.visibility = View.GONE
                 errorTextBible.visibility = View.GONE
             }
-        })
+        }
 
-        bibleViewModel.success.observe(viewLifecycleOwner, { isSuccess ->
-
-            if (isSuccess) {
-                fabJump.show()
-                searchList.visibility = View.VISIBLE
-                etSearchBible.isEnabled = true
-            } else {
-                fabJump.hide()
-                searchList.visibility = View.GONE
-                etSearchBible.isEnabled = false
+        bibleViewModel.success.observe(viewLifecycleOwner) { isSuccess ->
+            binding.apply {
+                if (isSuccess) {
+                    fabJump.show()
+                    searchList.visibility = View.VISIBLE
+                    etSearchBible.isEnabled = true
+                } else {
+                    fabJump.hide()
+                    searchList.visibility = View.GONE
+                    etSearchBible.isEnabled = false
+                }
             }
-        })
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setSearchIconClick() {
-        etSearchBible.setOnTouchListener { _, event ->
 
-            val DRAWABLE_LEFT = 0
-            val DRAWABLE_RIGHT = 2
+        binding.apply {
+            etSearchBible.setOnTouchListener { _, event ->
 
-            if (event.action == MotionEvent.ACTION_UP) {
-                etSearchBible.compoundDrawables[DRAWABLE_RIGHT]?.let {
-                    if (event.rawX >= etSearchBible.right - etSearchBible.compoundDrawables[DRAWABLE_RIGHT].bounds.width()) {
-                        if (etSearchBible.text!!.isNotEmpty()) {
-                            if (Prefs.getBoolean(IS_CONNECTED, true).not()) {
+                val DRAWABLE_LEFT = 0
+                val DRAWABLE_RIGHT = 2
 
-                                val bottomNavView: BottomNavigationView =
-                                    activity?.findViewById(R.id.bottomNavigation)!!
+                if (event.action == MotionEvent.ACTION_UP) {
+                    etSearchBible.compoundDrawables[DRAWABLE_RIGHT]?.let {
+                        if (event.rawX >= etSearchBible.right - etSearchBible.compoundDrawables[DRAWABLE_RIGHT].bounds.width()) {
+                            if (etSearchBible.text!!.isNotEmpty()) {
+                                if (Prefs.getBoolean(IS_CONNECTED, true).not()) {
 
-                                requireContext().showSnackBar(searchList,
-                                    bottomNavView,
-                                    getString(R.string.error_no_connection),
-                                    android.R.color.holo_red_light)
+                                    val bottomNavView: BottomNavigationView =
+                                        activity?.findViewById(R.id.bottomNavigation)!!
 
-                                return@let
-                            } else
-                                gotoSearchScreen(etSearchBible.text.toString())
+                                    requireContext().showSnackBar(
+                                        searchList,
+                                        bottomNavView,
+                                        getString(R.string.error_no_connection),
+                                        android.R.color.holo_red_light
+                                    )
+
+                                    return@let
+                                } else
+                                    gotoSearchScreen(etSearchBible.text.toString())
+                            }
+                            return@setOnTouchListener true
                         }
-                        return@setOnTouchListener true
+                    }
+                    etSearchBible.compoundDrawables[DRAWABLE_LEFT]?.let {
+                        if (event.rawX <= it.bounds.width() + 2 * etSearchBible.paddingLeft) {
+                            etSearchBible.editableText.clear()
+                            return@setOnTouchListener true
+                        }
                     }
                 }
-                etSearchBible.compoundDrawables[DRAWABLE_LEFT]?.let {
-                    if (event.rawX <= it.bounds.width() + 2 * etSearchBible.paddingLeft) {
-                        etSearchBible.editableText.clear()
-                        return@setOnTouchListener true
-                    }
-                }
+                false
             }
-            false
         }
     }
 
     override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
-        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-            etSearchBible?.let {
-                if (etSearchBible.text!!.isNotEmpty()) {
-                    if (Prefs.getBoolean(IS_CONNECTED, true).not()) {
 
-                        val bottomNavView: BottomNavigationView =
-                            activity?.findViewById(R.id.bottomNavigation)!!
+        binding.apply {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                etSearchBible.let {
+                    if (etSearchBible.text!!.isNotEmpty()) {
+                        if (Prefs.getBoolean(IS_CONNECTED, true).not()) {
 
-                        requireContext().showSnackBar(searchList,
-                            bottomNavView,
-                            getString(R.string.error_no_connection),
-                            android.R.color.holo_red_light)
+                            val bottomNavView: BottomNavigationView =
+                                activity?.findViewById(R.id.bottomNavigation)!!
 
-                        return false
-                    } else
-                        gotoSearchScreen(etSearchBible.text.toString())
+                            requireContext().showSnackBar(
+                                searchList,
+                                bottomNavView,
+                                getString(R.string.error_no_connection),
+                                android.R.color.holo_red_light
+                            )
+
+                            return false
+                        } else
+                            gotoSearchScreen(etSearchBible.text.toString())
+                    }
                 }
             }
         }
@@ -230,35 +260,44 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
     }
 
     private fun setSearchTypingListener() {
-        etSearchBible.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
-            }
+        binding.apply {
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            etSearchBible.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
 
-            }
+                }
 
-            override fun afterTextChanged(s: Editable?) {
-                etSearchBible?.let {
-                    if (s?.toString().isNullOrBlank()) {
-                        etSearchBible.setCompoundDrawablesWithIntrinsicBounds(
-                            0,
-                            0,
-                            R.drawable.ic_search,
-                            0
-                        )
-                    } else if (s?.toString()?.isNotBlank()!! && s.toString().isNotEmpty()) {
-                        etSearchBible.setCompoundDrawablesWithIntrinsicBounds(
-                            android.R.drawable.ic_menu_close_clear_cancel,
-                            0,
-                            R.drawable.ic_search,
-                            0
-                        )
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+                    etSearchBible.let {
+                        if (s?.toString().isNullOrBlank()) {
+                            etSearchBible.setCompoundDrawablesWithIntrinsicBounds(
+                                0,
+                                0,
+                                R.drawable.ic_search,
+                                0
+                            )
+                        } else if (s?.toString()?.isNotBlank()!! && s.toString().isNotEmpty()) {
+                            etSearchBible.setCompoundDrawablesWithIntrinsicBounds(
+                                android.R.drawable.ic_menu_close_clear_cancel,
+                                0,
+                                R.drawable.ic_search,
+                                0
+                            )
+                        }
                     }
                 }
-            }
-        })
+            })
+        }
     }
 
     private fun setupFastForwardSpinnerAdapter(books: List<Book>) {
@@ -267,9 +306,9 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
         lateinit var verses: List<Verse>
 
         val arabicTitles = resources.getStringArray(R.array.bible_books_dialog)
-        setupSpinnerArrayAdapter(arabicTitles.toList(), spinnerBook)
+        setupSpinnerArrayAdapter(arabicTitles.toList(), dialogBinding.spinnerBook)
 
-        spinnerBook.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        dialogBinding.spinnerBook.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
 
             override fun onItemSelected(
@@ -280,14 +319,14 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
             ) {
                 selectedBook = books[position]
                 chapters = selectedBook.chaptersMap.values.toList()
-                setupSpinnerArrayAdapter(chapters.map { it.chapterNum }, spinnerChapter)
+                setupSpinnerArrayAdapter(chapters.map { it.chapterNum }, dialogBinding.spinnerChapter)
 
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
-        spinnerChapter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        dialogBinding.spinnerChapter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -296,7 +335,7 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
             ) {
                 selectedChapter = chapters[position]
                 verses = selectedChapter.verseMap.values.toList()
-                setupSpinnerArrayAdapter(verses.map { it.verseNum }, spinnerVerse)
+                setupSpinnerArrayAdapter(verses.map { it.verseNum }, dialogBinding.spinnerVerse)
 
             }
 
@@ -319,6 +358,11 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
     override fun onDestroy() {
         super.onDestroy()
         bibleViewModel.onCleared()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

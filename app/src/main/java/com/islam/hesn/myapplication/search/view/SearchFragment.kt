@@ -17,6 +17,7 @@ import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.bible.model.response.bible.Verse
 import com.islam.hesn.myapplication.bible.view.fragment.TranslationBibleBottomSheetFragment
 import com.islam.hesn.myapplication.bible.viewmodel.BibleTranslationViewModel
+import com.islam.hesn.myapplication.databinding.SearchFragmentBinding
 import com.islam.hesn.myapplication.quran.model.response.arabic.AyaItem
 import com.islam.hesn.myapplication.quran.view.TranslationQuranBottomSheetFragment
 import com.islam.hesn.myapplication.quran.viewmodel.AyaTranslationViewModel
@@ -25,15 +26,12 @@ import com.islam.hesn.myapplication.search.viewmodel.SearchViewModel
 import com.islam.hesn.myapplication.utils.*
 import com.thoughtbot.expandablerecyclerview.listeners.OnGroupClickListener
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_bible_list.*
-import kotlinx.android.synthetic.main.fragment_chapter.*
-import kotlinx.android.synthetic.main.fragment_surah.*
-import kotlinx.android.synthetic.main.search_fragment.*
-import kotlinx.android.synthetic.main.search_fragment.etSearch
-import kotlinx.android.synthetic.main.search_fragment.searchList
 
 @AndroidEntryPoint
 class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClickListener {
+
+    private var _binding: SearchFragmentBinding? = null
+    private val binding get() = _binding!!
 
     private val searchViewModel: SearchViewModel by activityViewModels()
     private val ayaViewModel: AyaTranslationViewModel by activityViewModels()
@@ -44,81 +42,90 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClick
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(R.layout.search_fragment, container, false)
+    ): View {
+
+        _binding = SearchFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?)  {
+        super.onViewCreated(view, savedInstanceState)
         FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", "SearchFragment")
         Prefs.putAny(COUNTER_FOR_REVIEW, Prefs.getInt(COUNTER_FOR_REVIEW, 0) + 1)
         observeData()
         observeTranslationData()
         getQuranOrBibleSearchValues()
-        etSearch.setOnEditorActionListener(this)
+        binding.etSearch.setOnEditorActionListener(this)
         setSearchIconClick()
         setSearchTypingListener()
     }
 
     private fun observeTranslationData() {
-        ayaViewModel.aya.observe(viewLifecycleOwner, { aya ->
+        ayaViewModel.aya.observe(viewLifecycleOwner) { aya ->
             aya?.let {
                 createDialog(aya.aya, aya.translation)
                 ayaViewModel.aya.value = null
                 Prefs.putAny(COUNTER_FOR_REVIEW, Prefs.getInt(COUNTER_FOR_REVIEW, 0) + 1)
             }
 
-        })
+        }
 
-        ayaViewModel.loading.observe(viewLifecycleOwner, { isVisible ->
-            progressSearch.visibility = if (isVisible) View.VISIBLE else View.GONE
-        })
+        ayaViewModel.loading.observe(viewLifecycleOwner) { isVisible ->
+            binding.progressSearch.visibility = if (isVisible) View.VISIBLE else View.GONE
+        }
 
-        ayaViewModel.error.observe(viewLifecycleOwner, { isError ->
+        ayaViewModel.error.observe(viewLifecycleOwner) { isError ->
             if (isError) {
                 val bottomNavView: BottomNavigationView =
                     activity?.findViewById(R.id.bottomNavigation)!!
-                requireContext().showSnackBar(searchLayout,
+                requireContext().showSnackBar(
+                    binding.searchLayout,
                     bottomNavView,
                     getString(R.string.error_bible_quran_translation_api),
-                    android.R.color.holo_red_light)
+                    android.R.color.holo_red_light
+                )
             }
-        })
+        }
 
-        bibleTranslationViewModel.loading.observe(viewLifecycleOwner, { isVisible ->
-            progressSearch.visibility = if (isVisible) View.VISIBLE else View.GONE
-        })
+        bibleTranslationViewModel.loading.observe(viewLifecycleOwner) { isVisible ->
+            binding.progressSearch.visibility = if (isVisible) View.VISIBLE else View.GONE
+        }
 
-        bibleTranslationViewModel.error.observe(viewLifecycleOwner, { isError ->
+        bibleTranslationViewModel.error.observe(viewLifecycleOwner) { isError ->
             if (isError) {
                 val bottomNavView: BottomNavigationView =
                     activity?.findViewById(R.id.bottomNavigation)!!
-                requireContext().showSnackBar(searchLayout,
+                requireContext().showSnackBar(
+                    binding.searchLayout,
                     bottomNavView,
                     getString(R.string.error_bible_quran_translation_api),
-                    android.R.color.holo_red_light)
+                    android.R.color.holo_red_light
+                )
             }
-        })
+        }
 
-        bibleTranslationViewModel.verse.observe(viewLifecycleOwner, { verse ->
+        bibleTranslationViewModel.verse.observe(viewLifecycleOwner) { verse ->
             verse?.let {
 
                 createDialog(verse.verseNum.toString(), verse.verseContent)
                 bibleTranslationViewModel.verse.value = null
                 Prefs.putAny(COUNTER_FOR_REVIEW, Prefs.getInt(COUNTER_FOR_REVIEW, 0) + 1)
             }
-        })
+        }
     }
 
     private fun getQuranOrBibleSearchValues() {
-        when (searchViewModel.isFromQuranScreen.value) {
+        when (searchViewModel.isFromQuranScreen.value!!) {
             true -> {
                 searchViewModel.getQuranValues()
                 FirebaseCrashlytics.getInstance().setCustomKey("REQUEST", "QURAN_SEARCH")
             }
             false -> {
-                searchViewModel.getBibleValues(resources.getStringArray(R.array.bible_books)
-                    .toList())
+                searchViewModel.getBibleValues(
+                    resources.getStringArray(R.array.bible_books)
+                        .toList()
+                )
                 FirebaseCrashlytics.getInstance().setCustomKey("REQUEST", "BIBLE_SEARCH")
             }
         }
@@ -131,59 +138,64 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClick
     }
 
     private fun observeSearchBibleData() {
-        searchViewModel.searchedVersesSections.observe(viewLifecycleOwner, { sections ->
+        searchViewModel.searchedVersesSections.observe(viewLifecycleOwner) { sections ->
             if (!searchViewModel.isFromQuranScreen.value!!) {
-                searchList.adapter = SearchExpandableAdapter(sections, false, { verse: Verse ->
+                binding.searchList.adapter =
+                    SearchExpandableAdapter(sections, false, { verse: Verse ->
 
-                    if (Prefs.getBoolean(IS_CONNECTED, true).not()) {
+                        if (Prefs.getBoolean(IS_CONNECTED, true).not()) {
 
-                        val bottomNavView: BottomNavigationView =
-                            activity?.findViewById(R.id.bottomNavigation)!!
+                            val bottomNavView: BottomNavigationView =
+                                activity?.findViewById(R.id.bottomNavigation)!!
 
-                        requireContext().showSnackBar(searchLayout,
-                            bottomNavView,
-                            getString(R.string.error_no_connection),
-                            android.R.color.holo_red_light)
+                            requireContext().showSnackBar(
+                                binding.searchLayout,
+                                bottomNavView,
+                                getString(R.string.error_no_connection),
+                                android.R.color.holo_red_light
+                            )
 
-                        return@SearchExpandableAdapter
-                    }
-
-                    bibleTranslationViewModel.apply {
-
-                        val searchedVerse = searchViewModel.searchedVersesLiveData.value?.first {
-                            it.verseList.contains(verse)
+                            return@SearchExpandableAdapter
                         }
-                        bookName.value =
-                            searchedVerse?.bookNameEn
 
-                        chapterNum.value =
-                            searchedVerse?.chapterName?.toInt()
+                        bibleTranslationViewModel.apply {
 
-                        verseNum.value = verse.verseNum
-                    }
+                            val searchedVerse =
+                                searchViewModel.searchedVersesLiveData.value?.first {
+                                    it.verseList.contains(verse)
+                                }
+                            bookName.value =
+                                searchedVerse?.bookNameEn
 
-                    bottomSheetBible = TranslationBibleBottomSheetFragment.newInstance().apply {
-                        showNow(this@SearchFragment.parentFragmentManager, "translation")
-                    }
-                })
+                            chapterNum.value =
+                                searchedVerse?.chapterName?.toInt()
+
+                            verseNum.value = verse.verseNum
+                        }
+
+                        bottomSheetBible = TranslationBibleBottomSheetFragment.newInstance().apply {
+                            showNow(this@SearchFragment.parentFragmentManager, "translation")
+                        }
+                    })
             }
-        })
-        searchViewModel.emptySearch.observe(viewLifecycleOwner,
-            { visible ->
-                run {
-                    noResultsSearch.isVisible = visible
-                    searchList.isVisible = !visible
-                    cvSearchFrag.isVisible = !visible
-                }
-            })
+        }
+        searchViewModel.emptySearch.observe(
+            viewLifecycleOwner
+        ) { visible ->
+            binding.run {
+                noResultsSearch.isVisible = visible
+                searchList.isVisible = !visible
+                cvSearchFrag.isVisible = !visible
+            }
+        }
         searchViewModel.emptySearchText.observe(viewLifecycleOwner,
-            Observer { visible -> tvNoResults.isVisible = visible })
+            Observer { visible -> binding.tvNoResults.isVisible = visible })
     }
 
     private fun observeSearchQuranData() {
-        searchViewModel.searchedAyatSections.observe(viewLifecycleOwner, { sections ->
+        searchViewModel.searchedAyatSections.observe(viewLifecycleOwner) { sections ->
             if (searchViewModel.isFromQuranScreen.value!!) {
-                searchList.adapter = SearchExpandableAdapter(sections,
+                binding.searchList.adapter = SearchExpandableAdapter(sections,
                     true,
                     searchAyaItemClick = { verse: AyaItem ->
 
@@ -192,10 +204,12 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClick
                             val bottomNavView: BottomNavigationView =
                                 activity?.findViewById(R.id.bottomNavigation)!!
 
-                            requireContext().showSnackBar(searchLayout,
+                            requireContext().showSnackBar(
+                                binding.searchLayout,
                                 bottomNavView,
                                 getString(R.string.error_no_connection),
-                                android.R.color.holo_red_light)
+                                android.R.color.holo_red_light
+                            )
 
                             return@SearchExpandableAdapter
                         }
@@ -214,26 +228,30 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClick
                         Prefs.putAny(BOOKMARK_SURAH_NAME, surahName)
                         val bottomNavView: BottomNavigationView =
                             activity?.findViewById(R.id.bottomNavigation)!!
-                        requireContext().showSnackBar(searchLayout, bottomNavView,
-                            getString(R.string.bookmark_saved_successfully))
+                        requireContext().showSnackBar(
+                            binding.searchLayout, bottomNavView,
+                            getString(R.string.bookmark_saved_successfully)
+                        )
                         Prefs.putAny(COUNTER_FOR_REVIEW, Prefs.getInt(COUNTER_FOR_REVIEW, 0) + 1)
                     }).also {
                     it.setOnGroupClickListener(this@SearchFragment)
                 }
             }
-        })
+        }
     }
 
     override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
-        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-            if (etSearch.text.isNullOrEmpty().not() and (etSearch.text!!.isNotBlank()))
-                createNewSearchQuery(etSearch.text.toString())
+        binding.apply {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                if (etSearch.text.isNullOrEmpty().not() and (etSearch.text!!.isNotBlank()))
+                    createNewSearchQuery(etSearch.text.toString())
+            }
+            return true
         }
-        return true
     }
 
     private fun setSearchTypingListener() {
-        etSearch.addTextChangedListener(object : TextWatcher {
+        binding.etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -244,14 +262,14 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClick
 
             override fun afterTextChanged(s: Editable?) {
                 if (s?.toString().isNullOrBlank()) {
-                    etSearch.setCompoundDrawablesWithIntrinsicBounds(
+                    binding.etSearch.setCompoundDrawablesWithIntrinsicBounds(
                         0,
                         0,
                         R.drawable.ic_search,
                         0
                     )
                 } else if (s?.toString()?.isNotBlank()!! && s.toString().isNotEmpty()) {
-                    etSearch.setCompoundDrawablesWithIntrinsicBounds(
+                    binding.etSearch.setCompoundDrawablesWithIntrinsicBounds(
                         android.R.drawable.ic_menu_close_clear_cancel,
                         0,
                         R.drawable.ic_search,
@@ -264,27 +282,31 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClick
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setSearchIconClick() {
-        etSearch.setOnTouchListener(View.OnTouchListener { v, event ->
-            val DRAWABLE_LEFT = 0
-            val DRAWABLE_RIGHT = 2
+        binding.apply {
+            etSearch.setOnTouchListener(View.OnTouchListener { _, event ->
+                val DRAWABLE_LEFT = 0
+                val DRAWABLE_RIGHT = 2
 
-            if (event.action == MotionEvent.ACTION_UP) {
-                etSearch.compoundDrawables[DRAWABLE_RIGHT]?.let {
-                    if (event.rawX >= etSearch.right - it.bounds.width()) {
-                        if (etSearch.text.isNullOrEmpty().not() and (etSearch.text!!.isNotBlank()))
-                            createNewSearchQuery(etSearch.text.toString())
-                        return@OnTouchListener true
+                if (event.action == MotionEvent.ACTION_UP) {
+                    etSearch.compoundDrawables[DRAWABLE_RIGHT]?.let {
+                        if (event.rawX >= etSearch.right - it.bounds.width()) {
+                            if (etSearch.text.isNullOrEmpty()
+                                    .not() and (etSearch.text!!.isNotBlank())
+                            )
+                                createNewSearchQuery(etSearch.text.toString())
+                            return@OnTouchListener true
+                        }
+                    }
+                    etSearch.compoundDrawables[DRAWABLE_LEFT]?.let {
+                        if (event.rawX <= it.bounds.width() + 2 * etSearch.paddingLeft) {
+                            etSearch.editableText.clear()
+                            return@OnTouchListener true
+                        }
                     }
                 }
-                etSearch.compoundDrawables[DRAWABLE_LEFT]?.let {
-                    if (event.rawX <= it.bounds.width() + 2 * etSearch.paddingLeft) {
-                        etSearch.editableText.clear()
-                        return@OnTouchListener true
-                    }
-                }
-            }
-            false
-        })
+                false
+            })
+        }
     }
 
     private fun createNewSearchQuery(searchText: String) {

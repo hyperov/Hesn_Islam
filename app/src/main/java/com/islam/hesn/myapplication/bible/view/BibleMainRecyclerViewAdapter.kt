@@ -14,9 +14,7 @@ import com.islam.hesn.myapplication.bible.model.response.bible.Book
 import com.islam.hesn.myapplication.bible.model.response.bible.Chapter
 import com.islam.hesn.myapplication.bible.model.response.bible.Verse
 import com.islam.hesn.myapplication.bible.view.AdapterStateBibleEnum.*
-import kotlinx.android.synthetic.main.item_layout_chapter.view.*
-import kotlinx.android.synthetic.main.item_layout_surah.view.content
-import kotlinx.android.synthetic.main.item_layout_surah.view.item_num
+import com.islam.hesn.myapplication.databinding.ItemLayoutChapterBinding
 
 
 class BibleMainRecyclerViewAdapter(
@@ -30,10 +28,17 @@ class BibleMainRecyclerViewAdapter(
     private val onVerseItemClick: ((verse: Verse) -> Unit)? = null,
 ) : RecyclerView.Adapter<BibleMainRecyclerViewAdapter.ViewHolder>() {
 
+    //R.layout.item_layout_chapter
+    private var _binding: ItemLayoutChapterBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_layout_chapter, parent, false)
-        return ViewHolder(view)
+
+        _binding = ItemLayoutChapterBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent, false
+        )
+        return ViewHolder(binding.root)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -55,55 +60,68 @@ class BibleMainRecyclerViewAdapter(
 
         fun bind(book: Book, position: Int) = with(itemView) {
 
-            if (!isVerse)
-                tvTranslateBible.isGone = true
+            binding.apply {
 
-            with(book) {
-                item_num.text = bookNum.toString()
-                val arabicTitles = resources.getStringArray(R.array.bible_books)
-                content.text = arabicTitles[position]
-                setOnClickListener {
-                    onBookItemClick?.invoke(this, arabicTitles[position])
+                if (!isVerse)
+                    tvTranslateBible.isGone = true
+
+                with(book) {
+
+                    itemNum.text = bookNum.toString()
+                    val arabicTitles = resources.getStringArray(R.array.bible_books)
+                    content.text = arabicTitles[position]
+                    setOnClickListener {
+                        onBookItemClick?.invoke(this, arabicTitles[position])
+                    }
+
                 }
             }
         }
 
         fun bind(chapter: Chapter) = with(itemView) {
+            binding.apply {
+                if (!isVerse)
+                    tvTranslateBible.isGone = true
 
-            if (!isVerse)
-                tvTranslateBible.isGone = true
-
-            with(chapter) {
-                item_num.text = chapterNum.toString()
-                content.text = chapterNum.toString()
-                setOnClickListener {
-                    onChapterItemClick?.invoke(chapterNum)
+                with(chapter) {
+                    itemNum.text = chapterNum.toString()
+                    content.text = chapterNum.toString()
+                    setOnClickListener {
+                        onChapterItemClick?.invoke(chapterNum)
+                    }
                 }
             }
         }
 
         fun bind(verse: Verse) = with(itemView) {
 
-            if (isVerse)
-                tvTranslateBible.isGone = false
+            binding.apply {
+                if (isVerse)
+                    tvTranslateBible.isGone = false
 
-            with(verse) {
-                item_num.text = verseNum.toString()
-                content.text = verseContent.trim()
-                setOnClickListener {
-                    onVerseItemClick?.invoke(verse)
-                }
-                setOnLongClickListener {
-                    val clipboard =
-                        context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                with(verse) {
+                    itemNum.text = verseNum.toString()
+                    content.text = verseContent.trim()
+                    setOnClickListener {
+                        onVerseItemClick?.invoke(verse)
+                    }
+                    setOnLongClickListener {
+                        val clipboard =
+                            context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
 
-                    val clip = ClipData.newPlainText("العدد", verseContent.trim())
-                    clipboard.setPrimaryClip(clip)
-                    Toast.makeText(context, "تم نسخ العدد بنجاح", Toast.LENGTH_SHORT)
-                        .show()
-                    true
+                        val clip = ClipData.newPlainText("العدد", verseContent.trim())
+                        clipboard.setPrimaryClip(clip)
+                        Toast.makeText(context, "تم نسخ العدد بنجاح", Toast.LENGTH_SHORT)
+                            .show()
+                        true
+                    }
                 }
             }
         }
+    }
+
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView)
+        _binding = null
     }
 }

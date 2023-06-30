@@ -10,19 +10,20 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.islam.hesn.myapplication.R
+import com.islam.hesn.myapplication.databinding.FragmentSurahBinding
 import com.islam.hesn.myapplication.quran.model.response.arabic.AdapterStateQuranEnum.QURAN_SURAH
 import com.islam.hesn.myapplication.quran.model.response.arabic.AyaItem
 import com.islam.hesn.myapplication.quran.viewmodel.AyaTranslationViewModel
 import com.islam.hesn.myapplication.quran.viewmodel.QuranViewModel
 import com.islam.hesn.myapplication.utils.*
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_chapter.*
-import kotlinx.android.synthetic.main.fragment_surah.*
-import kotlinx.android.synthetic.main.fragment_surah.fab
 
 
 @AndroidEntryPoint
 class SurahFragment : Fragment() {
+
+    private var _binding: FragmentSurahBinding? = null
+    private val binding get() = _binding!!
 
     private lateinit var surahName: String
     private val quranViewModel: QuranViewModel by activityViewModels()
@@ -33,9 +34,10 @@ class SurahFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
 
-        return inflater.inflate(R.layout.fragment_surah, container, false)
+        _binding = FragmentSurahBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,28 +45,33 @@ class SurahFragment : Fragment() {
         FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", "SurahFragment");
         setListDivider()
         setupViewModelObservers()
-        fab.setOnClickListener { surahRecyclerView.smoothScrollToPosition(0) }
+        binding.fab.setOnClickListener { binding.surahRecyclerView.smoothScrollToPosition(0) }
     }
 
     private fun setListDivider() {
-        surahRecyclerView.addItemDecoration(DividerItemDecoration(context,
-            DividerItemDecoration.VERTICAL))
+        binding.surahRecyclerView.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
     }
 
     private fun setupViewModelObservers() {
-        quranViewModel.surahId.observe(viewLifecycleOwner, { surahId ->
+        quranViewModel.surahId.observe(viewLifecycleOwner) { surahId ->
 
             val surah =
                 quranViewModel.ayat.value?.filter {
                     it.sura_id == if (quranViewModel.isBookMark.value!!.not()) surahId
                     else Prefs.getInt(
                         BOOKMARK_SURAH_NUMBER,
-                        1)
+                        1
+                    )
                 }
             surahName = surah!!.first().sura_name
             changeToolbarTitle("سورة $surahName")
 
-            surahRecyclerView.adapter = MySurahRecyclerViewAdapter(
+            binding.surahRecyclerView.adapter = MySurahRecyclerViewAdapter(
                 surah as ArrayList<AyaItem>,
                 QURAN_SURAH, onAyaItemClick = { surahId, ayaId ->
 
@@ -73,10 +80,12 @@ class SurahFragment : Fragment() {
                         val bottomNavView: BottomNavigationView =
                             activity?.findViewById(R.id.bottomNavigation)!!
 
-                        requireContext().showSnackBar(surahRecyclerView,
+                        requireContext().showSnackBar(
+                            binding.surahRecyclerView,
                             bottomNavView,
                             getString(R.string.error_no_connection),
-                            android.R.color.holo_red_light)
+                            android.R.color.holo_red_light
+                        )
 
                         return@MySurahRecyclerViewAdapter
                     }
@@ -99,8 +108,10 @@ class SurahFragment : Fragment() {
                     quranViewModel.surahId.value = quranViewModel.surahId.value
                     val bottomNavView: BottomNavigationView =
                         activity?.findViewById(R.id.bottomNavigation)!!
-                    requireContext().showSnackBar(surahRecyclerView, bottomNavView,
-                        getString(R.string.bookmark_saved_successfully))
+                    requireContext().showSnackBar(
+                        binding.surahRecyclerView, bottomNavView,
+                        getString(R.string.bookmark_saved_successfully)
+                    )
 
                 }
             )
@@ -109,34 +120,39 @@ class SurahFragment : Fragment() {
                 val ayaScrollId =
                     if (isBookMark.value!!) Prefs.getInt(BOOKMARK_AYA_NUMBER, 1) - 1
                     else ayaFastForwardId.value!! - 1
-                surahRecyclerView.scrollToPosition(ayaScrollId)
+                binding.surahRecyclerView.scrollToPosition(ayaScrollId)
             }
-        })
+        }
 
-        ayaViewModel.aya.observe(viewLifecycleOwner, { aya ->
+        ayaViewModel.aya.observe(viewLifecycleOwner) { aya ->
             aya?.let {
                 this@SurahFragment.createDialog(aya.aya, aya.translation)
                 ayaViewModel.aya.value = null
                 Prefs.putAny(COUNTER_FOR_REVIEW, Prefs.getInt(COUNTER_FOR_REVIEW, 0) + 1)
             }
 
-        })
+        }
 
-        ayaViewModel.loading.observe(viewLifecycleOwner, { isVisible ->
-            progress.visibility = if (isVisible) View.VISIBLE else View.GONE
-        })
+        ayaViewModel.loading.observe(viewLifecycleOwner) { isVisible ->
+            binding.progress.visibility = if (isVisible) View.VISIBLE else View.GONE
+        }
 
-        ayaViewModel.error.observe(viewLifecycleOwner, { isError ->
+        ayaViewModel.error.observe(viewLifecycleOwner) { isError ->
             if (isError) {
                 val bottomNavView: BottomNavigationView =
                     activity?.findViewById(R.id.bottomNavigation)!!
-                requireContext().showSnackBar(surahRecyclerView,
+                requireContext().showSnackBar(
+                    binding.surahRecyclerView,
                     bottomNavView,
                     getString(R.string.error_bible_quran_translation_api),
-                    android.R.color.holo_red_light)
+                    android.R.color.holo_red_light
+                )
             }
-        })
+        }
     }
 
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

@@ -7,16 +7,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import com.islam.hesn.myapplication.R
+import com.islam.hesn.myapplication.databinding.FragmentYoutubePlayerBinding
 import com.islam.hesn.myapplication.utils.changeToolbarTitle
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubePlayerViewModel
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_youtube_player.*
 
 @AndroidEntryPoint
 class YoutubePlayerFragment : Fragment() {
+
+    private var _binding: FragmentYoutubePlayerBinding? = null
+    private val binding get() = _binding!!
 
     private val youtubePlayerViewModel: YoutubePlayerViewModel by activityViewModels()
 
@@ -24,8 +26,10 @@ class YoutubePlayerFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(R.layout.fragment_youtube_player, container, false)
+    ): View {
+
+        _binding = FragmentYoutubePlayerBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,12 +39,13 @@ class YoutubePlayerFragment : Fragment() {
             changeToolbarTitle(youtubePlayerViewModel.videoTitle.value!!)
         }
 
-        lifecycle.addObserver(youTubePlayerView)
+        lifecycle.addObserver(binding.youTubePlayerView)
         addListeners()
     }
 
     private fun addListeners() {
-        youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+        binding.youTubePlayerView.addYouTubePlayerListener(object :
+            AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
                 super.onReady(youTubePlayer)
                 youTubePlayer.loadVideo(youtubePlayerViewModel.videoId.value!!, 0f)
@@ -48,4 +53,8 @@ class YoutubePlayerFragment : Fragment() {
         })
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

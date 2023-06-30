@@ -11,21 +11,22 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.islam.hesn.myapplication.R
-import kotlinx.android.synthetic.main.fragment_contact_us_bottom_sheet.*
+import com.islam.hesn.myapplication.databinding.FragmentContactUsBottomSheetBinding
 
 class ContactUsBottomSheetFragment : BottomSheetDialogFragment() {
 
+
+    private var _binding: FragmentContactUsBottomSheetBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(
-            R.layout.fragment_contact_us_bottom_sheet,
-            container,
-            false
-        )
+    ): View {
+
+        _binding = FragmentContactUsBottomSheetBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -36,7 +37,7 @@ class ContactUsBottomSheetFragment : BottomSheetDialogFragment() {
 
     private fun setupViews() {
         setTypingListeners()
-        sendButton.setOnClickListener {
+        binding.sendButton.setOnClickListener {
             sendButtonClick()
             checkForErrors()
         }
@@ -54,14 +55,18 @@ class ContactUsBottomSheetFragment : BottomSheetDialogFragment() {
 
             override fun afterTextChanged(s: Editable?) {
                 if (s.toString().isNotEmpty()) {
-                    message.error = null
-                    subject.error = null
+                    binding.apply {
+                        message.error = null
+                        subject.error = null
+                    }
                 }
             }
         }
 
-        etMessage.addTextChangedListener(textWatcher)
-        etSubject.addTextChangedListener(textWatcher)
+        binding.apply {
+            etMessage.addTextChangedListener(textWatcher)
+            etSubject.addTextChangedListener(textWatcher)
+        }
     }
 
     private fun sendButtonClick() {
@@ -72,25 +77,35 @@ class ContactUsBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     private fun checkForErrors(): Boolean {
+        binding.apply {
 
-        if (etMessage.text?.isEmpty()!!) message.error = getString(R.string.message_empty_error)
-        if (etSubject.text?.isEmpty()!!) subject.error = getString(R.string.email_title_error)
+            if (etMessage.text?.isEmpty()!!) message.error = getString(R.string.message_empty_error)
+            if (etSubject.text?.isEmpty()!!) subject.error = getString(R.string.email_title_error)
 
-        return etMessage.text?.isNotEmpty()!! && etSubject.text?.isNotEmpty()!!
+            return etMessage.text?.isNotEmpty()!! && etSubject.text?.isNotEmpty()!!
+        }
     }
 
     private fun sendEmail() {
-        val emailSubject = etSubject.text.toString()
-        val emailMessage = etMessage.text.toString()
 
-        val mailto = "mailto:hosenalislam@gmail.com?" +
-                "subject=" + emailSubject +
-                "&body=" + emailMessage
+        binding.apply {
 
-        val emailIntent = Intent(Intent.ACTION_SENDTO)
-        emailIntent.data = Uri.parse(mailto)
+            val emailSubject = etSubject.text.toString()
+            val emailMessage = etMessage.text.toString()
+            val mailto = "mailto:hosenalislam@gmail.com?" +
+                    "subject=" + emailSubject +
+                    "&body=" + emailMessage
 
-        startActivity(emailIntent)
+            val emailIntent = Intent(Intent.ACTION_SENDTO)
+            emailIntent.data = Uri.parse(mailto)
+
+            startActivity(emailIntent)
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {

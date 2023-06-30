@@ -11,12 +11,15 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.islam.hesn.myapplication.R
+import com.islam.hesn.myapplication.databinding.LayoutQuranTranslationOptionsBottomSheetBinding
 import com.islam.hesn.myapplication.quran.model.response.translation.TranslationsQuranOptionsEnum.*
 import com.islam.hesn.myapplication.quran.viewmodel.AyaTranslationViewModel
-import kotlinx.android.synthetic.main.layout_quran_translation_options_bottom_sheet.*
 import kotlinx.coroutines.launch
 
 class TranslationQuranBottomSheetFragment : BottomSheetDialogFragment(), View.OnClickListener {
+
+    private var _binding: LayoutQuranTranslationOptionsBottomSheetBinding? = null
+    private val binding get() = _binding!!
 
     private val ayaViewModel: AyaTranslationViewModel by activityViewModels()
 
@@ -29,20 +32,22 @@ class TranslationQuranBottomSheetFragment : BottomSheetDialogFragment(), View.On
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(R.layout.layout_quran_translation_options_bottom_sheet,
-            container,
-            false)
+    ): View {
+
+        _binding =
+            LayoutQuranTranslationOptionsBottomSheetBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", "TranslationQuranBottomSheetFragment")
+        FirebaseCrashlytics.getInstance()
+            .setCustomKey("SCREEN", "TranslationQuranBottomSheetFragment")
         setupViews()
     }
 
     private fun setupViews() {
-        bottomsheet.children.forEach { it.setOnClickListener(this) }
+        binding.bottomsheet.children.forEach { it.setOnClickListener(this) }
     }
 
     companion object {
@@ -56,21 +61,23 @@ class TranslationQuranBottomSheetFragment : BottomSheetDialogFragment(), View.On
 
         var lang = ""
         ayaViewModel.apply {
-            when (v) {
-                english -> {
-                    lang = ENGLISH.lang
-                }
-                french -> {
-                    lang = FRENCH.lang
-                }
-                german -> {
-                    lang = GERMAN.lang
-                }
-                spanish -> {
-                    lang = SPANISH.lang
-                }
-                chinese -> {
-                    lang = CHINESE.lang
+            binding.apply {
+                when (v) {
+                    english -> {
+                        lang = ENGLISH.lang
+                    }
+                    french -> {
+                        lang = FRENCH.lang
+                    }
+                    german -> {
+                        lang = GERMAN.lang
+                    }
+                    spanish -> {
+                        lang = SPANISH.lang
+                    }
+                    chinese -> {
+                        lang = CHINESE.lang
+                    }
                 }
             }
             dismissAllowingStateLoss()
@@ -80,5 +87,10 @@ class TranslationQuranBottomSheetFragment : BottomSheetDialogFragment(), View.On
                 ayaViewModel.getAyah(lang, suraNum.value!!, ayaNum.value!!)
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

@@ -7,6 +7,7 @@
     android:background="@android:color/darker_gray">
 
     <include
+        android:id="@+id/layout_dialog_bible_chapter_fast_navigation"
         layout="@layout/layout_dialog_bible_chapter_fast_navigation"
         android:layout_width="300dp"
         android:layout_height="wrap_content"

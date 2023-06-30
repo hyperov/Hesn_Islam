@@ -9,25 +9,36 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.islam.hesn.myapplication.R
-import kotlinx.android.synthetic.main.fragment_misconceptions_main.*
+import com.islam.hesn.myapplication.databinding.FragmentMisconceptionsMainBinding
 
 
 class MisconceptionsMainFragment : Fragment() {
 
+    private var _binding: FragmentMisconceptionsMainBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
 
-        return inflater.inflate(R.layout.fragment_misconceptions_main, container, false)
+        _binding = FragmentMisconceptionsMainBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", "MisconceptionsMainFragment")
-        cvMisconceptions.setOnClickListener { findNavController().navigate(R.id.misconceptionsFragment) }
-        cvReligions.setOnClickListener { findNavController().navigate(R.id.misconceptionsSitesFragment) }
+        binding.apply {
+            cvMisconceptions.setOnClickListener { findNavController().navigate(R.id.misconceptionsFragment) }
+            cvReligions.setOnClickListener { findNavController().navigate(R.id.misconceptionsSitesFragment) }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }
