@@ -1,15 +1,16 @@
 package com.islam.hesn.myapplication.quran.viewmodel
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.islam.hesn.myapplication.quran.model.repo.translation.TranslationRepo
 import com.islam.hesn.myapplication.quran.model.response.translation.Aya
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.lang.Exception
+import javax.inject.Inject
 
-class AyaTranslationViewModel @ViewModelInject constructor(private val repo: TranslationRepo) :
+@HiltViewModel
+class AyaTranslationViewModel @Inject constructor(private val repo: TranslationRepo) :
     ViewModel() {
 
     val ayaNum = MutableLiveData<Int>()
@@ -27,9 +28,9 @@ class AyaTranslationViewModel @ViewModelInject constructor(private val repo: Tra
             try {
                 aya.postValue(repo.getAya(translationKey, suraNum, ayaNum).aya)
 
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 error.value = true
-            }finally {
+            } finally {
                 loading.postValue(false)
                 error.value = false
             }

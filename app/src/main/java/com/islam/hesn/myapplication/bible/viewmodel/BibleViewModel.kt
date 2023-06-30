@@ -1,6 +1,5 @@
 package com.islam.hesn.myapplication.bible.viewmodel
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,12 +7,15 @@ import com.islam.hesn.myapplication.bible.model.repo.BibleRepo
 import com.islam.hesn.myapplication.bible.model.response.bible.Book
 import com.islam.hesn.myapplication.bible.model.response.bible.Chapter
 import com.islam.hesn.myapplication.bible.model.response.bible.Verse
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.cancel
+import javax.inject.Inject
 
-class BibleViewModel @ViewModelInject constructor(
+@HiltViewModel
+class BibleViewModel @Inject constructor(
     private val bibleRepo: BibleRepo,
 ) : ViewModel() {
 

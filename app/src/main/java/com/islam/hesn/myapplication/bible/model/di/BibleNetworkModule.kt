@@ -8,8 +8,8 @@ import com.islam.hesn.myapplication.utils.Prefs
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit
 
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object BibleNetworkModule {
 
     @Provides
@@ -47,8 +47,10 @@ object BibleNetworkModule {
 
                     val originalRequest: Request = chain.request()
                     val cacheHeaderValue =
-                        if (Prefs.getBoolean(IS_CONNECTED,
-                                true)
+                        if (Prefs.getBoolean(
+                                IS_CONNECTED,
+                                true
+                            )
                         ) "public, max-age=2419200" else "public, only-if-cached, max-stale=2419200"
                     val request: Request = originalRequest.newBuilder().build()
                     val response: Response = chain.proceed(request)

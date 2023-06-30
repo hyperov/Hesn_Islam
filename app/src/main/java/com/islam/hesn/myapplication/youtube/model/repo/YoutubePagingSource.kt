@@ -1,6 +1,7 @@
 package com.islam.hesn.myapplication.youtube.model.repo
 
 import androidx.paging.PagingSource
+import androidx.paging.PagingState
 import com.islam.hesn.myapplication.youtube.model.response.Video
 import retrofit2.HttpException
 import java.io.IOException
@@ -14,8 +15,10 @@ class YoutubePagingSource(
     override suspend fun load(params: LoadParams<String>): LoadResult<String, Video> {
         return try {
             val nextPage = params.key ?: ""
-            val response = api.getYoutubeChannelVideos(playlistId,
-                nextPage)
+            val response = api.getYoutubeChannelVideos(
+                playlistId,
+                nextPage
+            )
             LoadResult.Page(
                 data = response.items!!,
                 prevKey = null, // Only paging forward.
@@ -29,6 +32,10 @@ class YoutubePagingSource(
             LoadResult.Error(e)
         }
 
+    }
+
+    override fun getRefreshKey(state: PagingState<String, Video>): String? {
+        return state.anchorPosition.toString()
     }
 
 }

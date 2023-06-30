@@ -1,15 +1,18 @@
 package com.islam.hesn.myapplication.quran.viewmodel
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.islam.hesn.myapplication.quran.model.repo.arabic.QuranRepo
 import com.islam.hesn.myapplication.quran.model.response.arabic.AyaItem
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import java.util.*
+import javax.inject.Inject
 
-class QuranViewModel @ViewModelInject constructor(
+@HiltViewModel
+class QuranViewModel @Inject constructor(
     private val quranRepo: QuranRepo,
 ) : ViewModel() {
 

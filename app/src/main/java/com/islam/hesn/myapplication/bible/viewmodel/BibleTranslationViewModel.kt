@@ -1,14 +1,16 @@
 package com.islam.hesn.myapplication.bible.viewmodel
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.islam.hesn.myapplication.bible.model.repo.BibleRepo
 import com.islam.hesn.myapplication.bible.model.response.bible.Verse
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class BibleTranslationViewModel @ViewModelInject constructor(
+@HiltViewModel
+class BibleTranslationViewModel @Inject constructor(
     private val bibleRepo: BibleRepo,
 ) : ViewModel() {
 
