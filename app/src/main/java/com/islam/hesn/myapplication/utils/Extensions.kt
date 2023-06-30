@@ -1,26 +1,25 @@
 package com.islam.hesn.myapplication.utils
 
 import android.app.Application
-import android.content.ActivityNotFoundException
-import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
+import android.content.*
 import android.content.res.AssetManager
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
 import android.net.Uri
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.islam.hesn.myapplication.R
+import com.islam.hesn.myapplication.databinding.LayoutVerseTranslationBottomSheetBinding
 import java.io.IOException
-import java.lang.StringBuilder
 import java.nio.charset.Charset
 
 lateinit var Prefs: SharedPreferences
@@ -60,15 +59,23 @@ fun SharedPreferences.putAny(name: String, any: Any) {
 }
 
 fun Context.showSnackBar(view: View, navigation: BottomNavigationView, text: String) {
-    Snackbar.make(view,
+    Snackbar.make(
+        view,
         text,
-        Snackbar.LENGTH_LONG)
-        .setTextColor(ContextCompat.getColor(
-            this,
-            R.color.colorAccent))
-        .setActionTextColor(ContextCompat.getColor(
-            this,
-            R.color.colorAccent))
+        Snackbar.LENGTH_LONG
+    )
+        .setTextColor(
+            ContextCompat.getColor(
+                this,
+                R.color.colorAccent
+            )
+        )
+        .setActionTextColor(
+            ContextCompat.getColor(
+                this,
+                R.color.colorAccent
+            )
+        )
         .apply {
             setAction(getString(R.string.dismiss)) { dismiss() }.show()
 
@@ -82,15 +89,23 @@ fun Context.showSnackBar(
     text: String,
     @ColorRes textColor: Int,
 ) {
-    Snackbar.make(view,
+    Snackbar.make(
+        view,
         text,
-        Snackbar.LENGTH_LONG)
-        .setTextColor(ContextCompat.getColor(
-            this,
-            textColor))
-        .setActionTextColor(ContextCompat.getColor(
-            this,
-            R.color.colorAccent))
+        Snackbar.LENGTH_LONG
+    )
+        .setTextColor(
+            ContextCompat.getColor(
+                this,
+                textColor
+            )
+        )
+        .setActionTextColor(
+            ContextCompat.getColor(
+                this,
+                R.color.colorAccent
+            )
+        )
         .apply {
             setAction(getString(R.string.dismiss)) { dismiss() }.show()
 
@@ -120,6 +135,32 @@ fun Fragment.changeToolbarTitle(text: String) {
     val toolbar = activity?.findViewById<MaterialToolbar>(R.id.toolbar)
 
     toolbar?.title = text
+}
+
+fun Fragment.createBottomSheet(verseNum: String, translation: String) {
+
+    //R.layout.layout_verse_translation_bottom_sheet
+    val bottomSheetDialog = BottomSheetDialog(context!!)
+    val binding = LayoutVerseTranslationBottomSheetBinding.inflate(layoutInflater, null, false)
+
+    bottomSheetDialog.setContentView(binding.root)
+
+    binding.tvVerse.text = verseNum
+    binding.tvVerseContent.text = translation
+
+    binding.tvVerseContent.setOnLongClickListener {
+        val clipboard =
+            context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+
+        val clip = ClipData.newPlainText("العدد", binding.tvVerseContent.text.trim())
+        clipboard.setPrimaryClip(clip)
+        Toast.makeText(context, "تم نسخ العدد بنجاح", Toast.LENGTH_SHORT)
+            .show()
+        true
+    }
+
+    bottomSheetDialog.show()
+
 }
 
 fun Fragment.createDialog(title: String, message: String) {
