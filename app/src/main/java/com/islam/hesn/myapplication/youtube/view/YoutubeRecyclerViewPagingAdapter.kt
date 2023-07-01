@@ -1,7 +1,6 @@
 package com.islam.hesn.myapplication.youtube.view
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -28,7 +27,7 @@ class YoutubeRecyclerViewPagingAdapter(
             parent,
             false
         )
-        return YoutubeViewHolder(binding.root)
+        return YoutubeViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: YoutubeViewHolder, position: Int) {
@@ -36,7 +35,8 @@ class YoutubeRecyclerViewPagingAdapter(
         holder.bind(item!!)
     }
 
-    inner class YoutubeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class YoutubeViewHolder(val binding: ItemLayoutYoutubeFirstChannelBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(video: CommonVideo) = with(itemView) {
             with(video.snippet) {

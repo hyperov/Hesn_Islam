@@ -4,7 +4,6 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context.CLIPBOARD_SERVICE
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
@@ -41,7 +40,7 @@ class MySurahRecyclerViewAdapter(
                 LayoutInflater.from(parent.context),
                 parent, false
             )
-        return ViewHolder(binding.root)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -51,7 +50,7 @@ class MySurahRecyclerViewAdapter(
 
     override fun getItemCount(): Int = values.size
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(val binding: ItemLayoutSurahBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(ayaItem: AyaItem) = with(itemView) {
 

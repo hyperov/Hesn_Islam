@@ -4,7 +4,6 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isGone
@@ -38,7 +37,7 @@ class BibleMainRecyclerViewAdapter(
             LayoutInflater.from(parent.context),
             parent, false
         )
-        return ViewHolder(binding.root)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -56,7 +55,7 @@ class BibleMainRecyclerViewAdapter(
         VERSES -> verses!!.size
     }
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(val binding: ItemLayoutChapterBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(book: Book, position: Int) = with(itemView) {
 
