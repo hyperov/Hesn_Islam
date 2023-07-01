@@ -137,27 +137,32 @@ fun Fragment.changeToolbarTitle(text: String) {
     toolbar?.title = text
 }
 
-fun Fragment.createBottomSheet(verseNum: String, translation: String) {
+fun Fragment.createBottomSheet(verseNum: String, translation: String, isSurah: Boolean) {
 
     //R.layout.layout_verse_translation_bottom_sheet
-    val bottomSheetDialog = BottomSheetDialog(context!!)
-    val binding = LayoutVerseTranslationBottomSheetBinding.inflate(layoutInflater, null, false)
+    val bottomSheetDialog = BottomSheetDialog(requireContext())
+    val binding = LayoutVerseTranslationBottomSheetBinding.inflate(
+        layoutInflater,
+        null, false
+    )
 
-    bottomSheetDialog.setContentView(binding.root)
 
     binding.tvVerse.text = verseNum
     binding.tvVerseContent.text = translation
 
-    binding.tvVerseContent.setOnLongClickListener {
+    binding.btnCopyTranslation.setOnClickListener {
         val clipboard =
             context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
 
         val clip = ClipData.newPlainText("العدد", binding.tvVerseContent.text.trim())
         clipboard.setPrimaryClip(clip)
-        Toast.makeText(context, "تم نسخ العدد بنجاح", Toast.LENGTH_SHORT)
+
+        val copyTest = if (isSurah) "تم نسخ الأية بنجاح" else "تم نسخ العدد بنجاح"
+        Toast.makeText(context, copyTest, Toast.LENGTH_SHORT)
             .show()
-        true
     }
+
+    bottomSheetDialog.setContentView(binding.root)
 
     bottomSheetDialog.show()
 

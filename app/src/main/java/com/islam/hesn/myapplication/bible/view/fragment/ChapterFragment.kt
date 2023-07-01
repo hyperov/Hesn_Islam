@@ -74,10 +74,9 @@ class ChapterFragment : Fragment() {
         }
 
         translationViewModel.verse.observe(viewLifecycleOwner) { verse ->
-            verse?.let {
 
-//                createDialog(verse.verseNum.toString(), verse.verseContent)
-                createBottomSheet(verse.verseNum.toString(), verse.verseContent)
+            verse?.let {
+                createBottomSheet(verse.verseNum.toString(), verse.verseContent,false)
                 translationViewModel.verse.value = null
                 Prefs.putAny(COUNTER_FOR_REVIEW, Prefs.getInt(COUNTER_FOR_REVIEW, 0) + 1)
             }

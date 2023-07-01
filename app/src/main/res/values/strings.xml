@@ -56,6 +56,7 @@
     <string name="click_for_translation">اضغط للترجمة</string>
     <string name="comperative_relegions">مقارنة أديان</string>
     <string name="misconceptions_main_title">شبهات وردود</string>
+    <string name="copy_translation">نسخ الترجمة</string>
 
     /////////////////////////////////////
     <string-array name="bible_books">

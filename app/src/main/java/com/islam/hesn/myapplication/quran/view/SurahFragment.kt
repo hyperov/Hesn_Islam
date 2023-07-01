@@ -125,8 +125,9 @@ class SurahFragment : Fragment() {
         }
 
         ayaViewModel.aya.observe(viewLifecycleOwner) { aya ->
+
             aya?.let {
-                this@SurahFragment.createDialog(aya.aya, aya.translation)
+                createBottomSheet(aya.aya, aya.translation,true)
                 ayaViewModel.aya.value = null
                 Prefs.putAny(COUNTER_FOR_REVIEW, Prefs.getInt(COUNTER_FOR_REVIEW, 0) + 1)
             }
