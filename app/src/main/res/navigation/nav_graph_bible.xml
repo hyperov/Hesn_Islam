@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_bible"
+    app:startDestination="@id/bibleFragment">
+
+    <fragment
+        android:id="@+id/bibleFragment"
+        android:name="com.islam.hesn.myapplication.bible.view.fragment.BibleFragment"
+        android:label="@string/bible"
+        tools:layout="@layout/fragment_bible_list">
+        <action
+            android:id="@+id/action_bibleFragment_to_bookFragment"
+            app:destination="@id/bookFragment" />
+        <action
+            android:id="@+id/action_bibleFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/chapterFragment"
+        android:name="com.islam.hesn.myapplication.bible.view.fragment.ChapterFragment"
+        android:label="fragment_chapter"
+        tools:layout="@layout/fragment_chapter" />
+
+    <fragment
+        android:id="@+id/bookFragment"
+        android:name="com.islam.hesn.myapplication.bible.view.fragment.BookFragment"
+        android:label="book_fragment"
+        tools:layout="@layout/fragment_book">
+        <action
+            android:id="@+id/action_bookFragment_to_chapterFragment"
+            app:destination="@id/chapterFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.islam.hesn.myapplication.search.view.SearchFragment"
+        android:label="@string/search_title"
+        tools:layout="@layout/search_fragment" />
+</navigation>

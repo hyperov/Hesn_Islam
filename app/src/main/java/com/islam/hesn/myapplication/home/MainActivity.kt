@@ -125,9 +125,9 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.quranFragment,
-                R.id.misconceptionsMainFragment,
+                R.id.nav_graph_bible,
                 R.id.youtubeFragment,
-                R.id.bibleFragment,
+                R.id.misconceptionsMainFragment,
                 R.id.moreFragment
             )
         )

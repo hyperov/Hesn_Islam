@@ -26,6 +26,7 @@ class BibleViewModel @Inject constructor(
 
     val selectedBook = MutableLiveData<Book>()
     val selectedChapter = MutableLiveData<Int>()
+    val selectedFastForwardVerse = MutableLiveData<Int>(1)
 
     val selectedTitle = MutableLiveData<String>()
 

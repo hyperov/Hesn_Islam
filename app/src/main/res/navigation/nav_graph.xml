@@ -21,32 +21,9 @@
         android:name="com.islam.hesn.myapplication.quran.view.SurahFragment"
         android:label="fragment_surah"
         tools:layout="@layout/fragment_surah" />
-    <fragment
-        android:id="@+id/bibleFragment"
-        android:name="com.islam.hesn.myapplication.bible.view.fragment.BibleFragment"
-        android:label="@string/bible"
-        tools:layout="@layout/fragment_bible_list">
-        <action
-            android:id="@+id/action_bibleFragment_to_bookFragment"
-            app:destination="@id/bookFragment" />
-        <action
-            android:id="@+id/action_bibleFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/bookFragment"
-        android:name="com.islam.hesn.myapplication.bible.view.fragment.BookFragment"
-        android:label="book_fragment"
-        tools:layout="@layout/fragment_book">
-        <action
-            android:id="@+id/action_bookFragment_to_chapterFragment"
-            app:destination="@id/chapterFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/chapterFragment"
-        android:name="com.islam.hesn.myapplication.bible.view.fragment.ChapterFragment"
-        android:label="fragment_chapter"
-        tools:layout="@layout/fragment_chapter" />
+
+    <include app:graph="@navigation/nav_graph_bible" />
+
     <fragment
         android:id="@+id/youtubeFragment"
         android:name="com.islam.hesn.myapplication.youtube.view.YoutubeFragment"

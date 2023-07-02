@@ -128,6 +128,7 @@ class ChapterFragment : Fragment() {
                             showNow(this@ChapterFragment.parentFragmentManager, "translation")
                         }
                     })
+            binding.searchList.scrollToPosition(bibleViewModel.selectedFastForwardVerse.value!! - 1)
         }
     }
 

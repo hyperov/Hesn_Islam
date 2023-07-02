@@ -79,6 +79,8 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
             fabJump.isExpanded = !fabJump.isExpanded
             bibleViewModel.selectedBook.value = selectedBook
             bibleViewModel.selectedChapter.value = selectedChapter.chapterNum
+            bibleViewModel.selectedFastForwardVerse.value =
+                dialogBinding.spinnerVerse.selectedItemPosition + 1
             findNavController().navigate(R.id.chapterFragment)
             Prefs.putAny(COUNTER_FOR_REVIEW, Prefs.getInt(COUNTER_FOR_REVIEW, 0) + 1)
         }
@@ -308,39 +310,44 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
         val arabicTitles = resources.getStringArray(R.array.bible_books_dialog)
         setupSpinnerArrayAdapter(arabicTitles.toList(), dialogBinding.spinnerBook)
 
-        dialogBinding.spinnerBook.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        dialogBinding.spinnerBook.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
 
 
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long,
-            ) {
-                selectedBook = books[position]
-                chapters = selectedBook.chaptersMap.values.toList()
-                setupSpinnerArrayAdapter(chapters.map { it.chapterNum }, dialogBinding.spinnerChapter)
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long,
+                ) {
+                    selectedBook = books[position]
+                    chapters = selectedBook.chaptersMap.values.toList()
+                    setupSpinnerArrayAdapter(
+                        chapters.map { it.chapterNum },
+                        dialogBinding.spinnerChapter
+                    )
 
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        }
+        dialogBinding.spinnerChapter.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long,
+                ) {
+                    selectedChapter = chapters[position]
+                    verses = selectedChapter.verseMap.values.toList()
+                    setupSpinnerArrayAdapter(verses.map { it.verseNum }, dialogBinding.spinnerVerse)
 
-        dialogBinding.spinnerChapter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long,
-            ) {
-                selectedChapter = chapters[position]
-                verses = selectedChapter.verseMap.values.toList()
-                setupSpinnerArrayAdapter(verses.map { it.verseNum }, dialogBinding.spinnerVerse)
+                }
 
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        }
     }
 
     private fun setupSpinnerArrayAdapter(books: List<Any>, spinner: Spinner) {
@@ -357,7 +364,8 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        bibleViewModel.onCleared()
+        bibleViewModel.selectedFastForwardVerse.value = 1
+        findNavController()
     }
 
     override fun onDestroyView() {
