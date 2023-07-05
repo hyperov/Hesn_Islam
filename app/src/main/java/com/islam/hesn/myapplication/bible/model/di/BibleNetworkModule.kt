@@ -16,7 +16,6 @@ import okhttp3.Request
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.create
 import java.util.concurrent.TimeUnit
@@ -67,7 +66,6 @@ object BibleNetworkModule {
             .baseUrl(BibleApis.BASE_URL)
             .client(client.build())
             .addConverterFactory(ScalarsConverterFactory.create())
-            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .build()
         return retrofit.create()
     }

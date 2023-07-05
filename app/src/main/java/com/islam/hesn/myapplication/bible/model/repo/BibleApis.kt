@@ -1,6 +1,5 @@
 package com.islam.hesn.myapplication.bible.model.repo
 
-import io.reactivex.rxjava3.core.Flowable
 import retrofit2.http.GET
 import retrofit2.http.Query
 
