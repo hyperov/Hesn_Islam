@@ -7,7 +7,7 @@ import retrofit2.http.Query
 interface BibleApis {
 
     @GET("json")
-    fun getBible(@Query("translation") translation: String): Flowable<String>
+    suspend fun getBible(@Query("translation") translation: String): String
 
     @GET("json")
     suspend fun getTranslatedVerse(

@@ -4,14 +4,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.islam.hesn.myapplication.bible.model.repo.BibleRepo
+import com.islam.hesn.myapplication.bible.model.response.bible.BibleResponse
 import com.islam.hesn.myapplication.bible.model.response.bible.Book
 import com.islam.hesn.myapplication.bible.model.response.bible.Chapter
 import com.islam.hesn.myapplication.bible.model.response.bible.Verse
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -34,26 +35,27 @@ class BibleViewModel @Inject constructor(
     val error = MutableLiveData(false)
     val success = MutableLiveData(false)
 
-    private val compositeDisposable = CompositeDisposable()
-
     fun getBible(translation: String) {
-        loading.value = true
-        error.value = false
-        success.value = false
 
-        val disposable = bibleRepo.getBible(translation).subscribeOn(Schedulers.io()).cache()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    bookModels.value = it.booksMap.values.toList()
-                    success.value = true
-                },
-                {
+        viewModelScope.launch {
+
+            bibleRepo.getBible(translation)
+                .flowOn(Dispatchers.IO)
+                .onStart {
+                    loading.value = true
+                    error.value = false
+                    success.value = false
+                }.catch {
                     error.value = true
                     success.value = false
-                }, { loading.value = false }
-            )
-        compositeDisposable.add(disposable)
+                }.onCompletion {
+                    loading.value = false
+                }.collect {
+                    bookModels.value = it.booksMap.values.toList()
+                    success.value = true
+                }
+
+        }
 
     }
 
@@ -71,6 +73,5 @@ class BibleViewModel @Inject constructor(
     public override fun onCleared() {
         super.onCleared()
         viewModelScope.cancel()
-        compositeDisposable.clear()
     }
 }
