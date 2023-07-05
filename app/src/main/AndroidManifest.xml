@@ -4,7 +4,9 @@
     package="com.islam.hesn.myapplication">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" tools:node="remove" />
+    <uses-permission
+        android:name="android.permission.READ_PHONE_STATE"
+        tools:node="remove" />
 
     <application
         android:name=".app.MyApp"
@@ -18,12 +20,12 @@
 
         <meta-data
             android:name="firebase_crashlytics_collection_enabled"
-            android:value="${crashlyticsCollectionEnabled}"/>
+            android:value="${crashlyticsCollectionEnabled}" />
 
         <activity
             android:name=".splash.SplashActivity"
-            android:theme="@style/SplashScreenTheme"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/SplashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,9 +33,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".TutorialActivity">
 
-        </activity>
         <activity android:name=".home.MainActivity" />
     </application>
 

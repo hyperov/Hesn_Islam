@@ -1,6 +1,7 @@
 package com.islam.hesn.myapplication.search.model
 
 
+import android.os.Parcelable
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -14,7 +15,7 @@ import com.islam.hesn.myapplication.utils.Prefs
 import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder
 
 
-class ItemViewHolder<T>(private var parentView: View) : ChildViewHolder(parentView) {
+class ItemViewHolder<T : Parcelable>(private var parentView: View) : ChildViewHolder(parentView) {
 
     private val itemName: TextView = parentView.findViewById(R.id.content)
     private val itemNum: TextView = parentView.findViewById(R.id.item_num)
@@ -26,7 +27,7 @@ class ItemViewHolder<T>(private var parentView: View) : ChildViewHolder(parentVi
         searchAyaItemClick: ((verse: AyaItem) -> Unit)? = null,
         isFromQuran: Boolean,
         onLastReadClick: ((surahId: Int, ayaId: Int, surahName: String) -> Unit)?,
-        searchExpandableAdapter: SearchExpandableAdapter<AyaItem>,
+        searchExpandableAdapter: SearchExpandableAdapter<T>,
     ) {
 
         if (verse is Verse) {

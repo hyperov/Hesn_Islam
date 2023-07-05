@@ -42,7 +42,7 @@ class SearchExpandableAdapter<T : Parcelable>(
         childIndex: Int,
     ) {
         val verse = group.items[childIndex]
-        holder.setVerse(verse as T, searchVerseItemClick, searchAyaItemClick,isFromQuran,onLastReadClick,this as SearchExpandableAdapter<AyaItem>)
+        holder.setVerse(verse as T, searchVerseItemClick, searchAyaItemClick,isFromQuran,onLastReadClick, this)
 
     }
 

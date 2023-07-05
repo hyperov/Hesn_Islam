@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.databinding.ItemLayoutYoutubeFirstChannelBinding
 import com.islam.hesn.myapplication.youtube.model.response.SearchVideo
 import com.islam.hesn.myapplication.youtube.view.YoutubeRecyclerViewSearchPagingAdapter.YoutubeViewHolder
-import com.squareup.picasso.Picasso
 
 class YoutubeRecyclerViewSearchPagingAdapter(
     diffCallback: DiffUtil.ItemCallback<SearchVideo>,
@@ -44,7 +44,7 @@ class YoutubeRecyclerViewSearchPagingAdapter(
     inner class YoutubeViewHolder(val binding: ItemLayoutYoutubeFirstChannelBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(video: SearchVideo) = with(itemView) {
+        fun bind(video: SearchVideo): Unit = with(itemView) {
             with(video.snippet) {
 
                 binding.tvName.text = title
@@ -52,20 +52,20 @@ class YoutubeRecyclerViewSearchPagingAdapter(
 
                 with(thumbnails) {
                     standard?.let {
-                        Picasso.get().load(standard.url).into(ivThumbnail)
-                        return@with
+                        Glide.with(itemView).load(standard.url).into(ivThumbnail)
+                        return
                     }
                     high?.let {
-                        Picasso.get().load(high.url).into(ivThumbnail)
-                        return@with
+                        Glide.with(itemView).load(high.url).into(ivThumbnail)
+                        return
                     }
                     medium?.let {
-                        Picasso.get().load(medium.url).into(ivThumbnail)
-                        return@with
+                        Glide.with(itemView).load(medium.url).into(ivThumbnail)
+                        return
                     }
                     default?.let {
-                        Picasso.get().load(default.url).into(ivThumbnail)
-                        return@with
+                        Glide.with(itemView).load(default.url).into(ivThumbnail)
+                        return
                     }
                 }
 

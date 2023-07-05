@@ -42,7 +42,7 @@ class SurahFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", "SurahFragment");
+        FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", "SurahFragment")
         setListDivider()
         setupViewModelObservers()
         binding.fab.setOnClickListener { binding.surahRecyclerView.smoothScrollToPosition(0) }
@@ -73,7 +73,7 @@ class SurahFragment : Fragment() {
 
             binding.surahRecyclerView.adapter = MySurahRecyclerViewAdapter(
                 surah as ArrayList<AyaItem>,
-                QURAN_SURAH, onAyaItemClick = { surahId, ayaId ->
+                QURAN_SURAH, onAyaItemClick = { surahIdClicked, ayaId ->
 
                     if (Prefs.getBoolean(IS_CONNECTED, true).not()) {
 
@@ -91,16 +91,16 @@ class SurahFragment : Fragment() {
                     }
 
                     ayaViewModel.ayaNum.value = ayaId
-                    ayaViewModel.suraNum.value = surahId
+                    ayaViewModel.suraNum.value = surahIdClicked
                     bottomSheet = TranslationQuranBottomSheetFragment.newInstance().apply {
 
                         showNow(this@SurahFragment.parentFragmentManager, "translation")
                     }
                 },
-                onLastReadClick = { surahId, ayaId ->
+                onLastReadClick = { lastSurahId, ayaId ->
                     quranViewModel.surahId.removeObservers(viewLifecycleOwner)
 
-                    Prefs.putAny(BOOKMARK_SURAH_NUMBER, surahId)
+                    Prefs.putAny(BOOKMARK_SURAH_NUMBER, lastSurahId)
                     Prefs.putAny(BOOKMARK_AYA_NUMBER, ayaId)
 
                     Prefs.putAny(BOOKMARK_SURAH_NAME, surahName)
@@ -127,7 +127,7 @@ class SurahFragment : Fragment() {
         ayaViewModel.aya.observe(viewLifecycleOwner) { aya ->
 
             aya?.let {
-                createBottomSheet(aya.aya, aya.translation,true)
+                createBottomSheet(aya.aya, aya.translation, true)
                 ayaViewModel.aya.value = null
                 Prefs.putAny(COUNTER_FOR_REVIEW, Prefs.getInt(COUNTER_FOR_REVIEW, 0) + 1)
             }
