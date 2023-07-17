@@ -214,7 +214,7 @@ class QuranFragment : Fragment(), TextView.OnEditorActionListener {
 
             searchQuery.value = searchText
             isFromQuranScreen.value = true
-            ayat.postValue(quranViewModel.ayat.value)
+            ayat.value = quranViewModel.ayat.value
         }
         findNavController().navigate(R.id.searchFragment)
     }

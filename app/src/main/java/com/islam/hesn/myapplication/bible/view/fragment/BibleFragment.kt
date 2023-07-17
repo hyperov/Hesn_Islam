@@ -257,7 +257,7 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
     private fun gotoSearchScreen(searchText: String) {
         searchViewModel.searchQuery.value = searchText
         searchViewModel.isFromQuranScreen.value = false
-        searchViewModel.booksBible.postValue(bibleViewModel.bookModels.value)
+        searchViewModel.booksBible.value = bibleViewModel.bookModels.value
         findNavController().navigate(R.id.searchFragment)
     }
 

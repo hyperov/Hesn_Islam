@@ -77,6 +77,6 @@
     <fragment
         android:id="@+id/misconceptionsSitesFragment"
         android:name="com.islam.hesn.myapplication.misconceptions.MisconceptionsSitesFragment"
-        android:label="@string/comperative_relegions"
+        android:label="@string/pdf_book_name"
         tools:layout="@layout/fragment_misconceptions" />
 </navigation>

@@ -32,7 +32,7 @@ class MisconceptionsMainFragment : Fragment() {
         FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", "MisconceptionsMainFragment")
         binding.apply {
             cvMisconceptions.setOnClickListener { findNavController().navigate(R.id.misconceptionsFragment) }
-            cvReligions.setOnClickListener { findNavController().navigate(R.id.misconceptionsSitesFragment) }
+            cvPdfBook.setOnClickListener { findNavController().navigate(R.id.misconceptionsSitesFragment) }
         }
     }
 
