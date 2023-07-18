@@ -49,3 +49,5 @@
 
 -keep class com.islam.hesn.myapplication.youtube.model.response.ErrorRes { *; }
 -keep class com.islam.hesn.myapplication.youtube.model.response.Error { *; }
+
+-keep class com.shockwave.**

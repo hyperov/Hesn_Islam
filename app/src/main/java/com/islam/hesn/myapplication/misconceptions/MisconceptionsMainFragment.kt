@@ -1,6 +1,7 @@
 package com.islam.hesn.myapplication.misconceptions
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.databinding.FragmentMisconceptionsMainBinding
+import com.islam.hesn.myapplication.pdfbook.PdfActivity
 
 
 class MisconceptionsMainFragment : Fragment() {
@@ -32,7 +34,11 @@ class MisconceptionsMainFragment : Fragment() {
         FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", "MisconceptionsMainFragment")
         binding.apply {
             cvMisconceptions.setOnClickListener { findNavController().navigate(R.id.misconceptionsFragment) }
-            cvPdfBook.setOnClickListener { findNavController().navigate(R.id.misconceptionsSitesFragment) }
+            cvPdfBook.setOnClickListener {
+                startActivity(
+                    Intent(requireContext(), PdfActivity::class.java)
+                )
+            }
         }
     }
 

@@ -70,13 +70,13 @@
         <action
             android:id="@+id/action_misconceptionsMainFragment_to_misconceptionsFragment"
             app:destination="@id/misconceptionsFragment" />
-        <action
-            android:id="@+id/action_misconceptionsMainFragment_to_misconceptionsSitesFragment"
-            app:destination="@id/misconceptionsSitesFragment" />
+<!--        <action-->
+<!--            android:id="@+id/action_misconceptionsMainFragment_to_misconceptionsSitesFragment"-->
+<!--            app:destination="@id/pdfFragment" />-->
     </fragment>
-    <fragment
-        android:id="@+id/misconceptionsSitesFragment"
-        android:name="com.islam.hesn.myapplication.misconceptions.MisconceptionsSitesFragment"
-        android:label="@string/pdf_book_name"
-        tools:layout="@layout/fragment_misconceptions" />
+<!--    <fragment-->
+<!--        android:id="@+id/pdfFragment"-->
+<!--        android:name="com.islam.hesn.myapplication.pdfbook.PdfFragment"-->
+<!--        android:label="@string/pdf_book_name"-->
+<!--        tools:layout="@layout/fragment_pdf" />-->
 </navigation>

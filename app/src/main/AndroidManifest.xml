@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".pdfbook.PdfActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="firebase_crashlytics_collection_enabled"
@@ -32,8 +35,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
         <activity android:name=".home.MainActivity" />
     </application>
 
