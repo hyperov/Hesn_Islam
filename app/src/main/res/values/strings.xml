@@ -57,6 +57,8 @@
     <string name="pdf_book_name">وتحسبونه هيناٌ</string>
     <string name="misconceptions_main_title">شبهات وردود</string>
     <string name="copy_translation">نسخ الترجمة</string>
+    <string name="book">كتاب</string>
+    <string name="book_text_desc">(للرد على الشبهات)</string>
 
     /////////////////////////////////////
     <string-array name="bible_books">

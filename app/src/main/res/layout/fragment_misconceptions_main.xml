@@ -59,7 +59,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cvPdfBook"
         android:layout_width="200dp"
-        android:layout_height="180dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="32dp"
         app:cardBackgroundColor="@color/colorAccent"
@@ -91,18 +91,45 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/tvBookText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/janna_bold"
+                android:text="@string/book"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_size_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+            <TextView
+                android:id="@+id/tvBookName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-20dp"
                 android:fontFamily="@font/janna_bold"
                 android:text="@string/pdf_book_name"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/text_size_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvBookText" />
+
+            <TextView
+                android:id="@+id/tvBookeDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/cairo_regular"
+                android:text="@string/book_text_desc"
+                android:textColor="@color/black_overlay"
+                android:textSize="@dimen/text_size_18"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+                app:layout_constraintTop_toBottomOf="@+id/tvBookName" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
