@@ -38,8 +38,8 @@ android {
         applicationId "com.islam.hesn.myapplication"
         minSdkVersion 21
         targetSdkVersion 33
-        versionCode 11
-        versionName "1.5"
+        versionCode 12
+        versionName "2.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "YOUTUBE_API_KEY", apiKeyProperties['YOUTUBE_API_KEY'])
