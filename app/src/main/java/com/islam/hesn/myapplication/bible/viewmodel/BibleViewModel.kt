@@ -1,17 +1,20 @@
 package com.islam.hesn.myapplication.bible.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.islam.hesn.myapplication.bible.model.repo.BibleRepo
-import com.islam.hesn.myapplication.bible.model.response.bible.BibleResponse
 import com.islam.hesn.myapplication.bible.model.response.bible.Book
 import com.islam.hesn.myapplication.bible.model.response.bible.Chapter
 import com.islam.hesn.myapplication.bible.model.response.bible.Verse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -46,6 +49,7 @@ class BibleViewModel @Inject constructor(
                     error.value = false
                     success.value = false
                 }.catch {
+                    Log.e("getBible", "getBible: ${it.message}", it)
                     error.value = true
                     success.value = false
                 }.onCompletion {

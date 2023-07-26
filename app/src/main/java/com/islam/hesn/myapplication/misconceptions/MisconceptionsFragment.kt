@@ -12,7 +12,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.databinding.FragmentMisconceptionsBinding
 
 
