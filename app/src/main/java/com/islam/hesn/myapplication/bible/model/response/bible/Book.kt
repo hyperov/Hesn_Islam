@@ -3,13 +3,16 @@ package com.islam.hesn.myapplication.bible.model.response.bible
 import com.google.gson.annotations.SerializedName
 
 data class Book(
-    @field:SerializedName("version")
+    @field:SerializedName("abbreviation")
     val translationName: String,
-    @field:SerializedName("book_name")
+    @field:SerializedName("language")
+    val language: String,
+    @field:SerializedName("name")
     val bookName: String,
-    @field:SerializedName("book_nr")
+    @field:SerializedName("nr")
     val bookNum: Int,
-    val direction: String,
-    @field:SerializedName("book")
-    val chaptersMap: Map<String, Chapter>,
+    @field:SerializedName("url")
+    val bookUrl: String?,
+    @field:SerializedName("chapters")
+    val chapters: List<Chapter>
 )

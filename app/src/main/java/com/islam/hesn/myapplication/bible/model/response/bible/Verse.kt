@@ -6,8 +6,10 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Verse(
-    @field:SerializedName("verse_nr")
-    val verseNum: Int,
+    @field:SerializedName("chapter")
+    val chapterNum: Int,
     @field:SerializedName("verse")
+    val verseNum: Int,
+    @field:SerializedName("text")
     val verseContent: String
 ) : Parcelable

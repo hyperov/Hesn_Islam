@@ -78,7 +78,7 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
 
             fabJump.isExpanded = !fabJump.isExpanded
             bibleViewModel.selectedBook.value = selectedBook
-            bibleViewModel.selectedChapter.value = selectedChapter.chapterNum
+            bibleViewModel.selectedChapter.value = selectedChapter
             bibleViewModel.selectedFastForwardVerse.value =
                 dialogBinding.spinnerVerse.selectedItemPosition + 1
             findNavController().navigate(R.id.chapterFragment)
@@ -118,7 +118,7 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
 
         }
         if (bibleViewModel.bookModels.value.isNullOrEmpty())
-            bibleViewModel.getBible(BibleLangEnum.VAN_DYKE.lang)
+            bibleViewModel.getBibleBooks(BibleLangEnum.VAN_DYKE.lang)
         FirebaseCrashlytics.getInstance().setCustomKey("REQUEST", "BIBLE")
     }
 
@@ -321,11 +321,11 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
                     id: Long,
                 ) {
                     selectedBook = books[position]
-                    chapters = selectedBook.chaptersMap.values.toList()
-                    setupSpinnerArrayAdapter(
-                        chapters.map { it.chapterNum },
-                        dialogBinding.spinnerChapter
-                    )
+//                    chapters = selectedBook.chaptersMap.values.toList()
+//                    setupSpinnerArrayAdapter(
+//                        chapters.map { it.chapterNum },
+//                        dialogBinding.spinnerChapter
+//                    )
 
                 }
 
@@ -341,8 +341,8 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
                     id: Long,
                 ) {
                     selectedChapter = chapters[position]
-                    verses = selectedChapter.verseMap.values.toList()
-                    setupSpinnerArrayAdapter(verses.map { it.verseNum }, dialogBinding.spinnerVerse)
+                    verses = selectedChapter.verses
+//                    setupSpinnerArrayAdapter(verses.map { it.verseNum }, dialogBinding.spinnerVerse)
 
                 }
 

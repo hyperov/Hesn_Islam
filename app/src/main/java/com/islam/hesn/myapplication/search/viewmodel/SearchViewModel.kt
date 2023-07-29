@@ -57,19 +57,19 @@ class SearchViewModel : ViewModel() {
         emptySearchText.value = false
 
         booksBible.value?.forEachIndexed { index, book ->
-            book.chaptersMap.values.forEach { chapter ->
-                val filteredVerses = chapter.verseMap.values.filter {
-                    it.verseContent.contains(
-                        searchQuery.value!!, true
-                    )
-                }
-                if (filteredVerses.isNotEmpty()) {
-
-                    searchVerses.add(SearchedVerse(bookTitlesArabic[index],
-                        chapter.chapterNum.toString(),
-                        filteredVerses, book.bookName))
-                }
-            }
+//            book.chaptersMap.values.forEach { chapter ->
+//                val filteredVerses = chapter.verseMap.values.filter {
+//                    it.verseContent.contains(
+//                        searchQuery.value!!, true
+//                    )
+//                }
+//                if (filteredVerses.isNotEmpty()) {
+//
+//                    searchVerses.add(SearchedVerse(bookTitlesArabic[index],
+//                        chapter.chapterNum.toString(),
+//                        filteredVerses, book.bookName))
+//                }
+//            }
 
         }
         if (searchVerses.isNotEmpty()) {

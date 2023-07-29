@@ -42,7 +42,7 @@ class ChapterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", "ChapterFragment")
-        changeToolbarTitle(bibleViewModel.selectedChapter.value.toString())
+        changeToolbarTitle(bibleViewModel.selectedChapter.value!!.chapterNum.toString())
         binding.fab.setOnClickListener { binding.searchList.smoothScrollToPosition(0) }
         setListDivider()
         observeData()
@@ -85,7 +85,10 @@ class ChapterFragment : Fragment() {
 
     private fun getVerses() {
         if (bibleViewModel.chapterModels.value == null)
-            bibleViewModel.getChaptersForSelectedBook()
+            bibleViewModel.getChaptersForSelectedBook(
+                bibleViewModel.selectedBook.value!!.translationName,
+                bibleViewModel.selectedBook.value!!.bookNum
+            )
         bibleViewModel.getVersesForSelectedChapter()
     }
 
@@ -119,7 +122,7 @@ class ChapterFragment : Fragment() {
                                 bibleViewModel.selectedBook.value!!.bookName
 
                             chapterNum.value =
-                                bibleViewModel.selectedChapter.value
+                                bibleViewModel.selectedChapter.value!!.chapterNum
 
                             verseNum.value = verse.verseNum
                         }

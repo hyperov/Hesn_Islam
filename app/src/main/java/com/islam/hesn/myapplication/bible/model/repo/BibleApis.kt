@@ -1,26 +1,30 @@
 package com.islam.hesn.myapplication.bible.model.repo
 
+import com.islam.hesn.myapplication.bible.model.response.bible.Book
 import retrofit2.http.GET
 import retrofit2.http.Path
-import retrofit2.http.Query
 
 interface BibleApis {
 
-    @GET("v2/{translation}.json")
-    suspend fun getBible(@Path("translation") translation: String): String
+    @GET("{translation}/books.json")
+    suspend fun getBibleBooks(@Path("translation") translation: String): Map<String, Book>
 
     //السفر
-    @GET("v2/{translation}/{book}.json")
-    suspend fun getBibleBook(@Path("translation") translation: String,
-                             @Path("book") book: String): String
+    @GET("{translation}/{book}.json")
+    suspend fun getBibleBook(
+        @Path("translation") translation: String,
+        @Path("book") bookNum: String
+    ): Book
 
     //الفصل
-    @GET("v2/{translation}/{book}/{chapter}.json")
-    suspend fun getBibleChapter(@Path("translation") translation: String,
-                                @Path("book") book: String,
-                                @Path("chapter") chapter: String): String
+    @GET("{translation}/{book}/{chapter}.json")
+    suspend fun getBibleChapter(
+        @Path("translation") translation: String,
+        @Path("book") book: String,
+        @Path("chapter") chapter: String
+    ): String
 
-    @GET("v2/{translation}")
+    @GET("{translation}")
     suspend fun getTranslatedVerse(
         @Path("translation") translation: String,
         @Path("passage") passage: String,
@@ -28,7 +32,7 @@ interface BibleApis {
 
 
     companion object {
-        const val BASE_URL = "https://api.getbible.net/"
+        const val BASE_URL = "https://api.getbible.net/v2/"
 
     }
 

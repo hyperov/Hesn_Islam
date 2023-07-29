@@ -49,6 +49,7 @@ class BookFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", "BookFragment")
         changeToolbarTitle("سفر  ${bibleViewModel.selectedTitle.value!!}")
+        setRefreshListener()
         setListDivider()
         observeData()
         getChapters()
@@ -61,14 +62,14 @@ class BookFragment : Fragment() {
         dialogBinding.btFastForwardDone.setOnClickListener {
 
             fabJump.isExpanded = !fabJump.isExpanded
-            bibleViewModel.selectedChapter.value = selectedChapter.chapterNum
+            bibleViewModel.selectedChapter.value = selectedChapter
             findNavController().navigate(R.id.chapterFragment)
         }
         dialogBinding.btCancel.setOnClickListener { fabJump.isExpanded = !fabJump.isExpanded }
     }
 
     private fun setListDivider() {
-        binding.searchList.addItemDecoration(
+        binding.rvChaptersList.addItemDecoration(
             DividerItemDecoration(
                 context,
                 DividerItemDecoration.VERTICAL
@@ -77,12 +78,13 @@ class BookFragment : Fragment() {
     }
 
     private fun getChapters() {
-        bibleViewModel.getChaptersForSelectedBook()
+        bibleViewModel.getChaptersForSelectedBook(bibleViewModel.selectedBook.value!!.translationName,
+            bibleViewModel.selectedBook.value!!.bookNum)
     }
 
     private fun observeData() {
         bibleViewModel.chapterModels.observe(viewLifecycleOwner) {
-            binding.searchList.adapter =
+            binding.rvChaptersList.adapter =
                 BibleMainRecyclerViewAdapter(
                     chapters = it,
                     state = AdapterStateBibleEnum.CHAPTERS,
@@ -92,6 +94,45 @@ class BookFragment : Fragment() {
                         findNavController().navigate(R.id.chapterFragment)
                     })
             setupFastForwardSpinnerAdapter(it!!)
+        }
+
+        bibleViewModel.loading.observe(viewLifecycleOwner) { isVisible ->
+
+            val progressBible = binding.progressBook
+            if (isVisible) {
+                progressBible.visibility = View.VISIBLE
+                progressBible.playAnimation()
+            } else {
+                progressBible.visibility = View.GONE
+                progressBible.cancelAnimation()
+                binding.refreshBook.isRefreshing = false
+            }
+
+        }
+
+        bibleViewModel.error.observe(viewLifecycleOwner) { isError ->
+
+            val errorBook = binding.errorBook
+            val errorTextBook = binding.errorTextBook
+            if (isError) {
+                errorBook.visibility = View.VISIBLE
+                errorTextBook.visibility = View.VISIBLE
+            } else {
+                errorBook.visibility = View.GONE
+                errorTextBook.visibility = View.GONE
+            }
+        }
+
+        bibleViewModel.success.observe(viewLifecycleOwner) { isSuccess ->
+            binding.apply {
+                if (isSuccess) {
+                    binding.fabJump.show()
+                    binding.rvChaptersList.visibility = View.VISIBLE
+                } else {
+                    binding.fabJump.hide()
+                    binding.rvChaptersList.visibility = View.GONE
+                }
+            }
         }
     }
 
@@ -111,8 +152,8 @@ class BookFragment : Fragment() {
                 id: Long,
             ) {
                 selectedChapter = chapters[position]
-                verses = selectedChapter.verseMap.values.toList()
-                setupSpinnerArrayAdapter(verses.map { it.verseNum }, dialogBinding.spinnerVerse)
+//                verses = selectedChapter.verseMap.values.toList()
+//                setupSpinnerArrayAdapter(verses.map { it.verseNum }, dialogBinding.spinnerVerse)
 
             }
 
@@ -130,6 +171,12 @@ class BookFragment : Fragment() {
         ).also { adapter ->
             adapter.setDropDownViewResource(R.layout.layout_spinner_drop_down_resource)
             spinner.adapter = adapter
+        }
+    }
+
+    private fun setRefreshListener() {
+        binding.refreshBook.setOnRefreshListener {
+            getChapters()
         }
     }
 

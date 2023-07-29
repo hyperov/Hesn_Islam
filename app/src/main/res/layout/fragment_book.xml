@@ -15,15 +15,72 @@
         android:visibility="invisible"
         app:layout_behavior="com.google.android.material.transformation.FabTransformationSheetBehavior" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/searchList"
-        android:name="com.islam.hesn.myapplication.bible.view.fragment.BookFragment"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshBook"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
-        app:layoutManager="LinearLayoutManager"
-        tools:context=".bible.view.fragment.BookFragment"
-        tools:listitem="@layout/item_layout_book" />
+        android:elevation="@dimen/card_corner_radius_4">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvChaptersList"
+            android:name="com.islam.hesn.myapplication.bible.view.fragment.BookFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            app:layoutManager="LinearLayoutManager"
+            tools:context=".bible.view.fragment.BookFragment"
+            tools:listitem="@layout/item_layout_book" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/progressBook"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:background="@color/colorPrimaryDark"
+        android:scaleType="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_colorFilter="@color/colorAccent"
+        app:lottie_fileName="loading_book.json"
+        app:lottie_loop="true" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/errorBook"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDark"
+        android:padding="@dimen/vertical_margin_16"
+        android:scaleType="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="error_animation.json"
+        app:lottie_loop="true"
+        app:lottie_speed="1" />
+
+    <TextView
+        android:id="@+id/errorTextBook"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="64dp"
+        android:fontFamily="@font/janna_bold"
+        android:gravity="center"
+        android:text="@string/swipe_to_refresh"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/text_size_24"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabJump"

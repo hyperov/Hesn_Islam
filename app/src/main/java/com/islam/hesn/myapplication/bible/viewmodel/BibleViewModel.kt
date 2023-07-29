@@ -29,7 +29,7 @@ class BibleViewModel @Inject constructor(
     val verseModels = MutableLiveData<List<Verse>>()
 
     val selectedBook = MutableLiveData<Book>()
-    val selectedChapter = MutableLiveData<Int>()
+    val selectedChapter = MutableLiveData<Chapter>()
     val selectedFastForwardVerse = MutableLiveData<Int>(1)
 
     val selectedTitle = MutableLiveData<String>()
@@ -38,11 +38,11 @@ class BibleViewModel @Inject constructor(
     val error = MutableLiveData(false)
     val success = MutableLiveData(false)
 
-    fun getBible(translation: String) {
+    fun getBibleBooks(translation: String) {
 
         viewModelScope.launch {
 
-            bibleRepo.getBible(translation)
+            bibleRepo.getBibleBooks(translation)
                 .flowOn(Dispatchers.IO)
                 .onStart {
                     loading.value = true
@@ -55,7 +55,7 @@ class BibleViewModel @Inject constructor(
                 }.onCompletion {
                     loading.value = false
                 }.collect {
-                    bookModels.value = it.booksMap.values.toList()
+                    bookModels.value = it.values.toList()
                     success.value = true
                 }
 
@@ -63,15 +63,33 @@ class BibleViewModel @Inject constructor(
 
     }
 
-    fun getChaptersForSelectedBook() {
-        chapterModels.value =
-            bookModels.value?.filter { it.bookNum == selectedBook.value!!.bookNum }
-                ?.get(0)!!.chaptersMap.values.toList()
+    fun getChaptersForSelectedBook(translation: String, bookNum: Int) {
+
+        viewModelScope.launch {
+            bibleRepo.getBibleBook(translation, bookNum.toString())
+                .flowOn(Dispatchers.IO)
+                .onStart {
+                    loading.value = true
+                    error.value = false
+                    success.value = false
+                }.catch {
+                    Log.e("getBible selected book", " ${it.message}", it)
+                    error.value = true
+                    success.value = false
+                }.onCompletion {
+                    loading.value = false
+                }.collect {
+                    chapterModels.value = it.chapters
+                    success.value = true
+                }
+        }
+
     }
 
     fun getVersesForSelectedChapter() {
-        verseModels.value = chapterModels.value?.filter { it.chapterNum == selectedChapter.value }
-            ?.get(0)!!.verseMap.values.toList()
+        verseModels.value = selectedChapter.value!!.verses
+//        verseModels.value = chapterModels.value?.filter { it.chapterNum == selectedChapter.value }
+//            ?.get(0)!!.verseMap.values.toList()
     }
 
     public override fun onCleared() {
