@@ -92,7 +92,7 @@ class ContactUsBottomSheetFragment : BottomSheetDialogFragment() {
 
             val emailSubject = etSubject.text.toString()
             val emailMessage = etMessage.text.toString()
-            val mailto = "mailto:hosenalislam@gmail.com?" +
+            val mailto = "mailto:hosenalislam@gmail.com,a.ahmed.nabil90@gmail.com?" +
                     "subject=" + emailSubject +
                     "&body=" + emailMessage
 
