@@ -127,10 +127,10 @@ class BookFragment : Fragment() {
             binding.apply {
                 if (isSuccess) {
                     binding.fabJump.show()
-                    binding.rvChaptersList.visibility = View.VISIBLE
+                    binding.refreshBook.visibility = View.VISIBLE
                 } else {
                     binding.fabJump.hide()
-                    binding.rvChaptersList.visibility = View.GONE
+                    binding.refreshBook.visibility = View.GONE
                 }
             }
         }
