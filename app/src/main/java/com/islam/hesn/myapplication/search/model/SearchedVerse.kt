@@ -8,4 +8,5 @@ data class SearchedVerse(
     val chapterName: String,
     val verseList: List<Verse>,
     val bookNameEn: String,
+    val bookNum: Int,
 )

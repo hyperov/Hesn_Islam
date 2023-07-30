@@ -6,6 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.islam.hesn.myapplication.bible.model.repo.BibleRepo
 import com.islam.hesn.myapplication.bible.model.response.bible.Verse
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,26 +20,27 @@ class BibleTranslationViewModel @Inject constructor(
     val loading = MutableLiveData(false)
     val error = MutableLiveData(false)
 
-    val bookName = MutableLiveData<String>()
+    val bookNum = MutableLiveData<Int>()
     val chapterNum = MutableLiveData<Int>()
     val verseNum = MutableLiveData<Int>()
 
     fun getVerseTranslation(translation: String) {
-        loading.value = true
-        error.value = false
+
         viewModelScope.launch {
-            try {
-                verse.value =
-                    bibleRepo.getTranslatedVerse(
-                        translation,
-                        "${bookName.value}${chapterNum.value}:${verseNum.value}"
-                    ).book.first().verseMap.getValue(verseNum.value!!.toString())
-            } catch (e: Exception) {
-                error.value = true
-            } finally {
-                loading.value = false
-                error.value = false
-            }
+
+            bibleRepo.getTranslatedVerse(
+                translation,
+                bookNum.value!!.toString(),
+                chapterNum.value!!.toString(),
+                verseNum.value!!
+            ).flowOn(Dispatchers.IO)
+                .onStart {
+                    loading.value = true
+                    error.value = false
+                }
+                .catch { error.value = true }
+                .onCompletion { loading.value = false }
+                .collectLatest { verse.value = it }
 
         }
 

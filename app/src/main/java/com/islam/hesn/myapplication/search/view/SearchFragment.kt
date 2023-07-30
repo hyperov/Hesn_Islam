@@ -164,8 +164,8 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClick
                                 searchViewModel.searchedVersesLiveData.value?.first {
                                     it.verseList.contains(verse)
                                 }
-                            bookName.value =
-                                searchedVerse?.bookNameEn
+                            bookNum.value =
+                                searchedVerse?.bookNum
 
                             chapterNum.value =
                                 searchedVerse?.chapterName?.toInt()

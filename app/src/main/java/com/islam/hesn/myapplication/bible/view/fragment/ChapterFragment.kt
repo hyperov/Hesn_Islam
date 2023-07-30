@@ -118,8 +118,8 @@ class ChapterFragment : Fragment() {
 
                         translationViewModel.apply {
 
-                            bookName.value =
-                                bibleViewModel.selectedBook.value!!.bookName
+                            bookNum.value =
+                                bibleViewModel.selectedBook.value!!.bookNum
 
                             chapterNum.value =
                                 bibleViewModel.selectedChapter.value!!.chapterNum

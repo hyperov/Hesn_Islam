@@ -67,7 +67,7 @@ class SearchViewModel : ViewModel() {
 //
 //                    searchVerses.add(SearchedVerse(bookTitlesArabic[index],
 //                        chapter.chapterNum.toString(),
-//                        filteredVerses, book.bookName))
+//                        filteredVerses, book.bookName,book.bookNum))
 //                }
 //            }
 

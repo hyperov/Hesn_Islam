@@ -66,7 +66,7 @@ class BibleViewModel @Inject constructor(
     fun getChaptersForSelectedBook(translation: String, bookNum: Int) {
 
         viewModelScope.launch {
-            bibleRepo.getBibleBook(translation, bookNum.toString())
+            bibleRepo.getBibleBookChapters(translation, bookNum.toString())
                 .flowOn(Dispatchers.IO)
                 .onStart {
                     loading.value = true
