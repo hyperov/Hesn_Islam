@@ -321,11 +321,11 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
                     id: Long,
                 ) {
                     selectedBook = books[position]
-//                    chapters = selectedBook.chaptersMap.values.toList()
-//                    setupSpinnerArrayAdapter(
-//                        chapters.map { it.chapterNum },
-//                        dialogBinding.spinnerChapter
-//                    )
+                    chapters = selectedBook.chapters
+                    setupSpinnerArrayAdapter(
+                        chapters.map { it.chapterNum },
+                        dialogBinding.spinnerChapter
+                    )
 
                 }
 
@@ -342,7 +342,7 @@ class BibleFragment : Fragment(), TextView.OnEditorActionListener {
                 ) {
                     selectedChapter = chapters[position]
                     verses = selectedChapter.verses
-//                    setupSpinnerArrayAdapter(verses.map { it.verseNum }, dialogBinding.spinnerVerse)
+                    setupSpinnerArrayAdapter(verses.map { it.verseNum }, dialogBinding.spinnerVerse)
 
                 }
 

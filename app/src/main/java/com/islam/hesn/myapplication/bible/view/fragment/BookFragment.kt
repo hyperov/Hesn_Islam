@@ -152,8 +152,8 @@ class BookFragment : Fragment() {
                 id: Long,
             ) {
                 selectedChapter = chapters[position]
-//                verses = selectedChapter.verseMap.values.toList()
-//                setupSpinnerArrayAdapter(verses.map { it.verseNum }, dialogBinding.spinnerVerse)
+                verses = selectedChapter.verses
+                setupSpinnerArrayAdapter(verses.map { it.verseNum }, dialogBinding.spinnerVerse)
 
             }
 
