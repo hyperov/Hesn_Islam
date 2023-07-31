@@ -8,6 +8,12 @@ import retrofit2.http.Path
 
 interface BibleApis {
 
+    //الاسفار
+    @GET("{translation}.json")
+    suspend fun getBibleBooks(
+        @Path("translation") translation: String
+    ): BibleSearchRes
+
     //السفر باصحاحاته
     @GET("{translation}/{book}.json")
     suspend fun getBibleBookChapters(
@@ -22,12 +28,6 @@ interface BibleApis {
         @Path("book") book: String,
         @Path("chapter") chapter: String
     ): Chapter
-
-    @GET("{translation}.json")
-    suspend fun getBibleBooks(
-        @Path("translation") translation: String
-    ): BibleSearchRes
-
 
     companion object {
         const val BASE_URL = "https://api.getbible.net/v2/"
