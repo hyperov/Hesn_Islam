@@ -11,5 +11,9 @@ data class Verse(
     @field:SerializedName("verse")
     val verseNum: Int,
     @field:SerializedName("text")
-    val verseContent: String
+    val verseContent: String,
+    @field:SerializedName("book_name")
+    val bookName: String?,
+    @field:SerializedName("book_nr")
+    val bookNum: Int?,
 ) : Parcelable

@@ -4,9 +4,9 @@ import com.google.gson.annotations.SerializedName
 
 data class Book(
     @field:SerializedName("abbreviation")
-    val translationName: String,
+    val translationName: String?,
     @field:SerializedName("language")
-    val language: String,
+    val language: String?,
     @field:SerializedName("name")
     val bookName: String,
     @field:SerializedName("nr")

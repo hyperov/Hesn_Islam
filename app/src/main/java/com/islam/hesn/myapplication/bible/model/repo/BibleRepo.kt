@@ -1,13 +1,13 @@
 package com.islam.hesn.myapplication.bible.model.repo
 
 import com.islam.hesn.myapplication.bible.model.response.bible.Book
-import com.islam.hesn.myapplication.bible.model.response.bible.Chapter
 import com.islam.hesn.myapplication.bible.model.response.bible.Verse
+import com.islam.hesn.myapplication.bible.model.response.search.BibleSearchRes
 import kotlinx.coroutines.flow.Flow
 
 interface BibleRepo {
 
-    fun getBibleBooks(translation: String): Flow<Map<String, Book>>
+    fun getBibleBooks(translation: String): Flow<BibleSearchRes>
 
     suspend fun getBibleBookChapters(
         translation: String,

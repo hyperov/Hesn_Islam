@@ -10,7 +10,6 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.islam.hesn.myapplication.R
@@ -49,7 +48,7 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClick
     }
 
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?)  {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", "SearchFragment")
         Prefs.putAny(COUNTER_FOR_REVIEW, Prefs.getInt(COUNTER_FOR_REVIEW, 0) + 1)
@@ -188,8 +187,8 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener, OnGroupClick
                 cvSearchFrag.isVisible = !visible
             }
         }
-        searchViewModel.emptySearchText.observe(viewLifecycleOwner,
-            Observer { visible -> binding.tvNoResults.isVisible = visible })
+        searchViewModel.emptySearchText.observe(viewLifecycleOwner)
+        { visible -> binding.tvNoResults.isVisible = visible }
     }
 
     private fun observeSearchQuranData() {

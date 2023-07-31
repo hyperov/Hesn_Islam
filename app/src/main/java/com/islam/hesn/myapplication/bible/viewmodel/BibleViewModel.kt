@@ -33,6 +33,7 @@ class BibleViewModel @Inject constructor(
     val selectedFastForwardVerse = MutableLiveData<Int>(1)
 
     val selectedTitle = MutableLiveData<String>()
+    val translationName = MutableLiveData<String>()
 
     val loading = MutableLiveData<Boolean>()
     val error = MutableLiveData(false)
@@ -55,7 +56,8 @@ class BibleViewModel @Inject constructor(
                 }.onCompletion {
                     loading.value = false
                 }.collect {
-                    bookModels.value = it.values.toList()
+                    bookModels.value = it.books
+                    translationName.value = it.translationName
                     success.value = true
                 }
 

@@ -1,6 +1,7 @@
 package com.islam.hesn.myapplication.bible.model.repo
 
 import com.islam.hesn.myapplication.bible.model.response.bible.Book
+import com.islam.hesn.myapplication.bible.model.response.search.BibleSearchRes
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
@@ -9,7 +10,7 @@ import javax.inject.Inject
 
 class BibleRepoImpl @Inject constructor(private val apis: BibleApis) : BibleRepo {
 
-    override fun getBibleBooks(translation: String): Flow<Map<String, Book>> {
+    override fun getBibleBooks(translation: String): Flow<BibleSearchRes> {
 
         return flow { emit(apis.getBibleBooks(translation)) }
     }

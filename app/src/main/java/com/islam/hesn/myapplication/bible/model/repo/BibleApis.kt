@@ -2,14 +2,11 @@ package com.islam.hesn.myapplication.bible.model.repo
 
 import com.islam.hesn.myapplication.bible.model.response.bible.Book
 import com.islam.hesn.myapplication.bible.model.response.bible.Chapter
+import com.islam.hesn.myapplication.bible.model.response.search.BibleSearchRes
 import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface BibleApis {
-
-    //الاسفار
-    @GET("{translation}/books.json")
-    suspend fun getBibleBooks(@Path("translation") translation: String): Map<String, Book>
 
     //السفر باصحاحاته
     @GET("{translation}/{book}.json")
@@ -25,6 +22,11 @@ interface BibleApis {
         @Path("book") book: String,
         @Path("chapter") chapter: String
     ): Chapter
+
+    @GET("{translation}.json")
+    suspend fun getBibleBooks(
+        @Path("translation") translation: String
+    ): BibleSearchRes
 
 
     companion object {

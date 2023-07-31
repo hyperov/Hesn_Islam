@@ -78,7 +78,7 @@ class BookFragment : Fragment() {
     }
 
     private fun getChapters() {
-        bibleViewModel.getChaptersForSelectedBook(bibleViewModel.selectedBook.value!!.translationName,
+        bibleViewModel.getChaptersForSelectedBook(bibleViewModel.translationName.value!!,
             bibleViewModel.selectedBook.value!!.bookNum)
     }
 

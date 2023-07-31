@@ -23,13 +23,11 @@
 
 -printusage usage.txt
 
--keep class com.islam.hesn.myapplication.bible.model.response.bible.BibleResponse { *; }
 -keep class com.islam.hesn.myapplication.bible.model.response.bible.Book { *; }
 -keep class com.islam.hesn.myapplication.bible.model.response.bible.Chapter { *; }
 -keep class com.islam.hesn.myapplication.bible.model.response.bible.Verse { *; }
 
--keep class com.islam.hesn.myapplication.bible.model.response.translation.BibleVerseTranslationResponse { *; }
--keep class com.islam.hesn.myapplication.bible.model.response.translation.Book { *; }
+-keep class com.islam.hesn.myapplication.bible.model.response.search.BibleSearchRes { *; }
 
 -keep class com.islam.hesn.myapplication.quran.model.response.arabic.QuranBaseResponse { *; }
 -keep class com.islam.hesn.myapplication.quran.model.response.arabic.AyaItem { *; }

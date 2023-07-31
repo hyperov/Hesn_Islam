@@ -86,7 +86,7 @@ class ChapterFragment : Fragment() {
     private fun getVerses() {
         if (bibleViewModel.chapterModels.value == null)
             bibleViewModel.getChaptersForSelectedBook(
-                bibleViewModel.selectedBook.value!!.translationName,
+                bibleViewModel.translationName.value!!,
                 bibleViewModel.selectedBook.value!!.bookNum
             )
         bibleViewModel.getVersesForSelectedChapter()
