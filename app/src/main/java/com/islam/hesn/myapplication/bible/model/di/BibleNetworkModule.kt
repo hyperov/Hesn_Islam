@@ -18,7 +18,6 @@ import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.create
 import java.util.concurrent.TimeUnit
 
@@ -67,7 +66,6 @@ object BibleNetworkModule {
         val retrofit = Retrofit.Builder()
             .baseUrl(BibleApis.BASE_URL)
             .client(client.build())
-            .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create(Gson()))
             .build()
         return retrofit.create()
