@@ -49,3 +49,9 @@
 -keep class com.islam.hesn.myapplication.youtube.model.response.Error { *; }
 
 -keep class com.shockwave.**
+
+-keep class com.pierfrancescosoffritti.androidyoutubeplayer.** { *; }
+
+-keepnames class com.pierfrancescosoffritti.youtubeplayer.*
+
+-dontwarn org.jetbrains.annotations.**
