@@ -1,5 +1,6 @@
 package com.islam.hesn.myapplication.youtube.model.repo
 
+import androidx.core.text.isDigitsOnly
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.islam.hesn.myapplication.youtube.model.response.Video
@@ -15,9 +16,10 @@ class YoutubePagingSource(
     override suspend fun load(params: LoadParams<String>): LoadResult<String, Video> {
         return try {
             val nextPage = params.key ?: ""
+
             val response = api.getYoutubeChannelVideos(
                 playlistId,
-                nextPage
+              if (nextPage.isDigitsOnly()) "" else nextPage
             )
             LoadResult.Page(
                 data = response.items!!,
