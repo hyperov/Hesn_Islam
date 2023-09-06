@@ -38,13 +38,16 @@ class YoutubeRecyclerViewPagingAdapter(
     inner class YoutubeViewHolder(val binding: ItemLayoutYoutubeFirstChannelBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(video: CommonVideo): Unit = with(itemView) {
+        fun bind(video: CommonVideo) {
             with(video.snippet) {
 
                 binding.tvName.text = title
                 val ivThumbnail = binding.ivThumbnail
 
                 with(thumbnails) {
+
+                    binding.root.setOnClickListener { onVideoClick(resourceId!!.videoId, title) }
+
                     standard?.let {
                         Glide.with(itemView).load(standard.url).into(ivThumbnail)
                         return
@@ -62,9 +65,7 @@ class YoutubeRecyclerViewPagingAdapter(
                         return
                     }
                 }
-                video.snippet.apply {
-                    setOnClickListener { onVideoClick(resourceId!!.videoId, title) }
-                }
+
 
 
             }
