@@ -1,4 +1,3 @@
-
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
@@ -16,6 +15,8 @@ def apiKeyProperties = new Properties()
 apiKeyProperties.load(new FileInputStream(apiKeyPropertiesFile))
 
 android {
+
+    namespace "com.islam.hesn.myapplication"
     signingConfigs {
 
         release {
@@ -27,17 +28,17 @@ android {
 
     }
 
-    compileSdkVersion 33
-    buildToolsVersion "30.0.3"
+    compileSdk 34
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 
     defaultConfig {
         applicationId "com.islam.hesn.myapplication"
         minSdkVersion 21
-        targetSdkVersion 33
+        targetSdkVersion 34
         versionCode 13
         versionName "2.5"
 
@@ -46,12 +47,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     buildTypes {
@@ -91,12 +92,13 @@ dependencies {
     implementation 'com.google.firebase:firebase-perf-ktx'
 
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
+    implementation 'androidx.test.ext:junit-ktx:1.2.1'
 
     def paging_version = '3.1.1'
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation 'androidx.core:core-ktx:1.10.1'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.core:core-ktx:1.13.1'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
 
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.google.android.material:material:1.9.0'
@@ -105,7 +107,7 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:2.6.0"
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.3.0'
+    implementation 'androidx.recyclerview:recyclerview:1.3.2'
 
     implementation 'com.google.code.gson:gson:2.9.0'
 
@@ -150,7 +152,7 @@ dependencies {
 
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
 
-    implementation 'androidx.preference:preference-ktx:1.2.0'
+    implementation 'androidx.preference:preference-ktx:1.2.1'
 
     implementation 'com.google.android.play:core:1.10.3'
     // For Kotlin users also import the Kotlin extensions library for Play Core:
