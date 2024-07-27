@@ -57,8 +57,8 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/vertical_margin_16"
-            android:visibility="visible"
             android:background="@android:color/white"
+            android:visibility="visible"
             app:layoutManager="LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -71,13 +71,16 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabJump"
+        style="@style/Widget.MaterialComponents.FloatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginEnd="@dimen/vertical_margin_16"
-        android:layout_marginBottom="@dimen/vertical_margin_16"
+        android:layout_margin="@dimen/card_corner_radius_16"
         android:backgroundTint="@color/colorAccent"
         android:layoutDirection="rtl"
-        app:srcCompat="@drawable/ic_fast_forward" />
+        app:icon="@drawable/ic_fast_forward"
+        app:iconTint="@color/colorPrimaryDark"
+        app:srcCompat="@drawable/ic_fast_forward"
+        app:tint="@color/colorPrimary" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

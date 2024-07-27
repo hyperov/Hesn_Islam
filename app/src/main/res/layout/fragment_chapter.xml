@@ -27,15 +27,17 @@
         app:layout_anchor="@id/searchList"
         app:layout_anchorGravity="center" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fab"
         style="@style/Widget.MaterialComponents.FloatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/vertical_margin_16"
-        android:src="@drawable/ic_up_arrow"
         app:backgroundTint="@color/colorAccent"
         app:fabSize="normal"
+        app:icon="@drawable/ic_up_arrow"
+        app:iconTint="@color/colorPrimaryDark"
         app:layout_anchor="@id/searchList"
-        app:layout_anchorGravity="bottom|end" />
+        app:layout_anchorGravity="bottom|end"
+        app:tint="@color/colorPrimary" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

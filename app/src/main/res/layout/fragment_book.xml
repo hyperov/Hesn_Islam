@@ -87,9 +87,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginEnd="@dimen/vertical_margin_16"
-        android:layout_marginBottom="@dimen/vertical_margin_16"
+        android:layout_margin="@dimen/vertical_margin_16"
         android:backgroundTint="@color/colorAccent"
         android:layoutDirection="rtl"
-        app:srcCompat="@drawable/ic_fast_forward" />
+        app:srcCompat="@drawable/ic_fast_forward"
+        app:tint="@color/colorPrimary" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
