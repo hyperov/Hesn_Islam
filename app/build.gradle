@@ -92,7 +92,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-perf-ktx'
 
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.8.4'
-    implementation 'androidx.test.ext:junit-ktx:1.2.1'
+    testImplementation 'androidx.test.ext:junit-ktx:1.2.1'
 
     def paging_version = '3.3.1'
 
