@@ -10,6 +10,7 @@ import com.islam.hesn.myapplication.bible.model.response.bible.Chapter
 import com.islam.hesn.myapplication.bible.model.response.bible.Verse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
@@ -23,6 +24,7 @@ class BibleViewModel @Inject constructor(
     private val bibleRepo: BibleRepo,
 ) : ViewModel() {
 
+    private lateinit var bibleBooksLaunch: Job
     val bookModels = MutableLiveData<List<Book>>()
     val chapterModels = MutableLiveData<List<Chapter>>()
 
@@ -41,7 +43,7 @@ class BibleViewModel @Inject constructor(
 
     fun getBibleBooks(translation: String) {
 
-        viewModelScope.launch {
+        bibleBooksLaunch = viewModelScope.launch {
 
             bibleRepo.getBibleBooks(translation)
                 .flowOn(Dispatchers.IO)
@@ -96,6 +98,7 @@ class BibleViewModel @Inject constructor(
 
     public override fun onCleared() {
         super.onCleared()
+        bibleBooksLaunch.cancel()
         viewModelScope.cancel()
     }
 }
