@@ -150,7 +150,7 @@ dependencies {
 
     implementation 'com.airbnb.android:lottie:4.2.2'
 
-    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.2'
 
     implementation 'androidx.preference:preference-ktx:1.2.1'
 
