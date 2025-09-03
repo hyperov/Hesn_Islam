@@ -2,8 +2,8 @@ package com.islam.hesn.myapplication.app
 
 import android.app.Application
 import androidx.preference.PreferenceManager
-import com.google.firebase.crashlytics.ktx.crashlytics
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.Firebase
+import com.google.firebase.crashlytics.crashlytics
 import com.islam.hesn.myapplication.BuildConfig
 import com.islam.hesn.myapplication.utils.COUNTER_FOR_REVIEW
 import com.islam.hesn.myapplication.utils.Prefs
@@ -18,7 +18,7 @@ class MyApp : Application() {
         super.onCreate()
 
         if (!BuildConfig.DEBUG) {
-            Firebase.crashlytics.setCrashlyticsCollectionEnabled(true)
+            Firebase.crashlytics.isCrashlyticsCollectionEnabled = true
         }
         Prefs = PreferenceManager.getDefaultSharedPreferences(this)
         Prefs.putAny(COUNTER_FOR_REVIEW, Prefs.getInt(COUNTER_FOR_REVIEW, 0))
