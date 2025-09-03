@@ -117,8 +117,8 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:4.9.1"
 //    implementation 'com.squareup.retrofit2:converter-scalars:2.1.0'
 
-    implementation 'com.google.dagger:hilt-android:2.44'
-    kapt 'com.google.dagger:hilt-compiler:2.44'
+    implementation 'com.google.dagger:hilt-android:2.57.1'
+    kapt 'com.google.dagger:hilt-compiler:2.57.1'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
     //view model , life cycle
@@ -144,7 +144,9 @@ dependencies {
         exclude group: 'org.apache.httpcomponents'
     }
 
-    implementation "com.thoughtbot:expandablerecyclerview:1.4"
+    //repo url
+    //https://mvnrepository.com/artifact/com.github.thoughtbot.expandable-recycler-view/expandablerecyclerview/v1.4
+    implementation "com.github.thoughtbot.expandable-recycler-view:expandablerecyclerview:v1.4"
 
     implementation 'com.github.bumptech.glide:glide:4.15.1'
 
