@@ -148,9 +148,9 @@ dependencies {
     //https://mvnrepository.com/artifact/com.github.thoughtbot.expandable-recycler-view/expandablerecyclerview/v1.4
     implementation "com.github.thoughtbot.expandable-recycler-view:expandablerecyclerview:v1.4"
 
-    implementation 'com.github.bumptech.glide:glide:4.15.1'
+    implementation 'com.github.bumptech.glide:glide:5.0.4'
 
-    implementation 'com.airbnb.android:lottie:4.2.2'
+    implementation 'com.airbnb.android:lottie:6.6.7'
 
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.2'
 
