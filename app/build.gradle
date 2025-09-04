@@ -7,6 +7,7 @@ plugins {
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
     id 'com.google.firebase.firebase-perf'
+    id 'com.google.devtools.ksp'
 }
 
 
@@ -38,8 +39,8 @@ android {
         minSdkVersion 23
         compileSdkVersion 36
         targetSdkVersion 36
-        versionCode 15
-        versionName "2.55"
+        versionCode 16
+        versionName "2.6"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "YOUTUBE_API_KEY", apiKeyProperties['YOUTUBE_API_KEY'])
@@ -113,7 +114,10 @@ dependencies {
 //    implementation 'com.squareup.retrofit2:converter-scalars:2.1.0'
 
     implementation 'com.google.dagger:hilt-android:2.57.1'
-    kapt 'com.google.dagger:hilt-compiler:2.57.1'
+    ksp 'com.google.dagger:hilt-compiler:2.57.1'
+    //viewmodel with hilt
+    ksp 'androidx.hilt:hilt-compiler:1.2.0'
+
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
     //view model , life cycle
@@ -121,8 +125,6 @@ dependencies {
     implementation "androidx.arch.core:core-common:2.2.0"
 
 
-    //viewmodel with hilt
-    kapt 'androidx.hilt:hilt-compiler:1.2.0'
 
     //coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2"
