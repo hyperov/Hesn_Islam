@@ -45,6 +45,7 @@ class MisconceptionsFragment : Fragment() {
     }
 
     class MyWebViewClient(private val progress: LottieAnimationView) : WebViewClient() {
+        @Deprecated("Deprecated in Java")
         override fun shouldOverrideUrlLoading(webView: WebView, url: String): Boolean {
             return false
         }

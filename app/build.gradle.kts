@@ -68,17 +68,17 @@ android {
             excludes += setOf("META-INF/*")
         }
         resources {
-            excludes += setOf(
-                'META-INF/DEPENDENCIES',
-                'META-INF/LICENSE',
-                'META-INF/LICENSE.txt',
-                'META-INF/license.txt',
-                'META-INF/NOTICE',
-                'META-INF/NOTICE.txt',
-                'META-INF/notice.txt',
-                'META-INF/ASL2.0',
-                'META-INF/*',
-                'META-INF/*.kotlin_module')
+            excludes += mutableSetOf(
+                "META-INF/DEPENDENCIES",
+                "META-INF/LICENSE",
+                "META-INF/LICENSE.txt",
+                "META-INF/license.txt",
+                "META-INF/NOTICE",
+                "META-INF/NOTICE.txt",
+                "META-INF/notice.txt",
+                "META-INF/ASL2.0",
+                "META-INF/*",
+                "META-INF/*.kotlin_module")
         }
     }
 }
@@ -160,7 +160,7 @@ dependencies {
     // For Kotlin users, also add the Kotlin extensions library for Play In-App Update:
     implementation("com.google.android.play:app-update-ktx:2.1.0")
 
-    implementation("com.github.mhiew:android-pdf-viewer:3.2.0-beta.3")
+    implementation ("com.github.mhiew:android-pdf-viewer:3.2.0-beta.3")
 
 }
 
