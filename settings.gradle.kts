@@ -3,7 +3,7 @@ pluginManagement {
         google()
         mavenCentral()
         gradlePluginPortal()
-        maven { url "https://mvnrepository.com/artifact" }
+        maven(url = "https://mvnrepository.com/artifact")
     }
 }
 dependencyResolutionManagement {
@@ -12,10 +12,10 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         jcenter()
-        maven { url "https://mvnrepository.com/artifact" }
-        maven { url "https://maven.scijava.org/content/repositories/public/" }
-
+        maven(url = "https://mvnrepository.com/artifact")
+        maven(url = "https://maven.scijava.org/content/repositories/public/")
     }
 }
 rootProject.name = "Hesn Islam"
-include ':app'
+include(":app")
+
