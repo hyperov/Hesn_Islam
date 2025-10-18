@@ -88,9 +88,12 @@ dependencies {
 
     implementation(libs.bundles.androidx.lifecycle)
     testImplementation(libs.androidx.test.ext.junit.ktx)
+    testImplementation(libs.bundles.testing)
+    androidTestImplementation(libs.bundles.testing)
 
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)
+    debugImplementation(libs.compose.ui.tooling)
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(libs.androidx.core.ktx)
