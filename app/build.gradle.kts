@@ -1,3 +1,4 @@
+import com.android.build.api.dsl.Packaging
 import java.util.Properties
 import java.io.FileInputStream
 
@@ -36,8 +37,8 @@ android {
         applicationId = "com.islam.hesn.myapplication"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = 16
-        versionName = "2.6"
+        versionCode = 17
+        versionName = "2.7"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "YOUTUBE_API_KEY", apiKeyProperties["YOUTUBE_API_KEY"] as String)
     }
@@ -59,12 +60,11 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
-    packagingOptions {
-        jniLibs {
-            excludes += setOf("META-INF/*")
-        }
+    fun Packaging.() {
+
         resources {
             excludes += setOf(
+                "/META-INF/{AL2.0,LGPL2.1}",
                 "META-INF/DEPENDENCIES",
                 "META-INF/LICENSE",
                 "META-INF/LICENSE.txt",
@@ -74,7 +74,7 @@ android {
                 "META-INF/notice.txt",
                 "META-INF/ASL2.0",
                 "META-INF/*",
-                "META-INF/*.kotlin_module"
+                "**/*.kotlin_module"
             )
         }
     }

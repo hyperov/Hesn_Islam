@@ -52,7 +52,7 @@ expandableRecyclerview = "v1.4"
 glide = "5.0.5"
 lottie = "6.6.10"
 youtubeplayer = "13.0.0"
-pdfViewer = "3.2.0-beta.3"
+pdfViewer = "3.2.7"
 
 [libraries]
 # AndroidX
@@ -112,7 +112,7 @@ expandablerecyclerview = { group = "com.github.thoughtbot.expandable-recycler-vi
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie" }
 youtubeplayer-core = { group = "com.pierfrancescosoffritti.androidyoutubeplayer", name = "core", version.ref = "youtubeplayer" }
-pdfviewer = { group = "com.github.mhiew", name = "android-pdf-viewer", version.ref = "pdfViewer" }
+pdfviewer = { group = "com.github.marain87", name = "AndroidPdfViewer", version.ref = "pdfViewer" }
 
 [bundles]
 androidx-lifecycle = ["androidx-lifecycle-livedata-ktx", "androidx-lifecycle-viewmodel-ktx", "androidx-lifecycle-runtime-ktx"]
