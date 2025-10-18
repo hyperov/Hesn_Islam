@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.firebase.perf)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.compose.compiler)
 }
 
 val apiKeyPropertiesFile = rootProject.file("apikey.properties")
@@ -31,6 +32,7 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
+        compose = true
     }
     compileSdk = libs.versions.compileSdk.get().toInt()
     defaultConfig {
@@ -86,6 +88,9 @@ dependencies {
 
     implementation(libs.bundles.androidx.lifecycle)
     testImplementation(libs.androidx.test.ext.junit.ktx)
+
+    implementation(platform(libs.compose.bom))
+    implementation(libs.bundles.compose)
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(libs.androidx.core.ktx)
