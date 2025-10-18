@@ -1,4 +1,4 @@
-package com.hyper.myapplication.ui.theme
+package ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
