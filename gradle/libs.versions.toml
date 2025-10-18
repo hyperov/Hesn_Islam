@@ -52,6 +52,7 @@ espressoCore = "3.5.1"
 # Compose
 compose = "2025.10.00"
 composeViewModel = "2.9.4"
+composeFragment = "1.8.1"
 
 # Other
 expandableRecyclerview = "v1.4"
@@ -61,7 +62,6 @@ youtubeplayer = "13.0.0"
 pdfViewer = "3.2.7"
 
 [libraries]
-
 # AndroidX
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCore" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidxAppcompat" }
@@ -118,6 +118,7 @@ compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling
 compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling"  }
 compose-material = { group = "androidx.compose.material3", name = "material3"  }
 compose-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "composeViewModel" }
+compose-fragment = { group = "androidx.fragment", name = "fragment-compose", version.ref = "composeFragment" }
 
 # Testing
 androidx-test-ext-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junit" }
@@ -138,7 +139,7 @@ androidx-navigation = ["androidx-navigation-fragment-ktx", "androidx-navigation-
 retrofit = ["retrofit", "retrofit-converter-gson", "okhttp-logging-interceptor"]
 coroutines = ["kotlinx-coroutines-core", "kotlinx-coroutines-android"]
 firebase = ["firebase-crashlytics", "firebase-analytics", "firebase-perf"]
-compose = [ "compose-ui-tooling-preview", "compose-material", "compose-viewmodel"]
+compose = [ "compose-ui-tooling-preview", "compose-material", "compose-viewmodel","compose-fragment"]
 testing = ["androidx-test-ext-junit-ktx", "androidx-test-runner", "androidx-test-core", "androidx-test-espresso"]
 
 [plugins]
