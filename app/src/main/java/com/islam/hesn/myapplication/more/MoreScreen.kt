@@ -18,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -33,6 +34,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.quran.viewmodel.QuranViewModel
 import com.islam.hesn.myapplication.utils.BOOKMARK_AYA_NUMBER
+import com.islam.hesn.myapplication.utils.BOOKMARK_SURAH_NAME
 import com.islam.hesn.myapplication.utils.BOOKMARK_SURAH_NUMBER
 import com.islam.hesn.myapplication.utils.IS_CONNECTED
 import com.islam.hesn.myapplication.utils.Prefs
@@ -52,13 +54,36 @@ fun MoreScreen(
     showContactUsBottomSheet: () -> Unit,
     navigateToYoutubePlayer: () -> Unit,
 ) {
+
+
     val scope = rememberCoroutineScope()
     val snackBarHostState = remember { SnackbarHostState() }
 
     val noBookmarksMessage = stringResource(R.string.no_bookmarks)
     val noConnectionMessage = stringResource(R.string.error_no_connection)
 
-   Scaffold(
+    val lastReadSecondaryText = remember {
+        derivedStateOf {
+            if (Prefs.contains(BOOKMARK_SURAH_NAME)) {
+                "( ${
+                    Prefs.getString(
+                        BOOKMARK_SURAH_NAME,
+                        "الفاتحة"
+                    )
+                } الأية ${Prefs.getInt(BOOKMARK_AYA_NUMBER, 1)} )"
+            } else {
+                ""
+            }
+        }
+    }
+
+    val showSecondaryText = remember {
+        derivedStateOf {
+            Prefs.contains(BOOKMARK_SURAH_NAME)
+        }
+    }
+
+    Scaffold(
         snackbarHost = {
             SnackbarHost(hostState = snackBarHostState)
         },
@@ -99,15 +124,17 @@ fun MoreScreen(
         Column(
             modifier = modifier
                 .fillMaxSize()
-                .padding(innerPadding)
-                .background(color = ColorPrimaryDark),
-            verticalArrangement = Arrangement.SpaceEvenly,
+                .background(color = ColorPrimaryDark)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(24.dp, Alignment.CenterVertically),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             IconAndTextCard(
                 modifier = Modifier,
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_bookmark2),
                 textResource = stringResource(R.string.last_read),
+                showSecondaryText = showSecondaryText.value,
+                secondaryTextResource = lastReadSecondaryText.value,
                 onClick = {
                     if (Prefs.contains(BOOKMARK_SURAH_NUMBER) && Prefs.contains(BOOKMARK_AYA_NUMBER)) {
                         quranViewModel.isBookMark.value = true
@@ -116,7 +143,6 @@ fun MoreScreen(
                         //value isn't important..but only to activate observer in surah fragment
                         quranViewModel.surahId.value = quranViewModel.surahId.value
                         navigateToSurah.invoke()
-//                        findNavController().navigate(R.id.surahFragment)
                     } else {
                         scope.launch {
                             snackBarHostState.showSnackbar(
@@ -132,7 +158,7 @@ fun MoreScreen(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_information),
                 textResource = stringResource(R.string.about_us),
                 onClick = {
-                   if (Prefs.getBoolean(IS_CONNECTED, true).not()) {
+                    if (Prefs.getBoolean(IS_CONNECTED, true).not()) {
 
                         scope.launch {
                             snackBarHostState.showSnackbar(
