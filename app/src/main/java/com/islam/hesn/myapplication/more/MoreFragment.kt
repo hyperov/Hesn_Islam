@@ -27,8 +27,6 @@ class MoreFragment : Fragment(), View.OnClickListener {
     private val quranViewModel: QuranViewModel by activityViewModels()
     private val youtubePlayerViewModel: YoutubePlayerViewModel by activityViewModels()
 
-    private lateinit var bottomSheet: ContactUsBottomSheetFragment
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -85,7 +83,7 @@ class MoreFragment : Fragment(), View.OnClickListener {
                         findNavController().navigate(R.id.youtubePlayerFragment)
                 }
                 cvContactUs -> {
-                    bottomSheet = ContactUsBottomSheetFragment.newInstance().apply {
+                     ContactUsBottomSheetFragment.newInstance().apply {
                         showNow(this@MoreFragment.parentFragmentManager, "translation")
                     }
                 }

@@ -44,7 +44,7 @@
 
     <fragment
         android:id="@+id/moreFragment"
-        android:name="com.islam.hesn.myapplication.more.MoreFragment"
+        android:name="com.islam.hesn.myapplication.more.MoreWrapperFragment"
         android:label="@string/more"
         tools:layout="@layout/fragment_more" />
     <fragment

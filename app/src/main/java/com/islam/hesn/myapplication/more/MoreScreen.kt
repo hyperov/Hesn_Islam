@@ -34,8 +34,8 @@ import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.quran.viewmodel.QuranViewModel
 import com.islam.hesn.myapplication.utils.BOOKMARK_AYA_NUMBER
 import com.islam.hesn.myapplication.utils.BOOKMARK_SURAH_NUMBER
+import com.islam.hesn.myapplication.utils.IS_CONNECTED
 import com.islam.hesn.myapplication.utils.Prefs
-import com.islam.hesn.myapplication.youtube.viewmodel.YoutubePlayerViewModel
 import kotlinx.coroutines.launch
 import ui.components.IconAndTextCard
 import ui.theme.ColorAccent
@@ -47,18 +47,20 @@ import ui.theme.JanaFamily
 @Composable
 fun MoreScreen(
     modifier: Modifier,
-    youtubePlayerViewModel: YoutubePlayerViewModel = viewModel(),
     quranViewModel: QuranViewModel = viewModel(),
-    navigateToSurah: () -> Unit
+    navigateToSurah: () -> Unit,
+    showContactUsBottomSheet: () -> Unit,
+    navigateToYoutubePlayer: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
-    val snackbarHostState = remember { SnackbarHostState() }
+    val snackBarHostState = remember { SnackbarHostState() }
 
     val noBookmarksMessage = stringResource(R.string.no_bookmarks)
+    val noConnectionMessage = stringResource(R.string.error_no_connection)
 
-    Scaffold(
+   Scaffold(
         snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState)
+            SnackbarHost(hostState = snackBarHostState)
         },
         modifier = modifier.fillMaxSize(),
         topBar = {
@@ -68,7 +70,7 @@ fun MoreScreen(
                         modifier = modifier
                             .fillMaxWidth()
                             .padding(end = 16.dp),
-                        horizontalArrangement = Arrangement.End,
+                        horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
@@ -117,7 +119,7 @@ fun MoreScreen(
 //                        findNavController().navigate(R.id.surahFragment)
                     } else {
                         scope.launch {
-                            snackbarHostState.showSnackbar(
+                            snackBarHostState.showSnackbar(
                                 message = noBookmarksMessage,
                                 withDismissAction = true
                             )
@@ -129,12 +131,26 @@ fun MoreScreen(
                 modifier = Modifier,
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_information),
                 textResource = stringResource(R.string.about_us),
-                onClick = {})
+                onClick = {
+                   if (Prefs.getBoolean(IS_CONNECTED, true).not()) {
+
+                        scope.launch {
+                            snackBarHostState.showSnackbar(
+                                message = noConnectionMessage,
+                                withDismissAction = true,
+                            )
+                        }
+                    } else
+                        navigateToYoutubePlayer.invoke()
+
+                })
             IconAndTextCard(
                 modifier = Modifier,
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_contact5),
                 textResource = stringResource(R.string.contact_us),
-                onClick = {})
+                onClick = {
+                    showContactUsBottomSheet.invoke()
+                })
         }
     }
 }
@@ -145,8 +161,9 @@ fun MoreScreen(
 fun PreviewMoreScreen() {
     MoreScreen(
         modifier = Modifier,
-        youtubePlayerViewModel = viewModel(),
         quranViewModel = viewModel(),
-        navigateToSurah = {}
+        navigateToSurah = {},
+        showContactUsBottomSheet = {},
+        navigateToYoutubePlayer = {},
     )
 }

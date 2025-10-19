@@ -5,14 +5,20 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.compose.ui.Modifier
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.compose.content
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.islam.hesn.myapplication.R
+import com.islam.hesn.myapplication.contactus.ContactUsBottomSheetFragment
+import com.islam.hesn.myapplication.youtube.viewmodel.YoutubePlayerViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.getValue
 
 @AndroidEntryPoint
 class MoreWrapperFragment : Fragment() {
+
+    private val youtubePlayerViewModel: YoutubePlayerViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -23,7 +29,17 @@ class MoreWrapperFragment : Fragment() {
         MoreScreen(
             navigateToSurah = {
                 findNavController().navigate(R.id.surahFragment)
-            }, modifier = Modifier
+            }, modifier = Modifier,
+            showContactUsBottomSheet = {
+                ContactUsBottomSheetFragment.newInstance().apply {
+                    showNow(this@MoreWrapperFragment.parentFragmentManager, "translation")
+                }
+            },
+            navigateToYoutubePlayer = {
+                youtubePlayerViewModel.videoId.value = getString(R.string.about_us_video_id)
+                youtubePlayerViewModel.videoTitle.value = getString(R.string.about_us_video_title)
+                findNavController().navigate(R.id.youtubePlayerFragment)
+            }
         )
     }
 
