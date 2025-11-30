@@ -13,7 +13,7 @@ import com.islam.hesn.myapplication.pdfbook.PdfActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MisconceptionsMainWrapperFragment : Fragment() {
+class MisconceptionsWrapperFragment : Fragment() {
 
 
     override fun onCreateView(
@@ -21,7 +21,7 @@ class MisconceptionsMainWrapperFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = content {
-        MisconceptionsMainScreen(
+        MisconceptionsScreen(
             navigateToMisconceptions = {
                 findNavController().navigate(R.id.misconceptionsFragment)
             },

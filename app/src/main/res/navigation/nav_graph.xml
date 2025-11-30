@@ -64,7 +64,7 @@
         tools:layout="@layout/youtube_search_fragment" />
     <fragment
         android:id="@+id/misconceptionsMainFragment"
-        android:name="com.islam.hesn.myapplication.misconceptions.MisconceptionsMainWrapperFragment"
+        android:name="com.islam.hesn.myapplication.misconceptions.MisconceptionsWrapperFragment"
         android:label="@string/misconceptions_main_title"
         tools:layout="@layout/fragment_misconceptions_main">
         <action

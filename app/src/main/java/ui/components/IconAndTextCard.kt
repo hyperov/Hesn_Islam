@@ -35,6 +35,8 @@ fun IconAndTextCard(
     imageScale: Float = 1.0f,
     showSecondaryText: Boolean = false,
     secondaryTextResource: String = "",
+    showThirdText: Boolean = false,
+    thirdTextResource: String = "",
     onClick: () -> Unit,
 ) {
     Card(
@@ -67,6 +69,13 @@ fun IconAndTextCard(
             if (showSecondaryText)
                 Text(
                     text = secondaryTextResource,
+                    fontSize = 16.sp,
+                    fontFamily = JanaFamily,
+                    color = ColorPrimary
+                )
+            if (showThirdText)
+                Text(
+                    text = thirdTextResource,
                     fontSize = 16.sp,
                     fontFamily = JanaFamily,
                     color = ColorPrimary

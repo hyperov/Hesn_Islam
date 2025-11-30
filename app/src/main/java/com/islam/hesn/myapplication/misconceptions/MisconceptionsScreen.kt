@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.islam.hesn.myapplication.R
@@ -30,7 +31,7 @@ import ui.theme.JanaFamily
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MisconceptionsMainScreen(
+fun MisconceptionsScreen(
     modifier: Modifier,
     navigateToMisconceptions: () -> Unit,
     navigateToPdf: () -> Unit,
@@ -83,9 +84,23 @@ fun MisconceptionsMainScreen(
                 modifier = Modifier,
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_religion),
                 textResource = stringResource(R.string.book),
+                showSecondaryText = true,
+                showThirdText = true,
+                secondaryTextResource = stringResource(R.string.pdf_book_name),
+                thirdTextResource = stringResource(R.string.book_text_desc),
                 onClick = {
                     navigateToPdf()
                 })
         }
     }
+}
+
+@Preview
+@Composable
+fun MisconceptionsScreenPreview() {
+    MisconceptionsScreen(
+        modifier = Modifier,
+        navigateToMisconceptions = {},
+        navigateToPdf = {},
+    )
 }
