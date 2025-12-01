@@ -12,6 +12,7 @@ plugins {
     alias(libs.plugins.firebase.perf)
     alias(libs.plugins.ksp)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 val apiKeyPropertiesFile = rootProject.file("apikey.properties")
@@ -93,6 +94,7 @@ dependencies {
 
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)
+    implementation(libs.compose.navigation)
     debugImplementation(libs.compose.ui.tooling)
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
@@ -142,6 +144,7 @@ dependencies {
     implementation(libs.glide)
 
     implementation(libs.lottie)
+    implementation(libs.lottie.compose)
 
     implementation(libs.youtubeplayer.core)
 

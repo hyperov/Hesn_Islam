@@ -38,9 +38,8 @@
     </fragment>
     <fragment
         android:id="@+id/misconceptionsFragment"
-        android:name="com.islam.hesn.myapplication.misconceptions.MisconceptionsFragment"
-        android:label="@string/misconceptions"
-        tools:layout="@layout/fragment_misconceptions" />
+        android:name="com.islam.hesn.myapplication.misconceptions.site.MisconceptionsSiteWrapperFragment"
+        android:label="@string/misconceptions" />
 
     <fragment
         android:id="@+id/moreFragment"
@@ -65,8 +64,7 @@
     <fragment
         android:id="@+id/misconceptionsMainFragment"
         android:name="com.islam.hesn.myapplication.misconceptions.MisconceptionsWrapperFragment"
-        android:label="@string/misconceptions_main_title"
-        tools:layout="@layout/fragment_misconceptions_main">
+        android:label="@string/misconceptions_main_title">
         <action
             android:id="@+id/action_misconceptionsMainFragment_to_misconceptionsFragment"
             app:destination="@id/misconceptionsFragment" />

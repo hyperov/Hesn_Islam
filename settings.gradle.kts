@@ -14,6 +14,7 @@ dependencyResolutionManagement {
         jcenter()
         maven(url = "https://mvnrepository.com/artifact")
         maven(url = "https://maven.scijava.org/content/repositories/public/")
+        maven(url = "https://oss.sonatype.org/content/repositories/snapshots/")
     }
 }
 rootProject.name = "Hesn Islam"

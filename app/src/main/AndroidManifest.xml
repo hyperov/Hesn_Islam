@@ -17,9 +17,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".pdfbook.PdfActivity"
-            android:exported="false" />
 
         <meta-data
             android:name="firebase_crashlytics_collection_enabled"
