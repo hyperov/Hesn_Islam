@@ -61,6 +61,8 @@ glide = "5.0.5"
 lottie = "6.7.1"
 youtubeplayer = "13.0.0"
 pdfViewer = "3.2.7"
+navigationFragmentKtx = "2.9.6"
+navigationUiKtx = "2.9.6"
 
 [libraries]
 # AndroidX
@@ -135,6 +137,8 @@ lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie"
 lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie" }
 youtubeplayer-core = { group = "com.pierfrancescosoffritti.androidyoutubeplayer", name = "core", version.ref = "youtubeplayer" }
 pdfviewer = { group = "com.github.marain87", name = "AndroidPdfViewer", version.ref = "pdfViewer" }
+navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
+navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
 
 [bundles]
 androidx-lifecycle = ["androidx-lifecycle-livedata-ktx", "androidx-lifecycle-viewmodel-ktx", "androidx-lifecycle-runtime-ktx"]

@@ -40,8 +40,7 @@
     <fragment
         android:id="@+id/moreFragment"
         android:name="com.islam.hesn.myapplication.more.MoreWrapperFragment"
-        android:label="@string/more"
-        tools:layout="@layout/fragment_more" />
+        android:label="@string/more" />
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.islam.hesn.myapplication.search.view.SearchFragment"

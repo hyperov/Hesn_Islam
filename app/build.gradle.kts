@@ -88,6 +88,8 @@ dependencies {
     implementation(libs.bundles.firebase)
 
     implementation(libs.bundles.androidx.lifecycle)
+    implementation(libs.navigation.fragment.ktx)
+    implementation(libs.navigation.ui.ktx)
     testImplementation(libs.androidx.test.ext.junit.ktx)
     testImplementation(libs.bundles.testing)
     androidTestImplementation(libs.bundles.testing)

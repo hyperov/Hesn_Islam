@@ -10,7 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.islam.hesn.myapplication.misconceptions.site.MisconceptionsSiteScreen
-import com.islam.hesn.myapplication.pdfbook.PdfScreen
+import com.islam.hesn.myapplication.misconceptions.pdfbook.PdfScreen
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.serialization.Serializable
 
