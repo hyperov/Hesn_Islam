@@ -1,6 +1,5 @@
 package com.islam.hesn.myapplication.misconceptions
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,8 +9,7 @@ import androidx.fragment.compose.content
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.fragment.findNavController
-import com.islam.hesn.myapplication.R
+import com.islam.hesn.myapplication.misconceptions.site.MisconceptionsSiteScreen
 import com.islam.hesn.myapplication.pdfbook.PdfScreen
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.serialization.Serializable
@@ -24,6 +22,9 @@ class MisconceptionsWrapperFragment : Fragment() {
 
     @Serializable
     object PDF
+
+    @Serializable
+    object MisconceptionsSite
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,7 +43,7 @@ class MisconceptionsWrapperFragment : Fragment() {
             composable<Misconceptions> {
                 MisconceptionsScreen(
                     navigateToMisconceptions = {
-                        findNavController().navigate(R.id.misconceptionsFragment)
+                        navController.navigate(MisconceptionsSite)
                     },
                     modifier = Modifier,
                     navigateToPdf = {
@@ -59,6 +60,8 @@ class MisconceptionsWrapperFragment : Fragment() {
                     }
                 )
             }
+
+            composable<MisconceptionsSite> { MisconceptionsSiteScreen() }
         }
 
     }

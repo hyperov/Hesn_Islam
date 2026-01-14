@@ -36,10 +36,6 @@
             android:id="@+id/action_youtubeFragment_to_youtubeSearchFragment"
             app:destination="@id/youtubeSearchFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/misconceptionsFragment"
-        android:name="com.islam.hesn.myapplication.misconceptions.site.MisconceptionsSiteWrapperFragment"
-        android:label="@string/misconceptions" />
 
     <fragment
         android:id="@+id/moreFragment"
@@ -65,16 +61,6 @@
         android:id="@+id/misconceptionsMainFragment"
         android:name="com.islam.hesn.myapplication.misconceptions.MisconceptionsWrapperFragment"
         android:label="@string/misconceptions_main_title">
-        <action
-            android:id="@+id/action_misconceptionsMainFragment_to_misconceptionsFragment"
-            app:destination="@id/misconceptionsFragment" />
-<!--        <action-->
-<!--            android:id="@+id/action_misconceptionsMainFragment_to_misconceptionsSitesFragment"-->
-<!--            app:destination="@id/pdfFragment" />-->
+
     </fragment>
-<!--    <fragment-->
-<!--        android:id="@+id/pdfFragment"-->
-<!--        android:name="com.islam.hesn.myapplication.pdfbook.PdfFragment"-->
-<!--        android:label="@string/pdf_book_name"-->
-<!--        tools:layout="@layout/fragment_pdf" />-->
 </navigation>
