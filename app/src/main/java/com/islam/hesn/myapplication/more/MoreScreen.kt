@@ -58,7 +58,6 @@ fun MoreScreen(
     modifier: Modifier,
     quranViewModel: QuranViewModel = viewModel(),
     navigateToSurah: () -> Unit,
-    showContactUsBottomSheet: () -> Unit,
     navigateToYoutubePlayer: () -> Unit,
 ) {
 
@@ -188,7 +187,6 @@ fun MoreScreen(
                 textResource = stringResource(R.string.contact_us),
                 onClick = {
                     showBottomSheet = true
-                    showContactUsBottomSheet.invoke()
                 })
             if (showBottomSheet)
                 ModalBottomSheet(containerColor = ColorAccent,
@@ -199,7 +197,7 @@ fun MoreScreen(
                 ) {
                     // Sheet content
                     ContactUsComposableBottomSheet(onDismiss = {
-                        scope.launch { sheetState.hide() }.invokeOnCompletion {
+                        sheetScope.launch { sheetState.hide() }.invokeOnCompletion {
                             if (!sheetState.isVisible) {
                                 showBottomSheet = false
                             }
@@ -218,7 +216,6 @@ fun PreviewMoreScreen() {
         modifier = Modifier,
         quranViewModel = viewModel(),
         navigateToSurah = {},
-        showContactUsBottomSheet = {},
         navigateToYoutubePlayer = {},
     )
 }

@@ -31,11 +31,6 @@ class MoreWrapperFragment : Fragment() {
             navigateToSurah = {
                 findNavController().navigate(R.id.surahFragment)
             }, modifier = Modifier,
-            showContactUsBottomSheet = {
-//                ContactUsBottomSheetFragment.newInstance().apply {
-//                    showNow(this@MoreWrapperFragment.parentFragmentManager, "translation")
-//                }
-            },
             navigateToYoutubePlayer = {
                 youtubePlayerViewModel.videoId.value = getString(R.string.about_us_video_id)
                 youtubePlayerViewModel.videoTitle.value = getString(R.string.about_us_video_title)
