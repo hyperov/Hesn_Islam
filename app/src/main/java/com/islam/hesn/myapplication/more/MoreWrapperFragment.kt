@@ -25,15 +25,16 @@ class MoreWrapperFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = content {
+
         FirebaseCrashlytics.getInstance().setCustomKey("SCREEN", "MoreWrapperFragment")
         MoreScreen(
             navigateToSurah = {
                 findNavController().navigate(R.id.surahFragment)
             }, modifier = Modifier,
             showContactUsBottomSheet = {
-                ContactUsBottomSheetFragment.newInstance().apply {
-                    showNow(this@MoreWrapperFragment.parentFragmentManager, "translation")
-                }
+//                ContactUsBottomSheetFragment.newInstance().apply {
+//                    showNow(this@MoreWrapperFragment.parentFragmentManager, "translation")
+//                }
             },
             navigateToYoutubePlayer = {
                 youtubePlayerViewModel.videoId.value = getString(R.string.about_us_video_id)
