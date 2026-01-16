@@ -88,8 +88,6 @@ dependencies {
     implementation(libs.bundles.firebase)
 
     implementation(libs.bundles.androidx.lifecycle)
-    implementation(libs.navigation.fragment.ktx)
-    implementation(libs.navigation.ui.ktx)
     testImplementation(libs.androidx.test.ext.junit.ktx)
     testImplementation(libs.bundles.testing)
     androidTestImplementation(libs.bundles.testing)
@@ -130,8 +128,8 @@ dependencies {
 
     // paging 3 lib
     implementation(libs.androidx.paging.runtime.ktx)
+    implementation(libs.androidx.paging.compose)
 
-    // Google Play libraries for app updates and reviews (Android 14 compatible)
     implementation(libs.play.app.update)
     implementation(libs.play.review)
 
@@ -144,6 +142,9 @@ dependencies {
     implementation(libs.expandablerecyclerview)
 
     implementation(libs.glide)
+
+    // Coil for Compose image loading
+    implementation(libs.coil.compose)
 
     implementation(libs.lottie)
     implementation(libs.lottie.compose)

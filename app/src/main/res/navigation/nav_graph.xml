@@ -26,16 +26,9 @@
 
     <fragment
         android:id="@+id/youtubeFragment"
-        android:name="com.islam.hesn.myapplication.youtube.view.YoutubeFragment"
+        android:name="com.islam.hesn.myapplication.youtube.view.YoutubeHostFragment"
         android:label="@string/youtube_channel"
-        tools:layout="@layout/fragment_youtube">
-        <action
-            android:id="@+id/action_youtubeFragment_to_youtubePlayerFragment"
-            app:destination="@id/youtubePlayerFragment" />
-        <action
-            android:id="@+id/action_youtubeFragment_to_youtubeSearchFragment"
-            app:destination="@id/youtubeSearchFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_youtube" />
 
     <fragment
         android:id="@+id/moreFragment"
@@ -46,16 +39,8 @@
         android:name="com.islam.hesn.myapplication.search.view.SearchFragment"
         android:label="@string/search_title"
         tools:layout="@layout/search_fragment" />
-    <fragment
-        android:id="@+id/youtubePlayerFragment"
-        android:name="com.islam.hesn.myapplication.youtube.view.YoutubePlayerFragment"
-        android:label="@string/youtube_channel"
-        tools:layout="@layout/fragment_youtube_player" />
-    <fragment
-        android:id="@+id/youtubeSearchFragment"
-        android:name="com.islam.hesn.myapplication.youtube.view.YoutubeSearchFragment"
-        android:label="@string/search_title"
-        tools:layout="@layout/youtube_search_fragment" />
+    <!-- YouTube player and search are now handled inside the Compose navigation
+         hosted by YoutubeHostFragment. -->
     <fragment
         android:id="@+id/misconceptionsMainFragment"
         android:name="com.islam.hesn.myapplication.misconceptions.MisconceptionsWrapperFragment"

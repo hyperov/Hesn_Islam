@@ -15,10 +15,11 @@ androidxAppcompat = "1.7.1"
 androidxConstraintlayout = "2.2.1"
 androidxRecyclerview = "1.4.0"
 androidxLegacySupport = "1.0.0"
-androidxLifecycle = "2.9.4"
+androidxLifecycle = "2.10.0"
 androidxLifecycleExtensions = "2.2.0"
 androidxArchCore = "2.2.0"
-androidxNavigation = "2.9.5"
+androidxNavigation = "2.9.6"
+androidxPagingCompose = "3.4.0-rc01"
 androidxPaging = "3.3.6"
 androidxPreference = "1.2.1"
 fragmentVersion = "1.8.9"
@@ -58,6 +59,7 @@ composeNavigation = "2.9.6"
 # Other
 expandableRecyclerview = "v1.4"
 glide = "5.0.5"
+coil = "2.7.0"
 lottie = "6.7.1"
 youtubeplayer = "13.0.0"
 pdfViewer = "3.2.7"
@@ -86,6 +88,7 @@ androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation
 
 # Paging
 androidx-paging-runtime-ktx = { group = "androidx.paging", name = "paging-runtime-ktx", version.ref = "androidxPaging" }
+androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "androidxPagingCompose" }
 
 # Preferences
 androidx-preference-ktx = { group = "androidx.preference", name = "preference-ktx", version.ref = "androidxPreference" }
@@ -133,12 +136,11 @@ androidx-test-espresso = { group = "androidx.test.espresso",name = "espresso-cor
 # Other
 expandablerecyclerview = { group = "com.github.thoughtbot.expandable-recycler-view", name = "expandablerecyclerview", version.ref = "expandableRecyclerview" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie" }
 lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie" }
 youtubeplayer-core = { group = "com.pierfrancescosoffritti.androidyoutubeplayer", name = "core", version.ref = "youtubeplayer" }
 pdfviewer = { group = "com.github.marain87", name = "AndroidPdfViewer", version.ref = "pdfViewer" }
-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
 
 [bundles]
 androidx-lifecycle = ["androidx-lifecycle-livedata-ktx", "androidx-lifecycle-viewmodel-ktx", "androidx-lifecycle-runtime-ktx"]

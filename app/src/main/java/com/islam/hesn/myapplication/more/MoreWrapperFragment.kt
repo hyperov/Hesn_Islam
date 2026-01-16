@@ -31,9 +31,12 @@ class MoreWrapperFragment : Fragment() {
                 findNavController().navigate(R.id.surahFragment)
             }, modifier = Modifier,
             navigateToYoutubePlayer = {
-                youtubePlayerViewModel.videoId.value = getString(R.string.about_us_video_id)
-                youtubePlayerViewModel.videoTitle.value = getString(R.string.about_us_video_title)
-                findNavController().navigate(R.id.youtubePlayerFragment)
+                youtubePlayerViewModel.setVideo(
+                    id = getString(R.string.about_us_video_id),
+                    title = getString(R.string.about_us_video_title)
+                )
+                // Navigate to YouTube tab - the host fragment will handle showing the player
+                findNavController().navigate(R.id.youtubeFragment)
             }
         )
     }
