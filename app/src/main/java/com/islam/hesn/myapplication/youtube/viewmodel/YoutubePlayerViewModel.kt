@@ -22,4 +22,8 @@ class YoutubePlayerViewModel @Inject constructor() : ViewModel() {
     fun setVideo(id: String, title: String) {
         _uiState.update { it.copy(videoId = id, videoTitle = title) }
     }
+
+    fun clearVideo() {
+        _uiState.update { it.copy(videoId = null, videoTitle = null) }
+    }
 }
