@@ -21,7 +21,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.itemKey
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubePlayerViewModel
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubeSearchViewModel
@@ -97,10 +96,7 @@ fun YoutubeSearchScreen(
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                     contentPadding = PaddingValues(bottom = 16.dp),
                 ) {
-                    items(
-                        pagingItems.itemCount,
-                        key = pagingItems.itemKey { it.id.videoId },
-                    ) { index ->
+                    items(pagingItems.itemCount) { index ->
                         pagingItems[index]?.let { video ->
                             YoutubeSearchItem(
                                 searchVideo = video,

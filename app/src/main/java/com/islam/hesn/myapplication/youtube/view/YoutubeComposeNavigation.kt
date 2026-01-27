@@ -42,10 +42,8 @@ fun YoutubeRootScreen(
                 youtubeSearchViewModel = youtubeSearchViewModel,
                 onOpenPlayer = { videoId, title ->
                     youtubePlayerViewModel.setVideo(videoId, title)
-                    val encodedId = Uri.encode(videoId)
-                    val encodedTitle = Uri.encode(title)
                     navController.navigate(
-                        "${YoutubeDestinations.PLAYER}/$encodedId/$encodedTitle"
+                        "${YoutubeDestinations.PLAYER}/$videoId"
                     )
                 },
                 onOpenSearch = { query, selectedTab ->
@@ -57,14 +55,11 @@ fun YoutubeRootScreen(
         }
 
         composable(
-            route = "${YoutubeDestinations.PLAYER}/{${YoutubeDestinations.ARG_VIDEO_ID}}/{${YoutubeDestinations.ARG_VIDEO_TITLE}}",
+            route = "${YoutubeDestinations.PLAYER}/{${YoutubeDestinations.ARG_VIDEO_ID}}",
             arguments = listOf(
                 navArgument(YoutubeDestinations.ARG_VIDEO_ID) {
                     type = NavType.StringType
-                },
-                navArgument(YoutubeDestinations.ARG_VIDEO_TITLE) {
-                    type = NavType.StringType
-                },
+                }
             )
         ) {
             YoutubePlayerScreen(
@@ -79,10 +74,8 @@ fun YoutubeRootScreen(
                 youtubePlayerViewModel = youtubePlayerViewModel,
                 onOpenPlayer = { videoId, title ->
                     youtubePlayerViewModel.setVideo(videoId, title)
-                    val encodedId = Uri.encode(videoId)
-                    val encodedTitle = Uri.encode(title)
                     navController.navigate(
-                        "${YoutubeDestinations.PLAYER}/$encodedId/$encodedTitle"
+                        "${YoutubeDestinations.PLAYER}/$videoId"
                     )
                 },
                 onBack = { navController.popBackStack() }

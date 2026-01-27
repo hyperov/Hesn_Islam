@@ -22,9 +22,9 @@ class YoutubePagingSource(
               if (nextPage.isDigitsOnly()) "" else nextPage
             )
             LoadResult.Page(
-                data = response.items!!,
+                data = response.items ?: emptyList(),
                 prevKey = null, // Only paging forward.
-                nextKey = response.nextPageToken
+                nextKey = if (response.items.isNullOrEmpty()) null else response.nextPageToken
             )
         } catch (e: IOException) {
             // IOException for network failures.
