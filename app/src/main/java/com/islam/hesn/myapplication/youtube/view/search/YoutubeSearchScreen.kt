@@ -22,6 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.islam.hesn.myapplication.R
+import com.islam.hesn.myapplication.youtube.view.components.YoutubeLoadingAnimation
+import com.islam.hesn.myapplication.youtube.view.components.YoutubeNoResultsAnimation
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubePlayerViewModel
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubeSearchViewModel
 import ui.theme.ColorAccent
@@ -81,13 +83,9 @@ fun YoutubeSearchScreen(
             }
 
             if (pagingItems.loadState.refresh is androidx.paging.LoadState.Loading) {
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    CircularProgressIndicator(color = ColorAccent)
-                }
+                YoutubeLoadingAnimation()
+            } else if (pagingItems.itemCount == 0 && pagingItems.loadState.refresh is androidx.paging.LoadState.NotLoading) {
+                YoutubeNoResultsAnimation()
             } else {
                 LazyColumn(
                     modifier = Modifier

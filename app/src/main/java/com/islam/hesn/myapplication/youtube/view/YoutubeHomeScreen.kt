@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.islam.hesn.myapplication.R
+import com.islam.hesn.myapplication.youtube.view.components.YoutubeLoadingAnimation
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubeSearchViewModel
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubeViewModel
 import kotlinx.coroutines.launch
@@ -172,13 +173,7 @@ fun YoutubeHomeScreen(
                     .padding(top = 16.dp),
             ) {
                 if (pagingItems.loadState.refresh is androidx.paging.LoadState.Loading) {
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        CircularProgressIndicator(color = ColorAccent)
-                    }
+                    YoutubeLoadingAnimation()
                 } else {
                     LazyColumn(
                         modifier = Modifier.fillMaxSize(),

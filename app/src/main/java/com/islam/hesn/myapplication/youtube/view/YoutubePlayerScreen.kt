@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.islam.hesn.myapplication.R
+import com.islam.hesn.myapplication.youtube.view.components.YoutubeNoResultsAnimation
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubePlayerViewModel
 import ui.theme.ColorAccent
 import ui.theme.JanaFamily
@@ -29,16 +30,7 @@ fun YoutubePlayerScreen(
     }
 
     if (videoId == null) {
-        Box(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            Text(
-                text = stringResource(id = R.string.no_results),
-                fontFamily = JanaFamily,
-                color = ColorAccent,
-                modifier = Modifier.align(Alignment.Center)
-            )
-        }
+        YoutubeNoResultsAnimation()
     } else {
         YoutubePlayerViewComposable(
             videoId = videoId,
