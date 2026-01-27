@@ -12,6 +12,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemKey
 import com.islam.hesn.myapplication.R
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubePlayerViewModel
 import com.islam.hesn.myapplication.youtube.viewmodel.YoutubeSearchViewModel
@@ -31,12 +33,25 @@ import ui.theme.JanaFamily
 fun YoutubeSearchScreen(
     youtubeSearchViewModel: YoutubeSearchViewModel,
     youtubePlayerViewModel: YoutubePlayerViewModel,
+    onOpenPlayer: (String, String) -> Unit,
     onBack: () -> Unit,
 ) {
     val uiState by youtubeSearchViewModel.uiState.collectAsStateWithLifecycle()
     // Collect the flow from StateFlow and then collect as paging items
     val currentFlow by youtubeSearchViewModel.flowState.collectAsStateWithLifecycle()
     val pagingItems = currentFlow.collectAsLazyPagingItems()
+
+    val mainChannelId = stringResource(R.string.main_channel_id)
+    val educationChannelId = stringResource(R.string.education_channel_id)
+
+    LaunchedEffect(uiState.searchQuery, uiState.selectedTabPosition) {
+        val channelId = if (uiState.selectedTabPosition == 1) {
+            educationChannelId
+        } else {
+            mainChannelId
+        }
+        youtubeSearchViewModel.getSearchedYoutubeVideos(channelId)
+    }
 
     BackHandler(onBack = onBack)
 
@@ -82,14 +97,16 @@ fun YoutubeSearchScreen(
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                     contentPadding = PaddingValues(bottom = 16.dp),
                 ) {
-                    items(pagingItems.itemCount) { item ->
-                        YoutubeSearchItem(
-                            searchVideo = pagingItems[item]!!,
-                            onOpenPlayer = { id, title ->
-                                youtubePlayerViewModel.setVideo(id, title)
-                                onBack()
-                            },
-                        )
+                    items(
+                        pagingItems.itemCount,
+                        key = pagingItems.itemKey { it.id.videoId },
+                    ) { index ->
+                        pagingItems[index]?.let { video ->
+                            YoutubeSearchItem(
+                                searchVideo = video,
+                                onOpenPlayer = onOpenPlayer
+                            )
+                        }
                     }
                 }
             }

@@ -95,6 +95,8 @@ dependencies {
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)
     implementation(libs.compose.navigation)
+    implementation(libs.compose.icons.core)
+    implementation(libs.compose.icons.extended)
     debugImplementation(libs.compose.ui.tooling)
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))

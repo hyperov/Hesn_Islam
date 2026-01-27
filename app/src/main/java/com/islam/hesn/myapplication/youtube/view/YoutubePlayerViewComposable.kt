@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -21,13 +23,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import com.islam.hesn.myapplication.R
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.options.IFramePlayerOptions
@@ -39,38 +38,12 @@ fun YoutubePlayerViewComposable(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val lifecycleOwner = LocalLifecycleOwner.current
-//    val activity = LocalContext.current.findActivity()
-
-//    var youTubePlayer by remember { mutableStateOf<YouTubePlayer?>(null) }
-//
-//    LaunchedEffect(youTubePlayer, videoId) {
-//        youTubePlayer?.loadOrCueVideo(lifecycleOwner.lifecycle, videoId, 0f)
-//    }
 
     Box(
         modifier = modifier
             .fillMaxSize()
             .background(Color.Black)
     ) {
-//        AndroidView(
-//            modifier = Modifier.fillMaxSize(),
-//            factory = { ctx ->
-//                YouTubePlayerView(ctx).apply {
-//                    lifecycleOwner.lifecycle.addObserver(this)
-//
-//                    addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
-//                        override fun onReady(player: YouTubePlayer) {
-//                            youTubePlayer = player
-//                        }
-//                    })
-//                }
-//            },
-//            onRelease = { view ->
-//                lifecycleOwner.lifecycle.removeObserver(view)
-//                view.release()
-//            }
-//        )
 
         //iframe solution
         val lifecycleOwner = LocalLifecycleOwner.current
@@ -113,8 +86,7 @@ fun YoutubePlayerViewComposable(
             )
 
         Icon(
-//            imageVector = Icons.Filled.Close,
-            imageVector = ImageVector.vectorResource(id = R.drawable.ic_youtube),
+            imageVector = Icons.Filled.Close,
             contentDescription = "Close player",
             tint = Color.White,
             modifier = Modifier

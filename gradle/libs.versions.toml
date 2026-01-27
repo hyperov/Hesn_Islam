@@ -55,6 +55,8 @@ compose = "2025.10.00"
 composeViewModel = "2.9.4"
 composeFragment = "1.8.1"
 composeNavigation = "2.9.6"
+material-icons-core = "1.7.8"
+material-icons-extended = "1.7.8"
 
 # Other
 expandableRecyclerview = "v1.4"
@@ -126,6 +128,8 @@ compose-material = { group = "androidx.compose.material3", name = "material3"  }
 compose-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "composeViewModel" }
 compose-fragment = { group = "androidx.fragment", name = "fragment-compose", version.ref = "composeFragment" }
 compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "composeNavigation" }
+compose-icons-core = { group = "androidx.compose.material", name = "material-icons-core", version.ref = "material-icons-core" }
+compose-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "material-icons-extended" }
 
 # Testing
 androidx-test-ext-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junit" }

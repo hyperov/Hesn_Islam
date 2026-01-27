@@ -1,5 +1,6 @@
 package com.islam.hesn.myapplication.youtube.view
 
+import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavType
@@ -41,8 +42,10 @@ fun YoutubeRootScreen(
                 youtubeSearchViewModel = youtubeSearchViewModel,
                 onOpenPlayer = { videoId, title ->
                     youtubePlayerViewModel.setVideo(videoId, title)
+                    val encodedId = Uri.encode(videoId)
+                    val encodedTitle = Uri.encode(title)
                     navController.navigate(
-                        "${YoutubeDestinations.PLAYER}/$videoId/$title"
+                        "${YoutubeDestinations.PLAYER}/$encodedId/$encodedTitle"
                     )
                 },
                 onOpenSearch = { query, selectedTab ->
@@ -74,6 +77,14 @@ fun YoutubeRootScreen(
             YoutubeSearchScreen(
                 youtubeSearchViewModel = youtubeSearchViewModel,
                 youtubePlayerViewModel = youtubePlayerViewModel,
+                onOpenPlayer = { videoId, title ->
+                    youtubePlayerViewModel.setVideo(videoId, title)
+                    val encodedId = Uri.encode(videoId)
+                    val encodedTitle = Uri.encode(title)
+                    navController.navigate(
+                        "${YoutubeDestinations.PLAYER}/$encodedId/$encodedTitle"
+                    )
+                },
                 onBack = { navController.popBackStack() }
             )
         }

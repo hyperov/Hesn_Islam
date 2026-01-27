@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import android.net.Uri
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -126,6 +128,19 @@ fun YoutubeHomeScreen(
                     unfocusedTextColor = ColorPrimary,
                 ),
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                keyboardActions = KeyboardActions(onSearch = {
+                    if (searchText.value.isNotBlank()) {
+                        youtubeSearchViewModel.updateSearchQuery(searchText.value)
+                        youtubeSearchViewModel.updateSelectedTab(selectedTab.value)
+                        onOpenSearch(searchText.value, selectedTab.value)
+                    } else {
+                        scope.launch {
+                            snackbarHostState.showSnackbar(
+                                message = noResults,
+                            )
+                        }
+                    }
+                }),
             )
 
             TabRow(
@@ -170,11 +185,13 @@ fun YoutubeHomeScreen(
                         verticalArrangement = Arrangement.spacedBy(8.dp),
                         contentPadding = PaddingValues(bottom = 16.dp),
                     ) {
-                        items(pagingItems.itemCount) { item ->
-                            YoutubeVideoItem(
-                                video = pagingItems[item]!!,
-                                onOpenPlayer = onOpenPlayer
-                            )
+                        items(pagingItems.itemCount) { index ->
+                            pagingItems[index]?.let { video ->
+                                YoutubeVideoItem(
+                                    video = video,
+                                    onOpenPlayer = onOpenPlayer
+                                )
+                            }
                         }
                     }
                 }

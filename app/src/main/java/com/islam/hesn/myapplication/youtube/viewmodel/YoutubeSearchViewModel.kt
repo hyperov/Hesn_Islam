@@ -45,6 +45,7 @@ class YoutubeSearchViewModel @Inject constructor(private val repo: YoutubeRepo) 
 
     fun getSearchedYoutubeVideos(channelId: String) {
         val query = _uiState.value.searchQuery
+
         if (query.isBlank()) return
 
         _uiState.update { it.copy(isLoading = true) }
